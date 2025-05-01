@@ -10,9 +10,51 @@ import juegos.Juego;
 
 // ASCII
 import ascii.ASCIIGeneral;
+import patterns.observer.PullPushModelObservable;
+import patterns.observer.PullPushModelObserverInteractive;
+import personas.Jugador;
 
-public class Mesa {
-    
+import static recursos.MensajesEstaticos.interactTable;
+
+public class Mesa implements PullPushModelObserverInteractive {
+
+    // Atributos Adicionales
+    private Integer posX, posY;
+    private Jugador jugador;
+
+    // Constructor con el Observer
+    public Mesa(Juego juego, String nombreMesa, int numPartcipantes, Integer posX, Integer posY) {
+        this.juego = juego;
+        this.nombreMesa = nombreMesa;
+        this.numPartcipantes = numPartcipantes;
+
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    @Override
+    public void interactive() {
+        jugar();
+    }
+
+    @Override
+    public void update(PullPushModelObservable pullPushModelObservable, Object object) {
+
+        if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
+            Jugador jugadorTMP = (Jugador) pullPushModelObservable;
+
+            if (jugadorTMP.getPosX() == this.posX && jugadorTMP.getPosY() == this.posY) {
+                interactTable(this.nombreMesa);
+                this.jugador = jugadorTMP;
+                if (this.jugador.getInteract()) interactive();
+            }
+            else {
+                jugador = null; // Se asume de que no hay ningun jugador ocupado // No se si habra multiplayer xd
+            }
+        }
+
+    }
+
     // Atributos 
     Juego juego;
     String nombreMesa;
@@ -44,7 +86,7 @@ public class Mesa {
     }
 
     // Jugar
-    public void jugar() throws ExcepcionJugadorSinFichas{
+    public void jugar() {
         try {
             juego.iniciarPartida(); 
         } catch (ExcepcionJugadorSinFichas e) {
@@ -52,6 +94,5 @@ public class Mesa {
             ASCIIGeneral.esperarTecla();
         }
     }
-
 
 }

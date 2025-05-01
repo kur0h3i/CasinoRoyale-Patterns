@@ -29,12 +29,15 @@ import personas.Jugador;
 // ASCII
 import ascii.ASCIIGeneral;
 
+// Mensajes
+import static recursos.MensajesEstaticos.*;
+
 
 public class SalaPrincipal {
 
     char[][] mapa = MapaCasino.mapa;
-    int posX = MapaCasino.posX;
-    int posY = MapaCasino.posY;
+    // int posX = MapaCasino.posX;
+    // int posY = MapaCasino.posY;
     Jugador jugador;
 
     public SalaPrincipal(Jugador jugador) throws ExcepcionJugadorSinFichas, ExcepcionJugadorSinDinero {
@@ -45,19 +48,23 @@ public class SalaPrincipal {
 
         // Mesas disponibles (agregar las mesas a la lista)
         ArrayList<Mesa> mesas = new ArrayList<>();
-        mesas.add(new Mesa(new Ruleta(jugador), "Ruleta", 1, new int[][]{{9, 4}})); 
-        mesas.add(new Mesa(new Bingo(jugador), "Bingo", 1, new int[][]{{14, 11}}));
-        mesas.add(new Mesa(new Slot(jugador), "Slot", 1, new int[][]{{25, 11}}));
-        mesas.add(new Mesa(new Dados(jugador), "Dados", 1, new int[][]{{23, 4}}));
-        mesas.add(new Mesa(new CartaMasAlta(jugador), "Carta Mas Alta", 1, new int[][]{{37, 4}}));
+        mesas.add(new Mesa(new Ruleta(jugador), "Ruleta", 1, 9, 4));
+        mesas.add(new Mesa(new Bingo(jugador), "Bingo", 1, 14, 11));
+        mesas.add(new Mesa(new Slot(jugador), "Slot", 1, 25, 11));
+        mesas.add(new Mesa(new Dados(jugador), "Dados", 1, 23, 4));
+        mesas.add(new Mesa(new CartaMasAlta(jugador), "Carta Mas Alta", 1, 37, 4));
 
+        for (Mesa mesa : mesas) {
+            jugador.attach(mesa);
+        }
+
+        jugador.attach(new Cajero(2, 7));
+        jugador.attach(new PuertaSalida(4, 0));
 
         boolean running = true;
         while (running) {
             ASCIIGeneral.limpiarPantalla();
             interfazPrincipal(jugador, mesas);
-            salirPuerta();
-            cajero();
             entradaTerminal(scanner, jugador, mesas);
         }
 
@@ -67,31 +74,23 @@ public class SalaPrincipal {
 
     public void interfazPrincipal(Jugador jugador, ArrayList<Mesa> mesas){
         // Interfaz del jugador
-        System.out.println("----------------------------");
-        System.out.println("Nombre :  " + jugador.getName());
-        System.out.println("Dinero : " + jugador.getDinero());
-        System.out.println("Fichas : " + jugador.getFichas());
-        System.out.println("----------------------------");
+        playerUI(jugador);
 
         // Mostrar el mapa del casino
         mostrarMapa();
 
         // Instrucciones de control
-        System.out.println("Usa WASD para moverte, E para unirte a la mesa:");
+        instructions();
 
-        // Interacción con mesas
-        for (Mesa mesa : mesas) {
-            if (mesa.getPosicionInteractuar()[0][0] == posX && mesa.getPosicionInteractuar()[0][1] == posY) {
-                System.out.println("Usa E para unirte a la mesa de " + mesa.getNombreMesa());
-            }
-        }
+        // Interacción con mesas // TODO
+
     }
 
     // Mostrar mapa del casino (Jugador P)
     public void mostrarMapa() {
         for (int i = 0; i < mapa.length; i++) {
             for (int j = 0; j < mapa[i].length; j++) {
-                if (i == posY && j == posX) {
+                if (i == jugador.getPosY() && j == jugador.getPosX()) {
                     System.out.print("P "); 
                 } else {
                     System.out.print(mapa[i][j] + " ");
@@ -102,28 +101,15 @@ public class SalaPrincipal {
     }
 
     // Mover jugador en el mapa
+    // TODO: SUGERENCIA 1
     public void moverJugador(int dx, int dy) {
-        int nuevaPosX = posX + dx;
-        int nuevaPosY = posY + dy;
+        Integer nuevaPosX = jugador.getPosX() + dx;
+        Integer nuevaPosY = jugador.getPosY() + dy;
 
         // Comprobar que la nueva posición esté dentro de los límites y no sea un muro (#)
         if (nuevaPosX >= 0 && nuevaPosX < mapa[0].length && nuevaPosY >= 0 && nuevaPosY < mapa.length
                 && mapa[nuevaPosY][nuevaPosX] != '#') {
-            posX = nuevaPosX;
-            posY = nuevaPosY;
-        }
-    }
-
-    // Puerta Salida Mostrar Indicaciones
-    public void salirPuerta(){
-        if (posX == 4 && posY == 0) {
-            System.out.println("Usa E para salir/guardar/cargar "); 
-        }
-    }
-    // Cajero Mostrar Indicaciones
-    public void cajero(){
-        if (posX == 2 && posY == 7){
-            System.out.println("Usa E para entrar en el cajero");
+            jugador.move(nuevaPosX, nuevaPosY);
         }
     }
 
@@ -150,24 +136,12 @@ public class SalaPrincipal {
                         moverJugador(1, 0);
                         break;
                     case "e":
-                        // Comprobar si estamos en una Mesa
-                        for (Mesa mesa : mesas) {
-                            if (mesa.getPosicionInteractuar()[0][0] == posX && mesa.getPosicionInteractuar()[0][1] == posY) {
-                                mesa.jugar();
-                            }
-                        }
-                        // Comprobar si estamos en el cajero
-                        if (posX == 2 && posY == 7){
-                            new Cajero(jugador);
-                        }
-                        // Comprobar si estamos en el la puerta
-                        if (posX == 4 && posY == 0){
-                            new PuertaSalida(jugador);
-                        }
+                        System.out.println("He pulsado la tecla E!");
+                        jugador.interacting();
                         break;
                     default:
                         validInput = false;  
-                        System.out.println("Comando no válido. Intenta de nuevo.");
+                        badCommand();
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no válida. Por favor, ingresa un comando válido.");

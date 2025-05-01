@@ -2,9 +2,74 @@
 package personas;
 
 // IO
-import java.io.Serializable;
+import estructuraCasino.MapaCasino;
+import patterns.observer.PullPushModelObservable;
+import patterns.observer.PullPushModelObserver;
 
-public class Jugador implements Serializable{
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Jugador implements Serializable, PullPushModelObservable{
+
+
+    // Atributos Adicionales
+    private Integer posX = MapaCasino.posX, posY = MapaCasino.posY;
+    private Boolean interact = false;
+
+    // Sobrecarga Constructor
+    public Jugador(String nombre, int edad, double dinero, Integer posX, Integer posY){
+        this.nombre = nombre;
+        this.edad = edad;
+        this.dinero = dinero;
+
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    public Integer getPosX() {
+        return posX;
+    }
+
+    public Integer getPosY() {
+        return posY;
+    }
+
+    public Boolean getInteract() {
+        return interact;
+    }
+
+    public void move(Integer x, Integer y) {
+        this.posX = x;
+        this.posY = y;
+        notifyObservers();
+    }
+
+    public void interacting() {
+        this.interact = true;
+        notifyObservers();
+        this.interact = false;
+    }
+
+    private List<PullPushModelObserver> observers = new ArrayList<>();
+
+    @Override
+    public void attach(PullPushModelObserver observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void detach(PullPushModelObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (PullPushModelObserver observer : this.observers) { // for each
+            // observer.update(this);
+            observer.update(this, null); // TODO: SUGERENCIA 2
+        }
+    }
     
     // Atributos
     private static final long serialVersionUID = 1L;
@@ -95,4 +160,5 @@ public class Jugador implements Serializable{
                 + "\nFichas : "
                 + this.fichas;
     }
+
 }

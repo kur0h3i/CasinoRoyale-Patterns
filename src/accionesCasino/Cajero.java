@@ -14,22 +14,28 @@ import ascii.ASCIICajero;
 import ascii.ASCIIGeneral;
 
 // Jugador
+import patterns.observer.PullPushModelObservable;
+import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 
+import static recursos.MensajesEstaticos.interactATM;
+import static recursos.MensajesEstaticos.interactSave;
 
-public class Cajero {
+
+public class Cajero implements PullPushModelObserverInteractive {
+
+    // Atributos Adicionales
+    private Integer posX, posY;
+
+    // Constructor con el Observer Implementado
+    public Cajero(Integer posX, Integer posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
 
     // Atributos Cajero
     Jugador jugador;
     ASCIICajero interfaz;
-
-    // Constructor
-    public Cajero(Jugador jugador) throws ExcepcionJugadorSinDinero, ExcepcionJugadorSinFichas{
-        Scanner input = new Scanner (System.in);
-        this.jugador = jugador;
-        interfaz = new ASCIICajero(jugador);
-        iniciarCajero(input);    
-    }
 
     // Metodos
     // Iniciar Cajero
@@ -127,6 +133,31 @@ public class Cajero {
             }
         }
         return valor;
+    }
+
+    @Override
+    public void update(PullPushModelObservable pullPushModelObservable, Object object) {
+
+        if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
+            Jugador jugadorTMP = (Jugador) pullPushModelObservable;
+
+            if (jugadorTMP.getPosX() == this.posX && jugadorTMP.getPosY() == this.posY) {
+                interactATM();
+                this.jugador = jugadorTMP;
+                if (this.jugador.getInteract()) interactive();
+            }
+            else {
+                jugador = null; // Se asume de que no hay ningun jugador ocupado // No se si habra multiplayer xd
+            }
+        }
+
+    }
+
+    @Override
+    public void interactive() {
+        Scanner input = new Scanner(System.in);
+        interfaz = new ASCIICajero(jugador);
+        iniciarCajero(input);
     }
 }
 

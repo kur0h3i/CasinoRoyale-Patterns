@@ -36,7 +36,6 @@ public class SalaPrincipal {
     int posX = MapaCasino.posX;
     int posY = MapaCasino.posY;
     Jugador jugador;
-    ASCIIGeneral interzaf;
 
     public SalaPrincipal(Jugador jugador) throws ExcepcionJugadorSinFichas, ExcepcionJugadorSinDinero {
         Scanner scanner = new Scanner(System.in);

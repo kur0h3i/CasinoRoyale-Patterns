@@ -43,6 +43,10 @@ public class Mesa {
         return posicionInteractuar;
     }
 
+    public void setJuego(Juego nuevoJuego) {
+        this.juego = nuevoJuego;
+    }
+
     // Jugar
     public void jugar() throws ExcepcionJugadorSinFichas{
         try {

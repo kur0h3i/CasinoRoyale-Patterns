@@ -7,6 +7,7 @@ import ascii.ASCIIBingo;
 
 // Util
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ import excep.ExcepcionJugadorSinFichas;
 import personas.Jugador;
 
 
-public class Bingo extends Juego {
+public class Bingo implements StrategyJuego {
 
     // Atributos
     private final int FILAS = 4;
@@ -33,10 +34,43 @@ public class Bingo extends Juego {
 
     // Constructor
     public Bingo(Jugador jugador) {
-        super(jugador);
         this.jugador = jugador;
         numerosDisponibles = new HashSet<>();
         interfaz = new ASCIIBingo();
+    }
+
+    // Deifinir la apuesta
+    public int definirApuesta(Scanner input) {
+        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
+
+        int apuesta = 0;
+
+        try {
+            apuesta = input.nextInt();
+            input.nextLine(); // Limpiar buffer
+
+            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
+                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
+            }
+
+            jugador.restarFichas(apuesta);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Intenta de nuevo.");
+            input.nextLine(); // Limpiar buffer en caso de excepción
+            return definirApuesta(input); // Llamada recursiva para repetir el proceso
+        }
+
+        return apuesta;
+    }
+
+
+    // Comprobar si hay fichas
+    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
+        if (jugador.getFichas() <= 0) {
+            throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
+        }
     }
 
     // Metodos

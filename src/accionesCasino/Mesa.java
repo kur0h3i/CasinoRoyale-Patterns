@@ -4,9 +4,9 @@ package accionesCasino;
 
 // Excepciones
 import excep.ExcepcionJugadorSinFichas;
-
+import juegos.StrategyJuego;
 //Jugador
-import juegos.Juego;
+import juegos.Dados;
 
 // ASCII
 import ascii.ASCIIGeneral;
@@ -25,8 +25,7 @@ public class Mesa implements PullPushModelObserverInteractive {
     private Jugador jugador;
 
     // Constructor con el Observer
-    public Mesa(Juego juego, String nombreMesa, int numPartcipantes, Integer posX, Integer posY) {
-        this.juego = juego;
+    public Mesa(String nombreMesa, int numPartcipantes, Integer posX, Integer posY) {
         this.nombreMesa = nombreMesa;
         this.numPartcipantes = numPartcipantes;
 
@@ -57,15 +56,14 @@ public class Mesa implements PullPushModelObserverInteractive {
 
     }
 
-    // Atributos 
-    Juego juego;
+    // Atributos
     String nombreMesa;
     int numPartcipantes;
     int [][] posicionInteractuar;
+    StrategyJuego strategy;
 
     // Constructor
-    public Mesa(Juego juego, String nombreMesa, int numPartcipantes, int [][] posicionInteractuar){
-        this.juego = juego;
+    public Mesa(String nombreMesa, int numPartcipantes, int [][] posicionInteractuar){
         this.nombreMesa = nombreMesa;
         this.numPartcipantes = numPartcipantes;
         this.posicionInteractuar = posicionInteractuar;
@@ -74,9 +72,9 @@ public class Mesa implements PullPushModelObserverInteractive {
 
 
     // Getters
-    public Juego getJuego() {
+    /*public Juego getJuego() {
         return juego;
-    }
+    }*/
     public String getNombreMesa() {
         return nombreMesa;
     }
@@ -87,14 +85,23 @@ public class Mesa implements PullPushModelObserverInteractive {
         return posicionInteractuar;
     }
 
+    public StrategyJuego getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(StrategyJuego strategy) {
+        this.strategy = strategy;
+    }
+
     // Jugar
-    public void jugar() {
+    public void jugar() throws ExcepcionJugadorSinFichas{
         try {
-            juego.iniciarPartida(); 
+            strategy.iniciarPartida();
         } catch (ExcepcionJugadorSinFichas e) {
             System.out.println("No puedes jugar porque no tienes fichas.");
             ASCIIGeneral.esperarTecla();
         }
     }
+
 
 }

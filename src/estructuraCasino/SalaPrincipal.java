@@ -48,11 +48,12 @@ public class SalaPrincipal {
 
         // Mesas disponibles (agregar las mesas a la lista)
         ArrayList<Mesa> mesas = new ArrayList<>();
-        mesas.add(new Mesa(new Ruleta(jugador), "Ruleta", 1, 9, 4));
-        mesas.add(new Mesa(new Bingo(jugador), "Bingo", 1, 14, 11));
-        mesas.add(new Mesa(new Slot(jugador), "Slot", 1, 25, 11));
-        mesas.add(new Mesa(new Dados(jugador), "Dados", 1, 23, 4));
-        mesas.add(new Mesa(new CartaMasAlta(jugador), "Carta Mas Alta", 1, 37, 4));
+        // Update the Mesa constructor to accept a generic Juego type
+        mesas.add(new Mesa("Ruleta", 1, 9, 4));
+        mesas.add(new Mesa("Bingo", 1, 14, 11));
+        mesas.add(new Mesa("Slot", 1, 25, 11));
+        mesas.add(new Mesa("Dados", 1, 23, 4));
+        mesas.add(new Mesa("Carta Mas Alta", 1, 37, 4));
 
         for (Mesa mesa : mesas) {
             jugador.attach(mesa);

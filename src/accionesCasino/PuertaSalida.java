@@ -6,6 +6,7 @@ import java.io.*;
 
 // Util
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 // Excepciones
@@ -47,7 +48,7 @@ public class PuertaSalida implements PullPushModelObserverInteractive {
 
         if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
             Jugador jugadorTMP = (Jugador) pullPushModelObservable;
-            if (jugadorTMP.getPosX() == this.posX && jugadorTMP.getPosY() == this.posY) {
+            if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
                 interactSave();
                 this.jugador = jugadorTMP;
                 if (this.jugador.getInteract()) interactive();

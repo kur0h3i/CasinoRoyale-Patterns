@@ -14,6 +14,8 @@ import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 
+import java.util.Objects;
+
 import static recursos.MensajesEstaticos.interactTable;
 
 public class Mesa implements PullPushModelObserverInteractive {
@@ -43,7 +45,7 @@ public class Mesa implements PullPushModelObserverInteractive {
         if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
             Jugador jugadorTMP = (Jugador) pullPushModelObservable;
 
-            if (jugadorTMP.getPosX() == this.posX && jugadorTMP.getPosY() == this.posY) {
+            if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
                 interactTable(this.nombreMesa);
                 this.jugador = jugadorTMP;
                 if (this.jugador.getInteract()) interactive();

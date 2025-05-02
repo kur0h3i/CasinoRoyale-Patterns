@@ -4,24 +4,23 @@ package accionesCasino;
 
 // Excepciones
 import excep.ExcepcionJugadorSinFichas;
-
+import juegos.StrategyJuego;
 //Jugador
-import juegos.Juego;
+import juegos.Dados;
 
 // ASCII
 import ascii.ASCIIGeneral;
 
 public class Mesa {
     
-    // Atributos 
-    Juego juego;
+    // Atributos
     String nombreMesa;
     int numPartcipantes;
     int [][] posicionInteractuar;
+    StrategyJuego strategy;
 
     // Constructor
-    public Mesa(Juego juego, String nombreMesa, int numPartcipantes, int [][] posicionInteractuar){
-        this.juego = juego;
+    public Mesa(String nombreMesa, int numPartcipantes, int [][] posicionInteractuar){
         this.nombreMesa = nombreMesa;
         this.numPartcipantes = numPartcipantes;
         this.posicionInteractuar = posicionInteractuar;
@@ -30,9 +29,9 @@ public class Mesa {
 
 
     // Getters
-    public Juego getJuego() {
+    /*public Juego getJuego() {
         return juego;
-    }
+    }*/
     public String getNombreMesa() {
         return nombreMesa;
     }
@@ -43,14 +42,18 @@ public class Mesa {
         return posicionInteractuar;
     }
 
-    public void setJuego(Juego nuevoJuego) {
-        this.juego = nuevoJuego;
+    public StrategyJuego getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(StrategyJuego strategy) {
+        this.strategy = strategy;
     }
 
     // Jugar
     public void jugar() throws ExcepcionJugadorSinFichas{
         try {
-            juego.iniciarPartida(); 
+            strategy.iniciarPartida();
         } catch (ExcepcionJugadorSinFichas e) {
             System.out.println("No puedes jugar porque no tienes fichas.");
             ASCIIGeneral.esperarTecla();

@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "blackjack.Main",
+            "projectName": "Casino-CLI_825f4220"
+        },
+        {
+            "type": "java",
+            "name": "MainCasino",
+            "request": "launch",
+            "mainClass": "MainCasino",
+            "projectName": "Casino-CLI_825f4220"
+        },
+        {
+            "type": "java",
+            "name": "MainCasino",
+            "request": "launch",
+            "mainClass": "MainCasino",
+            "projectName": "Casino-CLI_34ac63aa"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "blackjack.Main",
+            "projectName": "ProyectoCasinoJava_2c2cf91e"
+        },
+        {
+            "type": "java",
+            "name": "MainCasino",
+            "request": "launch",
+            "mainClass": "MainCasino",
+            "projectName": "ProyectoCasinoJava_57ad0194"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "MainCasino",
+            "request": "launch",
+            "mainClass": "MainCasino",
+            "projectName": "ProyectoCasinoJava_2c2cf91e"
+        }
+    ]
+}

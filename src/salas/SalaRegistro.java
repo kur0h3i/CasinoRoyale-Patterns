@@ -132,7 +132,7 @@ public class SalaRegistro {
         String nombre = " ";
         Integer edad = 0;
         Character confirmacion = ' ';
-        Double dinero = 0f;
+        Double dinero = 0.0;
 
         // Crear al jugador
         System.out.println("Cuéntame un poco sobre ti:");

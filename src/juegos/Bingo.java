@@ -102,7 +102,7 @@ public class Bingo implements StrategyJuego {
         jugador.restarFichas(apuesta);
 
         for (Integer i = 1; i < numJugadores; i++) {
-            jugadores[i] = new Jugador("Jugador " + i, 18, 0);
+            jugadores[i] = new Jugador("Jugador " + i, 18, 0.0);
         }
 
         System.out.println("¡Apuesta aceptada! El bote es de " + bote + " fichas.");

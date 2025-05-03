@@ -2,6 +2,7 @@
 package personas;
 
 // IO
+import excep.ExcepcionJugadorSinFichas;
 import mapas.SalaPrincipalMapa;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
@@ -67,7 +68,11 @@ public class Jugador implements Serializable, PullPushModelObservable{
     public void notifyObservers() {
         for (PullPushModelObserver observer : this.observers) { // for each
             // observer.update(this);
-            observer.update(this, null); // TODO: SUGERENCIA 2
+            try {
+                observer.update(this, null); // TODO: SUGERENCIA 2
+            } catch (ExcepcionJugadorSinFichas e) {
+                e.printStackTrace();
+            }
         }
     }
     

@@ -4,14 +4,19 @@ package acciones;
 
 // Excepciones
 import excep.ExcepcionJugadorSinFichas;
+
+// Strategy
 import juegos.StrategyJuego;
+
 //Jugador
+import personas.Jugador;
 
 // ASCII
 import ascii.ASCIIGeneral;
+
+// Observer
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
-import personas.Jugador;
 
 import java.util.Objects;
 
@@ -63,7 +68,6 @@ public class Mesa implements PullPushModelObserverInteractive {
             ASCIIGeneral.esperarTecla();
         }
     }
-
 
     // Observer
     @Override

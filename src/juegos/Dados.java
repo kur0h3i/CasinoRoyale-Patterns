@@ -19,7 +19,7 @@ import personas.Jugador;
 public class Dados implements StrategyJuego {
 
     // Atributos
-    private int apuesta;
+    private Integer apuesta;
     private Jugador jugador;
     private ASCIIDados interfaz;
 
@@ -30,11 +30,11 @@ public class Dados implements StrategyJuego {
     }
 
     // Deifinir la apuesta
-    public int definirApuesta(Scanner input) {
+    public Integer definirApuesta(Scanner input) {
         System.out.println("¿Cuántas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
 
-        int apuesta = 0;
+        Integer apuesta = 0;
 
         try {
             apuesta = input.nextInt();
@@ -69,14 +69,14 @@ public class Dados implements StrategyJuego {
         
         comprobarfichas();
 
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opciones();
 
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); // Limpiar buffer
 
                 switch (opcion) {
@@ -106,7 +106,7 @@ public class Dados implements StrategyJuego {
     // Jugar a los dados
     private void jugarDados(Scanner input) {
         Random random = new Random();
-        int resultado = tirarDados(random);
+        Integer resultado = tirarDados(random);
 
         if (resultado == 7 || resultado == 11) {
             System.out.println("¡Has sacado " + resultado + "! ¡Ganaste!");
@@ -120,7 +120,7 @@ public class Dados implements StrategyJuego {
     }
 
     // Jugar el Punto
-    private void jugarPunto(Scanner input, int punto, Random random) {
+    private void jugarPunto(Scanner input, Integer punto, Random random) {
         System.out.println("Tira los dados nuevamente para intentar obtener tu Punto: " + punto + ".");
         System.out.println("Si sacas un 7 antes del Punto, pierdes.");
 
@@ -128,7 +128,7 @@ public class Dados implements StrategyJuego {
             System.out.println("Presiona Enter para tirar los dados...");
             input.nextLine();
 
-            int resultado = tirarDados(random);
+            Integer resultado = tirarDados(random);
 
             if (resultado == punto) {
                 System.out.println("¡Has sacado tu Punto! ¡Ganaste!");
@@ -144,10 +144,10 @@ public class Dados implements StrategyJuego {
     }
 
     // Tirar los Dados
-    private int tirarDados(Random random) {
-        int dado1 = random.nextInt(6) + 1;
-        int dado2 = random.nextInt(6) + 1;
-        int suma = dado1 + dado2;
+    private Integer tirarDados(Random random) {
+        Integer dado1 = random.nextInt(6) + 1;
+        Integer dado2 = random.nextInt(6) + 1;
+        Integer suma = dado1 + dado2;
 
         interfaz.mostrarResultadoDados(dado1, dado2, suma);
         return suma;

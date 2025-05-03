@@ -58,7 +58,7 @@ public class SalaRegistro {
     // Crea o usa un usuario ya existente
     public Jugador iniciarJugador() {
         Scanner input = new Scanner(System.in);
-        int opcion;
+        Integer opcion;
         Jugador jugadorSeleccionado = null;
 
         do {
@@ -130,9 +130,9 @@ public class SalaRegistro {
         Scanner input = new Scanner(System.in);
         // Atributos Jugador
         String nombre = " ";
-        int edad = 0;
-        char confirmacion = ' ';
-        double dinero = 0f;
+        Integer edad = 0;
+        Character confirmacion = ' ';
+        Double dinero = 0f;
 
         // Crear al jugador
         System.out.println("Cuéntame un poco sobre ti:");
@@ -162,7 +162,7 @@ public class SalaRegistro {
     }
 
     // Verificar si el jugador es mayor de edad
-    public boolean mayorEdad() throws ExcepcionJugadorMenorEdad {
+    public Boolean mayorEdad() throws ExcepcionJugadorMenorEdad {
         if (jugador.getEdad() >= 18) {
             return true;
         } else {

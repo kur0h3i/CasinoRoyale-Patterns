@@ -70,7 +70,7 @@ public class PuertaSalida implements PullPushModelObserverInteractive {
 
     // Métodos
     public void iniciarPuerta(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 4) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();

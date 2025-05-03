@@ -23,7 +23,7 @@ public class Carta {
     return tipo;
   }
 
-  public int getValorNumerico() {
+  public Integer getValorNumerico() {
     switch (valor) {
       case "A":
         return 14; // As vale más que las cartas numéricas
@@ -39,7 +39,7 @@ public class Carta {
   }
   
   // Prioridad de los palos segun mi criterio
-  private int getPrioridadPalo() {
+  private Integer getPrioridadPalo() {
     switch (tipo) {
       case "S": // PICAS
         return 4;

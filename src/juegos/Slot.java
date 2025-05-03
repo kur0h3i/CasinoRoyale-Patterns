@@ -19,7 +19,7 @@ import personas.Jugador;
 public class Slot implements StrategyJuego {
 
     // Atributos
-    private int apuesta;
+    private Integer apuesta;
     private Jugador jugador;
     private ASCIISlot interfaz;
 
@@ -30,11 +30,11 @@ public class Slot implements StrategyJuego {
     }
 
     // Deifinir la apuesta
-    public int definirApuesta(Scanner input) {
+    public Integer definirApuesta(Scanner input) {
         System.out.println("¿Cuántas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
 
-        int apuesta = 0;
+        Integer apuesta = 0;
 
         try {
             apuesta = input.nextInt();
@@ -69,14 +69,14 @@ public class Slot implements StrategyJuego {
         
         comprobarfichas();
         
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opcioes();
 
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); // Limpiar buffer
 
                 switch (opcion) {
@@ -119,7 +119,7 @@ public class Slot implements StrategyJuego {
         interfaz.mostrarResultados(simbolo1, simbolo2, simbolo3);
 
         if (simbolo1.equals(simbolo2) && simbolo2.equals(simbolo3)) {
-            int premio = calcularPremio(simbolo1);
+            Integer premio = calcularPremio(simbolo1);
             System.out.println("¡Felicidades! Ganaste " + premio + " fichas.");
             jugador.agregarFichas(premio);
         } else if (simbolo1.equals(simbolo2) || simbolo2.equals(simbolo3) || simbolo1.equals(simbolo3)) {
@@ -131,7 +131,7 @@ public class Slot implements StrategyJuego {
         }
     }
 
-    private int calcularPremio(String simbolo) {
+    private Integer calcularPremio(String simbolo) {
         switch (simbolo) {
             case "X":
                 return apuesta * 10; // Jackpot

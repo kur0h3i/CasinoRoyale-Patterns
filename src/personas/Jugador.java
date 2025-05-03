@@ -19,7 +19,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     private Boolean interact = false;
 
     // Sobrecarga Constructor
-    public Jugador(String nombre, int edad, double dinero, Integer posX, Integer posY){
+    public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY){
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
@@ -79,12 +79,12 @@ public class Jugador implements Serializable, PullPushModelObservable{
     // Atributos
     private static final long serialVersionUID = 1L;
     String nombre;
-    int edad;
-    double dinero;
-    int fichas;
+    Integer edad;
+    Double dinero;
+    Integer fichas;
 
     // Constructor
-    public Jugador(String nombre, int edad, double dinero){
+    public Jugador(String nombre, Integer edad, Double dinero){
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
@@ -96,13 +96,13 @@ public class Jugador implements Serializable, PullPushModelObservable{
     public void setNombre( String nombre){
         this.nombre = nombre;
     }
-    public void setEdad( int edad){
+    public void setEdad( Integer edad){
         this.edad = edad;
     }
-    public void setDinero( double dinero){
+    public void setDinero( Double dinero){
         this.dinero = dinero;
     }
-    public void setFichas( int fichas){
+    public void setFichas( Integer fichas){
         this.fichas = fichas;
     }
 
@@ -110,30 +110,30 @@ public class Jugador implements Serializable, PullPushModelObservable{
     public String getName(){
         return this.nombre;
     }
-    public int getEdad(){
+    public Integer getEdad(){
         return this.edad;
     }
-    public double getDinero(){
+    public Double getDinero(){
         return this.dinero;
     }
-    public int getFichas(){
+    public Integer getFichas(){
         return this.fichas;
     }
 
     // agregar / restar
-    public void agregarFichas(int fichas){
+    public void agregarFichas(Integer fichas){
         this.fichas += fichas;
     }
 
-    public void restarFichas(int fichas){
+    public void restarFichas(Integer fichas){
         this.fichas -= fichas;
     }
 
-    public void agregarDinero(int dinero){
+    public void agregarDinero(Integer dinero){
         this.dinero += dinero;
     }
 
-    public void restarDinero(int dinero){
+    public void restarDinero(Integer dinero){
         this.dinero -= dinero;
     }
 

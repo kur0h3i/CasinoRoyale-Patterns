@@ -1,4 +1,7 @@
 package salas;
 
-public class SalaAzar extends Sala{
+public class SalaAzar extends Sala {
+
+
+
 }

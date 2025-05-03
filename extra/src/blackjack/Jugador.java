@@ -2,7 +2,7 @@ package blackjack;
 public class Jugador {
 
     private Carta[] mano; // Arreglo para guardar las cartas del jugador
-    private int numeroCartas; // Número de cartas en la mano
+    private Integer numeroCartas; // Número de cartas en la mano
     private String nombre; // Nombre del jugador
     
     public Jugador(String nombre) {
@@ -21,11 +21,11 @@ public class Jugador {
     }
 
     // Calcular el puntaje de la mano
-    public int calcularPuntaje() {
-        int puntaje = 0;
-        int ases = 0; // Contador de ases
+    public Integer calcularPuntaje() {
+        Integer puntaje = 0;
+        Integer ases = 0; // Contador de ases
 
-        for (int i = 0; i < numeroCartas; i++) {
+        for (Integer i = 0; i < numeroCartas; i++) {
             String valor = mano[i].getNumero();
 
             // Convertir el valor de la carta a puntaje
@@ -51,7 +51,7 @@ public class Jugador {
     // Mostrar las cartas en la mano
     public void mostrarMano() {
         System.out.println(nombre + " tiene:");
-        for (int i = 0; i < numeroCartas; i++) {
+        for (Integer i = 0; i < numeroCartas; i++) {
             System.out.println("- " + mano[i]);
         }
         System.out.println("Puntaje: " + calcularPuntaje());
@@ -61,7 +61,7 @@ public class Jugador {
         return nombre;
     }
 
-    public boolean estaEnJuego() {
+    public Boolean estaEnJuego() {
         return calcularPuntaje() <= 21;
     }
 

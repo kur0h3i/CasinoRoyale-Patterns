@@ -19,7 +19,7 @@ import ascii.ASCIIGeneral;
 public class Ruleta implements StrategyJuego {
 
     // Atributos
-    private int apuesta; 
+    private Integer apuesta;
     private Jugador jugador; // Jugador participando en la partida
     ASCIIRuleta interfaz;
 
@@ -32,11 +32,11 @@ public class Ruleta implements StrategyJuego {
     // Metodos
 
     // Deifinir la apuesta
-    public int definirApuesta(Scanner input) {
+    public Integer definirApuesta(Scanner input) {
         System.out.println("¿Cuántas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
 
-        int apuesta = 0;
+        Integer apuesta = 0;
 
         try {
             apuesta = input.nextInt();
@@ -74,7 +74,7 @@ public class Ruleta implements StrategyJuego {
 
     // Menu partida
     private void menuPartida(Scanner input){
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 4) {
             // Monstrar Interfaz
             ASCIIGeneral.limpiarPantalla();
@@ -123,15 +123,15 @@ public class Ruleta implements StrategyJuego {
     }
     
 
-    public int tirarRuleta() {
+    public Integer tirarRuleta() {
         Random random = new Random();
-        int resultado = random.nextInt(37);
+        Integer resultado = random.nextInt(37);
         System.out.println("La ruleta gira... El número es: " + resultado);
         return resultado;
     }
 
     public void opcionesDeApuesta(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         ASCIIGeneral.limpiarPantalla();
         while (opcion != 6) {
             //interaz partida
@@ -170,9 +170,9 @@ public class Ruleta implements StrategyJuego {
     }
 
     // Saber si un numero es rojo
-    private boolean esNumeroRojo(int numero) {
-        int[] rojos = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
-        for (int rojo : rojos) {
+    private Boolean esNumeroRojo(Integer numero) {
+        Integer [] rojos = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
+        for (Integer rojo : rojos) {
             if (numero == rojo) {
                 return true;
             }
@@ -183,10 +183,10 @@ public class Ruleta implements StrategyJuego {
     // Apuesta por Color
     public void apostarPorColor(Scanner input) {
         System.out.println("Elige un color: 1 para Rojo, 2 para Negro:");
-        int color = input.nextInt();
-    
-        int resultado = tirarRuleta();
-        boolean esRojo = esNumeroRojo(resultado);
+        Integer color = input.nextInt();
+
+        Integer resultado = tirarRuleta();
+        Boolean esRojo = esNumeroRojo(resultado);
     
         if ((color == 1 && esRojo) || (color == 2 && !esRojo)) {
             System.out.println("¡Felicidades! Ganaste x1 tu apuesta.");
@@ -199,11 +199,11 @@ public class Ruleta implements StrategyJuego {
     // Apuesta Por Par/Impar
     public void apostarParImpar(Scanner input) {
         System.out.println("Elige: 1 para Par, 2 para Impar:");
-        int eleccion = input.nextInt();
+        Integer eleccion = input.nextInt();
+
+        Integer resultado = tirarRuleta();
     
-        int resultado = tirarRuleta();
-    
-        boolean esPar = (resultado != 0 && resultado % 2 == 0);
+        Boolean esPar = (resultado != 0 && resultado % 2 == 0);
         if ((eleccion == 1 && esPar) || (eleccion == 2 && !esPar)) {
             System.out.println("¡Felicidades! Ganaste x1 tu apuesta.");
             jugador.agregarFichas(apuesta * 2);
@@ -215,14 +215,14 @@ public class Ruleta implements StrategyJuego {
     // Apuesta por un numero
     public void apostarPorNumero(Scanner input) {
         System.out.println("Elige un número entre 0 y 36:");
-        int numeroApostado = input.nextInt();
+        Integer numeroApostado = input.nextInt();
     
         if (numeroApostado < 0 || numeroApostado > 36) {
             System.out.println("Número inválido. Intenta de nuevo.");
             return;
         }
-    
-        int resultado = tirarRuleta();
+
+        Integer resultado = tirarRuleta();
     
         if (numeroApostado == resultado) {
             System.out.println("¡Felicidades! Ganaste x35 tu apuesta!");
@@ -236,14 +236,14 @@ public class Ruleta implements StrategyJuego {
     public void apostarPorDocena(Scanner input) {
     
         System.out.println("Elige una docena: 1 (1-12), 2 (13-24), o 3 (25-36):");
-        int docena = input.nextInt();
+        Integer docena = input.nextInt();
     
         if (docena < 1 || docena > 3) {
             System.out.println("Docena inválida. Intenta de nuevo.");
             return;
         }
-    
-        int resultado = tirarRuleta();
+
+        Integer resultado = tirarRuleta();
     
         if ((docena == 1 && resultado >= 1 && resultado <= 12) ||
             (docena == 2 && resultado >= 13 && resultado <= 24) ||
@@ -260,14 +260,14 @@ public class Ruleta implements StrategyJuego {
     public void apostarMitad(Scanner input) {
     
         System.out.println("Elige una mitad: 1 (1-18) o 2 (19-36):");
-        int mitad = input.nextInt();
+        Integer mitad = input.nextInt();
     
         if (mitad != 1 && mitad != 2) {
             System.out.println("Mitad inválida. Intenta de nuevo.");
             return;
         }
-    
-        int resultado = tirarRuleta();
+
+        Integer resultado = tirarRuleta();
     
         if ((mitad == 1 && resultado >= 1 && resultado <= 18) ||
             (mitad == 2 && resultado >= 19 && resultado <= 36)) {

@@ -25,7 +25,7 @@ public class CartaMasAlta implements StrategyJuego {
     private Baraja baraja;
     private ASCIICartaMasAlta interfaz;
     Jugador jugador;
-    private int apuesta;
+    private Integer apuesta;
 
     // Constructor
     public CartaMasAlta(Jugador jugador) {
@@ -35,11 +35,11 @@ public class CartaMasAlta implements StrategyJuego {
     }
 
     // Deifinir la apuesta
-    public int definirApuesta(Scanner input) {
+    public Integer definirApuesta(Scanner input) {
         System.out.println("¿Cuántas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
 
-        int apuesta = 0;
+        Integer apuesta = 0;
 
         try {
             apuesta = input.nextInt();
@@ -74,14 +74,14 @@ public class CartaMasAlta implements StrategyJuego {
 
         comprobarfichas();
 
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opciones();
 
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); 
 
                 switch (opcion) {
@@ -113,7 +113,7 @@ public class CartaMasAlta implements StrategyJuego {
     }
 
     // Jugar ronda
-    private void jugarRonda(int apuesta) {
+    private void jugarRonda(Integer apuesta) {
         baraja.mezclar();
 
         Carta cartaJugador = baraja.repartir();
@@ -122,8 +122,8 @@ public class CartaMasAlta implements StrategyJuego {
         System.out.println("Tu carta: " + cartaJugador);
         System.out.println("Carta de la IA: " + cartaIA);
 
-        int valorJugador = cartaJugador.getValorNumerico();
-        int valorIA = cartaIA.getValorNumerico();
+        Integer valorJugador = cartaJugador.getValorNumerico();
+        Integer valorIA = cartaIA.getValorNumerico();
 
         if (valorJugador > valorIA) {
             System.out.println("¡Has ganado esta ronda con " + cartaJugador + "!");

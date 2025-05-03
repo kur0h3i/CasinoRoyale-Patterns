@@ -41,7 +41,7 @@ public class Cajero implements PullPushModelObserverInteractive {
     // Iniciar Cajero
     public void iniciarCajero(Scanner input){
         
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 3) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
@@ -102,7 +102,7 @@ public class Cajero implements PullPushModelObserverInteractive {
     }
 
     // Fichas ---> Dinero
-    public void fichasDinero(int valor) throws ExcepcionJugadorSinFichas {
+    public void fichasDinero(Integer valor) throws ExcepcionJugadorSinFichas {
         comprobarfichas();
         System.out.println("Cambiando " + valor + " fichas por dinero...");
         jugador.restarFichas(valor);
@@ -110,7 +110,7 @@ public class Cajero implements PullPushModelObserverInteractive {
     }
 
     // Dinero ---> Fichas
-    public void dineroFichas(int valor) throws ExcepcionJugadorSinDinero {
+    public void dineroFichas(Integer valor) throws ExcepcionJugadorSinDinero {
         comprobarDinero();
         System.out.println("Cambiando " + valor + " dinero por fichas...");
         jugador.restarDinero(valor);
@@ -118,8 +118,8 @@ public class Cajero implements PullPushModelObserverInteractive {
     }
 
     // Definir Valor
-    public int definirValor(Scanner input) {
-        int valor = -1;
+    public Integer definirValor(Scanner input) {
+        Integer valor = -1;
         while (valor <= 0) { // Asegurar que el valor sea mayor que cero
             System.out.println("¿Cuál es el valor que quieres intercambiar?");
             try {

@@ -8,14 +8,14 @@ public class Baraja {
 
     // Atributos
     private Carta[] cartas; 
-    private int cartasDisponibles; 
+    private Integer cartasDisponibles; 
 
     // Constructor
     public Baraja() {
         String[] valores = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         String[] tipos = {"C", "D", "H", "S"};
         cartas = new Carta[52]; // Total de cartas en una baraja estándar son 52
-        int index = 0;
+        Integer index = 0;
 
         // Crear todas las cartas
         for (String tipo : tipos) {
@@ -31,8 +31,8 @@ public class Baraja {
     // Mezclar las cartas de la baraja
     public void mezclar() {
         Random random = new Random();
-        for (int i = 0; i < cartas.length; i++) {
-            int randomIndex = random.nextInt(cartas.length);
+        for (Integer i = 0; i < cartas.length; i++) {
+            Integer randomIndex = random.nextInt(cartas.length);
             Carta temp = cartas[i];
             cartas[i] = cartas[randomIndex];
             cartas[randomIndex] = temp;
@@ -49,7 +49,7 @@ public class Baraja {
     }
 
     // Numeero de cartas que quedan en la baraja
-    public int cartasRestantes() {
+    public Integer cartasRestantes() {
         return cartasDisponibles;
     }
 

@@ -29,13 +29,13 @@ public class Mesa implements PullPushModelObserverInteractive {
 
     // Atributos
     String nombreMesa;
-    int numPartcipantes;
+    Integer numPartcipantes;
     private Integer posX, posY;
     private Jugador jugador;
     StrategyJuego strategy;
 
     // Constructor [Observer + Strategy]
-    public Mesa(String nombreMesa, int numPartcipantes, Integer posX, Integer posY) {
+    public Mesa(String nombreMesa, Integer numPartcipantes, Integer posX, Integer posY) {
         this.nombreMesa = nombreMesa;
         this.numPartcipantes = numPartcipantes;
 
@@ -47,7 +47,7 @@ public class Mesa implements PullPushModelObserverInteractive {
     public String getNombreMesa() {
         return nombreMesa;
     }
-    public int getNumPartcipantes() {
+    public Integer getNumPartcipantes() {
         return numPartcipantes;
     }
     public Integer getPosX() {return posX;}

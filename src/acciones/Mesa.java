@@ -17,13 +17,19 @@ import java.util.Objects;
 
 import static recursos.MensajesEstaticos.interactTable;
 
+
+// TODO : DUDA AL PROFESOR SI HACE FALTA HACER UN FACTORY O UN SINGLETON
+
 public class Mesa implements PullPushModelObserverInteractive {
 
-    // Atributos Adicionales
+    // Atributos
+    String nombreMesa;
+    int numPartcipantes;
     private Integer posX, posY;
     private Jugador jugador;
+    StrategyJuego strategy;
 
-    // Constructor con el Observer
+    // Constructor [Observer + Strategy]
     public Mesa(String nombreMesa, int numPartcipantes, Integer posX, Integer posY) {
         this.nombreMesa = nombreMesa;
         this.numPartcipantes = numPartcipantes;
@@ -32,6 +38,34 @@ public class Mesa implements PullPushModelObserverInteractive {
         this.posY = posY;
     }
 
+    // Getters
+    public String getNombreMesa() {
+        return nombreMesa;
+    }
+    public int getNumPartcipantes() {
+        return numPartcipantes;
+    }
+    public Integer getPosX() {return posX;}
+    public Integer getPosY() {return posY;}
+    public Jugador getJugador() {return jugador;}
+    public StrategyJuego getStrategy() {return strategy;}
+
+    // Strategy -> Definir las estrategia
+    public void setStrategy(StrategyJuego strategy) {
+        this.strategy = strategy;
+    }
+
+    public void jugar() throws ExcepcionJugadorSinFichas{
+        try {
+            strategy.iniciarPartida();
+        } catch (ExcepcionJugadorSinFichas e) {
+            System.out.println("No puedes jugar porque no tienes fichas.");
+            ASCIIGeneral.esperarTecla();
+        }
+    }
+
+
+    // Observer
     @Override
     public void interactive() throws ExcepcionJugadorSinFichas {
         jugar();
@@ -54,53 +88,4 @@ public class Mesa implements PullPushModelObserverInteractive {
         }
 
     }
-
-    // Atributos
-    String nombreMesa;
-    int numPartcipantes;
-    int [][] posicionInteractuar;
-    StrategyJuego strategy;
-
-    // Constructor
-    public Mesa(String nombreMesa, int numPartcipantes, int [][] posicionInteractuar){
-        this.nombreMesa = nombreMesa;
-        this.numPartcipantes = numPartcipantes;
-        this.posicionInteractuar = posicionInteractuar;
-    }
-
-
-
-    // Getters
-    /*public Juego getJuego() {
-        return juego;
-    }*/
-    public String getNombreMesa() {
-        return nombreMesa;
-    }
-    public int getNumPartcipantes() {
-        return numPartcipantes;
-    }
-    public int[][] getPosicionInteractuar() {
-        return posicionInteractuar;
-    }
-
-    public StrategyJuego getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(StrategyJuego strategy) {
-        this.strategy = strategy;
-    }
-
-    // Jugar
-    public void jugar() throws ExcepcionJugadorSinFichas{
-        try {
-            strategy.iniciarPartida();
-        } catch (ExcepcionJugadorSinFichas e) {
-            System.out.println("No puedes jugar porque no tienes fichas.");
-            ASCIIGeneral.esperarTecla();
-        }
-    }
-
-
 }

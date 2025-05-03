@@ -33,12 +33,12 @@ public class Mesa implements PullPushModelObserverInteractive {
     }
 
     @Override
-    public void interactive() {
+    public void interactive() throws ExcepcionJugadorSinFichas {
         jugar();
     }
 
     @Override
-    public void update(PullPushModelObservable pullPushModelObservable, Object object) {
+    public void update(PullPushModelObservable pullPushModelObservable, Object object) throws ExcepcionJugadorSinFichas {
 
         if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
             Jugador jugadorTMP = (Jugador) pullPushModelObservable;

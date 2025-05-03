@@ -31,7 +31,7 @@ import static recursos.MensajesEstaticos.*;
 
 public class SalaPrincipal {
 
-    char[][] mapa = SalaPrincipalMapa.mapa;
+    char[][] mapa = SalaPrincipalMapa.mapaSalaPrincipal;
     // int posX = MapaCasino.posX;
     // int posY = MapaCasino.posY;
     Jugador jugador;

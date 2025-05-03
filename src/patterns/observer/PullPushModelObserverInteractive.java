@@ -1,7 +1,9 @@
 package patterns.observer;
 
+import excep.ExcepcionJugadorSinFichas;
+
 public interface PullPushModelObserverInteractive extends PullPushModelObserver {
 
-    void interactive();
+    void interactive() throws ExcepcionJugadorSinFichas;
 
 }

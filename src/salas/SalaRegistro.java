@@ -82,9 +82,9 @@ public class SalaRegistro {
                 case 2:
                     jugadorSeleccionado = crearJugador();
                     break;
-                case 3:
+                case 3: // DEBUG MOMENTANEO
                     System.out.println("Adiós, espero que se lo haya pasado bien");
-                    System.exit(0);
+                    return new Jugador("Lediff el travieso", 23, 1000.0);
                 default:
                     System.out.println("Opción no válida, por favor elige 1, 2 o 3.");
             }
@@ -132,7 +132,7 @@ public class SalaRegistro {
         String nombre = " ";
         Integer edad = 0;
         Character confirmacion = ' ';
-        Double dinero = 0.0;
+        Double dinero = 100.0;
 
         // Crear al jugador
         System.out.println("Cuéntame un poco sobre ti:");

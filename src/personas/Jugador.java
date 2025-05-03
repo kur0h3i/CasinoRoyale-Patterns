@@ -98,6 +98,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
+        this.fichas = 0;
     }
 
     // Metodos

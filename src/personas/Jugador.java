@@ -6,9 +6,11 @@ import excep.ExcepcionJugadorSinFichas;
 import mapas.SalaPrincipalMapa;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
+import salas.SalaPrincipal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Jugador implements Serializable, PullPushModelObservable{
@@ -34,6 +36,14 @@ public class Jugador implements Serializable, PullPushModelObservable{
 
     public Integer getPosY() {
         return posY;
+    }
+
+    public void setPosX(Integer posX) {
+        this.posX = posX;
+    }
+
+    public void setPosY(Integer posY) {
+        this.posY = posY;
     }
 
     public Boolean getInteract() {
@@ -67,9 +77,9 @@ public class Jugador implements Serializable, PullPushModelObservable{
     @Override
     public void notifyObservers() {
         for (PullPushModelObserver observer : this.observers) { // for each
-            // observer.update(this);
             try {
                 observer.update(this, null); // TODO: SUGERENCIA 2
+                if (this.observers.isEmpty()) return;
             } catch (ExcepcionJugadorSinFichas e) {
                 e.printStackTrace();
             }
@@ -166,4 +176,8 @@ public class Jugador implements Serializable, PullPushModelObservable{
                 + this.fichas;
     }
 
+    @Override
+    public void detachAll() {
+        observers.clear();
+    }
 }

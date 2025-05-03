@@ -10,21 +10,27 @@ import java.util.Objects;
 public class Pasillo implements PullPushModelObserver {
 
     private final Integer posX, posY;
-    private final Sala sala; // Necesito a que sala me llevara
 
-    public Pasillo(Integer posX, Integer posY, Sala sala) {
+    private final Sala salaPosterior; // Necesito a que sala me llevara
+
+    public Pasillo(Integer posX, Integer posY, Sala salaPosterior) {
         this.posX = posX;
         this.posY = posY;
-        this.sala = sala;
+        this.salaPosterior = salaPosterior;
     }
 
     @Override
     public void update(PullPushModelObservable pullPushModelObservable, Object object) {
-        Jugador jugadorTMP = (Jugador) pullPushModelObservable;
+        if (pullPushModelObservable instanceof Jugador) {
+            Jugador jugadorTMP = (Jugador) pullPushModelObservable;
 
-        if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
-            this.sala.setJugador(jugadorTMP);
-            // TODO: Aplicar logica de cambio de sala, la linea anterior ha sido un ejemplo
+            if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
+                jugadorTMP.detachAll();
+
+                this.salaPosterior.setJugador(jugadorTMP);
+                this.salaPosterior.iniciarInterfaz();
+
+            }
         }
 
     }

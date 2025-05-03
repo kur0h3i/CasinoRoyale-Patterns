@@ -4,11 +4,13 @@ package salas;
 
 // Util
 import java.util.ArrayList;
-import java.util.InputMismatchException;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 // Aciones Casino
 import acciones.Mesa;
+import acciones.Pasillo;
 import acciones.PuertaSalida;
 import acciones.Cajero;
 
@@ -25,40 +27,45 @@ import personas.Jugador;
 // ASCII
 import ascii.ASCIIGeneral;
 
-// Mensajes
-import static recursos.MensajesEstaticos.*;
 
 
-public class SalaPrincipal {
+public class SalaPrincipal extends Sala {
 
-    char[][] mapa = SalaPrincipalMapa.mapaSalaPrincipal;
-    // int posX = MapaCasino.posX;
-    // int posY = MapaCasino.posY;
-    Jugador jugador;
+    private final Cajero cajero = new Cajero(2, 7);
+    private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
+
+    private Integer posInitialX = SalaPrincipalMapa.posX, posInitialY = SalaPrincipalMapa.posY;
 
     public SalaPrincipal(Jugador jugador) throws ExcepcionJugadorSinFichas, ExcepcionJugadorSinDinero {
-        Scanner scanner = new Scanner(System.in);
-        this.jugador = jugador;
+        super(
+                jugador,
+                SalaPrincipalMapa.mapaSalaPrincipal,
+                // Mesas disponibles (agregar las mesas a la lista)
+                new ArrayList<Mesa>(
+                        Arrays.asList(
+                                new Mesa("Ruleta", 1, 9, 4),
+                                new Mesa("Bingo", 1, 14, 11),
+                                new Mesa("Slot", 1, 25, 11),
+                                new Mesa("Dados", 1, 23, 4),
+                                new Mesa("Carta Mas Alta", 1, 37, 4)
+                        )
+                ),
+                new ArrayList<Pasillo>(
+                        Arrays.asList(
+                                new Pasillo(3, 15, new SalaAzar(null)),
+                                new Pasillo(0, 22, new SalaCartas(null))
+                        )
+                )
+                );
 
         //jugador.setFichas(100); // Fichas iniciales del jugador
 
-        // Mesas disponibles (agregar las mesas a la lista)
-        ArrayList<Mesa> mesas = new ArrayList<>();
-        // Update the Mesa constructor to accept a generic Juego type
-        mesas.add(new Mesa("Ruleta", 1, 9, 4));
-        mesas.add(new Mesa("Bingo", 1, 14, 11));
-        mesas.add(new Mesa("Slot", 1, 25, 11));
-        mesas.add(new Mesa("Dados", 1, 23, 4));
-        mesas.add(new Mesa("Carta Mas Alta", 1, 37, 4));
+        jugador.setPosX(posInitialX);
+        jugador.setPosY(posInitialY);
+        subscribe(jugador);
 
-        for (Mesa mesa : mesas) {
-            jugador.attach(mesa);
-        }
-
-        jugador.attach(new Cajero(2, 7));
-        jugador.attach(new PuertaSalida(4, 0));
-
-        boolean running = true;
+        Scanner scanner = new Scanner(System.in);
+        Boolean running = true;
         while (running) {
             ASCIIGeneral.limpiarPantalla();
             interfazPrincipal(jugador, mesas);
@@ -68,83 +75,26 @@ public class SalaPrincipal {
         scanner.close();
     }
 
-
-    public void interfazPrincipal(Jugador jugador, ArrayList<Mesa> mesas){
-        // Interfaz del jugador
-        playerUI(jugador);
-
-        // Mostrar el mapa del casino
-        mostrarMapa();
-
-        // Instrucciones de control
-        instructions();
-
-        // Interacción con mesas // TODO
-
-    }
-
-    // Mostrar mapa del casino (Jugador P)
-    public void mostrarMapa() {
-        for (int i = 0; i < mapa.length; i++) {
-            for (int j = 0; j < mapa[i].length; j++) {
-                if (i == jugador.getPosY() && j == jugador.getPosX()) {
-                    System.out.print("P "); 
-                } else {
-                    System.out.print(mapa[i][j] + " ");
-                }
+    @Override
+    public void subscribe(Jugador jugador) {
+        if (!Objects.isNull(jugador)) {
+            for (Mesa mesa : this.mesas) {
+                jugador.attach(mesa);
             }
-            System.out.println();
+
+            for (Pasillo pasillo : this.pasillos) {
+                jugador.attach(pasillo);
+            }
+
+            jugador.attach(this.cajero);
+            jugador.attach(this.puertaSalida);
         }
     }
 
-    // Mover jugador en el mapa
-    // TODO: SUGERENCIA 1
-    public void moverJugador(int dx, int dy) {
-        Integer nuevaPosX = jugador.getPosX() + dx;
-        Integer nuevaPosY = jugador.getPosY() + dy;
-
-        // Comprobar que la nueva posición esté dentro de los límites
-        if (nuevaPosX >= 0 && nuevaPosX < mapa[0].length && nuevaPosY >= 0 && nuevaPosY < mapa.length
-                && mapa[nuevaPosY][nuevaPosX] == ' ') {
-            jugador.move(nuevaPosX, nuevaPosY);
-        }
-    }
-
-    // Manejo de la Terminal
-    public void entradaTerminal(Scanner scanner, Jugador jugador, ArrayList<Mesa> mesas) throws ExcepcionJugadorSinFichas, ExcepcionJugadorSinDinero {
-        boolean validInput = false;
-        
-        while (!validInput) {
-            
-            try {
-                String input = scanner.nextLine().toLowerCase();
-                validInput = true;
-                switch (input) {
-                    case "w":
-                        moverJugador(0, -1);
-                        break;
-                    case "s":
-                        moverJugador(0, 1);
-                        break;
-                    case "a":
-                        moverJugador(-1, 0);
-                        break;
-                    case "d":
-                        moverJugador(1, 0);
-                        break;
-                    case "e":
-                        System.out.println("He pulsado la tecla E!");
-                        jugador.interacting();
-                        break;
-                    default:
-                        validInput = false;  
-                        badCommand();
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Por favor, ingresa un comando válido.");
-                scanner.nextLine(); 
-                validInput = false;  
-            }
+    @Override
+    public void unsubscribe(Jugador jugador) {
+        if (!Objects.isNull(jugador)) {
+            jugador.detachAll();
         }
     }
 }

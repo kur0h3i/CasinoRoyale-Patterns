@@ -1,5 +1,5 @@
 // Cajero.java
-package accionesCasino;
+package acciones;
 
 // Excepciones
 import excep.ExcepcionJugadorSinDinero;
@@ -20,7 +20,6 @@ import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 
 import static recursos.MensajesEstaticos.interactATM;
-import static recursos.MensajesEstaticos.interactSave;
 
 
 public class Cajero implements PullPushModelObserverInteractive {

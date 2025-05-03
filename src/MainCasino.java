@@ -2,7 +2,7 @@
 import java.io.IOException;
 
 // Estructura Casino
-import estructuraCasino.*;
+import salas.*;
 
 // Excepcion
 import excep.ExcepcionJugadorMenorEdad;

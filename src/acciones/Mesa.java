@@ -1,12 +1,11 @@
 
 // Mesa.java
-package accionesCasino;
+package acciones;
 
 // Excepciones
 import excep.ExcepcionJugadorSinFichas;
 import juegos.StrategyJuego;
 //Jugador
-import juegos.Dados;
 
 // ASCII
 import ascii.ASCIIGeneral;

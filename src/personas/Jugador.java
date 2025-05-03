@@ -2,7 +2,7 @@
 package personas;
 
 // IO
-import estructuraCasino.MapaCasino;
+import mapas.SalaPrincipalMapa;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 
@@ -14,7 +14,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
 
 
     // Atributos Adicionales
-    private Integer posX = MapaCasino.posX, posY = MapaCasino.posY;
+    private Integer posX = SalaPrincipalMapa.posX, posY = SalaPrincipalMapa.posY;
     private Boolean interact = false;
 
     // Sobrecarga Constructor

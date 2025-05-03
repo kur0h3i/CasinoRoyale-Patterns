@@ -1,6 +1,6 @@
 // SalaPrincipal.java
 
-package estructuraCasino;
+package salas;
 
 // Util
 import java.util.ArrayList;
@@ -8,9 +8,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Aciones Casino
-import accionesCasino.Mesa;
-import accionesCasino.PuertaSalida;
-import accionesCasino.Cajero;
+import acciones.Mesa;
+import acciones.PuertaSalida;
+import acciones.Cajero;
 
 // Excepciones
 import excep.ExcepcionJugadorSinDinero;
@@ -103,9 +103,9 @@ public class SalaPrincipal {
         Integer nuevaPosX = jugador.getPosX() + dx;
         Integer nuevaPosY = jugador.getPosY() + dy;
 
-        // Comprobar que la nueva posición esté dentro de los límites y no sea un muro (#)
+        // Comprobar que la nueva posición esté dentro de los límites
         if (nuevaPosX >= 0 && nuevaPosX < mapa[0].length && nuevaPosY >= 0 && nuevaPosY < mapa.length
-                && mapa[nuevaPosY][nuevaPosX] != '#') {
+                && mapa[nuevaPosY][nuevaPosX] == ' ') {
             jugador.move(nuevaPosX, nuevaPosY);
         }
     }

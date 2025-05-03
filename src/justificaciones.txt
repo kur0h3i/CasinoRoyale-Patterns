@@ -1,4 +1,4 @@
-estructuraCasino/MapaCasino
+salas/MapaCasino
     - poner public en las posiciones x e y, lo he hecho asi debido a que quiero controlar las posiciones en el personaje en vez de Sala Principal
     Se haría más intuitivo esto.
 
@@ -9,13 +9,13 @@ personas/Jugador
     - Voy a agregar tambien un booleano de cuando va a estar interactuando, ya que va a ser necesario cuando se vaya a sentar a algo, cajero, salir, etc
     - Sobrecarga de constructor para añadir las posiciones iniciales del personaje.
 
-estructuraCasino/SalaPrincipal
+salas/SalaPrincipal
     - Actualizaciones con las variables locales posX y posY para que trabajen en torno a jugador (jugador.getPosX()...)
     - Cambio algunos tipos variables primitivos como Objetos (Nuestro profesor es especial :D)
 
 recursos/MensajesEstaticos
     - Una manera mas facil de implementar muchos mensajes que son iguales por aca, ejemplo: "Pulsa E para interactuar", etc...
 
-accionesCasino/Mesa
+acciones/Mesa
     - Actualizacion en jugar() (irrelevante)
 

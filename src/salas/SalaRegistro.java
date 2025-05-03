@@ -1,5 +1,5 @@
 // Salaregisttro
-package estructuraCasino;
+package salas;
 
 import java.util.Scanner;
 

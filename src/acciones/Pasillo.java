@@ -1,6 +1,6 @@
-package accionesCasino;
+package acciones;
 
-import estructuraCasino.Sala;
+import salas.Sala;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import personas.Jugador;

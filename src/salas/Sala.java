@@ -1,4 +1,4 @@
-package estructuraCasino;
+package salas;
 
 import personas.Jugador;
 

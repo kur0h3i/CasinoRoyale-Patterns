@@ -1,5 +1,5 @@
 // PuertaSalida.java
-package accionesCasino;
+package acciones;
 
 // IO
 import java.io.*;
@@ -11,8 +11,6 @@ import java.util.Scanner;
 
 // Excepciones
 import excep.ExcepcionJugadorNoEncontrado;
-import excep.ExcepcionJugadorSinDinero;
-import excep.ExcepcionJugadorSinFichas;
 
 // Jugador
 import patterns.observer.PullPushModelObservable;

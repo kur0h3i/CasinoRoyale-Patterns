@@ -17,13 +17,9 @@ import excep.ExcepcionJugadorSinDinero;
 import excep.ExcepcionJugadorSinFichas;
 
 //Juegos
-import juegos.Bingo;
-import juegos.CartaMasAlta;
-import juegos.Dados;
-import juegos.Ruleta;
-import juegos.Slot;
 
 // Jugador
+import mapas.SalaPrincipalMapa;
 import personas.Jugador;
 
 // ASCII
@@ -35,7 +31,7 @@ import static recursos.MensajesEstaticos.*;
 
 public class SalaPrincipal {
 
-    char[][] mapa = MapaCasino.mapa;
+    char[][] mapa = SalaPrincipalMapa.mapa;
     // int posX = MapaCasino.posX;
     // int posY = MapaCasino.posY;
     Jugador jugador;

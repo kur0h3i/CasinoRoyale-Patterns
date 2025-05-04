@@ -1,9 +1,14 @@
 // Salaregisttro
-package estructuraCasino;
+package salas;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Scanner;
 
 import excep.ExcepcionJugadorMenorEdad;
+import excep.ExcepcionJugadorNoEncontrado;
 import personas.Jugador;
 
 public class SalaRegistro {
@@ -18,7 +23,7 @@ public class SalaRegistro {
         // Información sobre el Casino
         informacionCasino();
         // Crear al jugador
-        jugador = crearJugador();
+        jugador = iniciarJugador();
         
         // Verificar si es mayor de edad
         try { 
@@ -50,17 +55,86 @@ public class SalaRegistro {
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
-    // Crear al Jugador
-    public Jugador crearJugador() {
-        // Inicialización de variables
-        @SuppressWarnings("resource")
-        Scanner input = new Scanner(System.in); // No lo cierres
-        String nombre;
-        int edad;
-        char confirmacion;
-        double dinero = 0f;
-        int dificultad = 0;
+    // Crea o usa un usuario ya existente
+    public Jugador iniciarJugador() {
+        Scanner input = new Scanner(System.in);
+        Integer opcion;
+        Jugador jugadorSeleccionado = null;
 
+        do {
+            System.out.println("Buenos días, Sr.");
+            System.out.println("1. Iniciar Sesión Socio");
+            System.out.println("2. Registrar un nuevo Socio");
+            System.out.println("3. Salir");
+
+            while (!input.hasNextInt()) {
+                System.out.println("Por favor, introduce una opción válida (1-3):");
+                input.next();
+            }
+
+            opcion = input.nextInt();
+            input.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    jugadorSeleccionado = cargarJugador();
+                    break;
+                case 2:
+                    jugadorSeleccionado = crearJugador();
+                    break;
+                case 3: // DEBUG MOMENTANEO
+                    System.out.println("Adiós, espero que se lo haya pasado bien");
+                    return new Jugador("Lediff el travieso", 23, 1000.0);
+                default:
+                    System.out.println("Opción no válida, por favor elige 1, 2 o 3.");
+            }
+        } while (jugadorSeleccionado == null);
+
+        return jugadorSeleccionado;
+    }
+
+    // Iniciar Sesion
+    public Jugador cargarJugador() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Nombre del jugador que quieres cargar: ");
+        String nombreJugador = input.nextLine();
+
+        File archivo = new File("saves/" + nombreJugador + ".dat");
+
+        try {
+            if (!archivo.exists()) {
+                throw new ExcepcionJugadorNoEncontrado("El jugador con nombre '" + nombreJugador + "' no existe.");
+            }
+
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+                Jugador jugadorCargado = (Jugador) ois.readObject();
+                System.out.println("Partida cargada exitosamente:");
+                System.out.println(jugadorCargado);
+
+                return jugadorCargado;
+            }
+        } catch (ExcepcionJugadorNoEncontrado e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error al cargar los datos del jugador: " + e.getMessage());
+        }
+
+        return null; // Si ocurre un error, devuelve null
+    }
+
+
+    // Crear Jugador
+    public Jugador crearJugador() {
+        Scanner input = new Scanner(System.in);
+        // Atributos Jugador
+        String nombre = " ";
+        Integer edad = 0;
+        Character confirmacion = ' ';
+        Double dinero = 100.0;
+
+        // Crear al jugador
         System.out.println("Cuéntame un poco sobre ti:");
         do {
             // Nombre
@@ -77,33 +151,6 @@ public class SalaRegistro {
             edad = input.nextInt();
             input.nextLine();
 
-            // Dificultad
-            do {
-                System.out.println("Selecciona la dificultad:\n\t1. Fácil -> 500€\n\t2. Normal -> 200€\n\t3. Difícil -> 50€");
-                while (!input.hasNextInt()) {
-                    System.out.println("Por favor, selecciona una opción válida.");
-                    input.next(); // Limpiar el buffer
-                }
-                dificultad = input.nextInt();
-                input.nextLine(); // Limpiar el buffer
-            } while (dificultad != 1 && dificultad != 2 && dificultad != 3);
-
-            // Asignación del dinero según la dificultad
-            switch (dificultad) {
-                case 1:
-                    dinero = 500f;
-                    break;
-                case 2:
-                    dinero = 200f;
-                    break;
-                case 3:
-                    dinero = 50f;
-                    break;
-                default:
-                    System.out.println("Error: Dinero no configurado.");
-                    break;
-            }
-
             // Confirmación de los datos
             System.out.println("Te llamas " + nombre + " y tienes " + edad + " años, ¿es correcto? S/n");
             confirmacion = input.nextLine().charAt(0);
@@ -115,11 +162,16 @@ public class SalaRegistro {
     }
 
     // Verificar si el jugador es mayor de edad
-    public boolean mayorEdad() throws ExcepcionJugadorMenorEdad {
+    public Boolean mayorEdad() throws ExcepcionJugadorMenorEdad {
         if (jugador.getEdad() >= 18) {
             return true;
         } else {
             throw new ExcepcionJugadorMenorEdad("Lo sentimos, pero los menores de edad no pueden entrar al casino.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Registro";
     }
 }

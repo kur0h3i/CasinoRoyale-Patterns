@@ -19,20 +19,53 @@ import personas.Jugador;
 // Excepcion
 import excep.ExcepcionJugadorSinFichas;
 
-public class CartaMasAlta extends Juego {
+public class CartaMasAlta implements StrategyJuego {
 
     // Atributos
     private Baraja baraja;
     private ASCIICartaMasAlta interfaz;
     Jugador jugador;
-    private int apuesta;
+    private Integer apuesta;
 
     // Constructor
     public CartaMasAlta(Jugador jugador) {
-        super(jugador);
         this.jugador = jugador;
         this.baraja = new Baraja();
         this.interfaz = new ASCIICartaMasAlta(jugador);
+    }
+
+    // Deifinir la apuesta
+    public Integer definirApuesta(Scanner input) {
+        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
+
+        Integer apuesta = 0;
+
+        try {
+            apuesta = input.nextInt();
+            input.nextLine(); // Limpiar buffer
+
+            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
+                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
+            }
+
+            jugador.restarFichas(apuesta);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Intenta de nuevo.");
+            input.nextLine(); // Limpiar buffer en caso de excepción
+            return definirApuesta(input); // Llamada recursiva para repetir el proceso
+        }
+
+        return apuesta;
+    }
+
+
+    // Comprobar si hay fichas
+    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
+        if (jugador.getFichas() <= 0) {
+            throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
+        }
     }
 
     @Override
@@ -41,14 +74,14 @@ public class CartaMasAlta extends Juego {
 
         comprobarfichas();
 
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opciones();
 
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); 
 
                 switch (opcion) {
@@ -80,7 +113,7 @@ public class CartaMasAlta extends Juego {
     }
 
     // Jugar ronda
-    private void jugarRonda(int apuesta) {
+    private void jugarRonda(Integer apuesta) {
         baraja.mezclar();
 
         Carta cartaJugador = baraja.repartir();
@@ -89,8 +122,8 @@ public class CartaMasAlta extends Juego {
         System.out.println("Tu carta: " + cartaJugador);
         System.out.println("Carta de la IA: " + cartaIA);
 
-        int valorJugador = cartaJugador.getValorNumerico();
-        int valorIA = cartaIA.getValorNumerico();
+        Integer valorJugador = cartaJugador.getValorNumerico();
+        Integer valorIA = cartaIA.getValorNumerico();
 
         if (valorJugador > valorIA) {
             System.out.println("¡Has ganado esta ronda con " + cartaJugador + "!");

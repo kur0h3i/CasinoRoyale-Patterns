@@ -2,7 +2,8 @@
 import java.io.IOException;
 
 // Estructura Casino
-import estructuraCasino.*;
+import acciones.Pasillo;
+import salas.*;
 
 // Excepcion
 import excep.ExcepcionJugadorMenorEdad;
@@ -13,7 +14,7 @@ public class MainCasino {
     public static void main(String[] args) throws IOException, ExcepcionJugadorSinFichas, ExcepcionJugadorMenorEdad, ExcepcionJugadorSinDinero {
         SalaRegistro registro = new SalaRegistro();
         if (registro.mayorEdad()){
-            new SalaPrincipal(SalaRegistro.jugador);
+            Casino.iniciarCasino();
         }
     }
 }

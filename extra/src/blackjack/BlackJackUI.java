@@ -104,7 +104,7 @@ public class BlackJackUI extends JFrame {
         
 
         // Mostrar cartas del jugador
-        for (int i = 0; i < jugador.getMano().length && jugador.getMano()[i] != null; i++) {
+        for (Integer i = 0; i < jugador.getMano().length && jugador.getMano()[i] != null; i++) {
             Carta carta = jugador.getMano()[i];
             jugadorPanel.add(crearEtiquetaCarta(carta));
         }
@@ -121,7 +121,7 @@ public class BlackJackUI extends JFrame {
         crupierPanel.add(crupierLabel);
 
         // Mostrar cartas del crupier
-        for (int i = 0; i < crupier.getMano().length && crupier.getMano()[i] != null; i++) {
+        for (Integer i = 0; i < crupier.getMano().length && crupier.getMano()[i] != null; i++) {
             Carta carta = crupier.getMano()[i];
             // Muestra la primera carta del crupier, y oculta las demás con un reverso
             if (i == 0 || !pedirCartaButton.isEnabled()) {
@@ -153,8 +153,8 @@ public class BlackJackUI extends JFrame {
     }
 
     private void determinarGanador() {
-        int puntajeJugador = jugador.calcularPuntaje();
-        int puntajeCrupier = crupier.calcularPuntaje();
+        Integer puntajeJugador = jugador.calcularPuntaje();
+        Integer puntajeCrupier = crupier.calcularPuntaje();
 
         if (!jugador.estaEnJuego() || (puntajeCrupier <= 21 && puntajeCrupier > puntajeJugador)) {
             mostrarMensaje("El crupier gana.");

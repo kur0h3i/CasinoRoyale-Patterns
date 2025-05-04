@@ -47,7 +47,7 @@ public class ASCIIDados {
     }
 
     // Mostrar resultados del tiro de dados
-    public void mostrarResultadoDados(int dado1, int dado2, int suma) {
+    public void mostrarResultadoDados(Integer dado1, Integer dado2, Integer suma) {
         System.out.println("___________________________________");
         System.out.println("|              DADOS              |");
         System.out.println("|_________________________________|");

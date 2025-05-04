@@ -16,18 +16,51 @@ import excep.ExcepcionJugadorSinFichas;
 // Jugador
 import personas.Jugador;
 
-public class Dados extends Juego {
+public class Dados implements StrategyJuego {
 
     // Atributos
-    private int apuesta;
+    private Integer apuesta;
     private Jugador jugador;
     private ASCIIDados interfaz;
 
     // Constructor
     public Dados(Jugador jugador) {
-        super(jugador);
         this.jugador = jugador;
         this.interfaz = new ASCIIDados(jugador);
+    }
+
+    // Deifinir la apuesta
+    public Integer definirApuesta(Scanner input) {
+        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
+
+        Integer apuesta = 0;
+
+        try {
+            apuesta = input.nextInt();
+            input.nextLine(); // Limpiar buffer
+
+            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
+                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
+            }
+
+            jugador.restarFichas(apuesta);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Intenta de nuevo.");
+            input.nextLine(); // Limpiar buffer en caso de excepción
+            return definirApuesta(input); // Llamada recursiva para repetir el proceso
+        }
+
+        return apuesta;
+    }
+
+
+    // Comprobar si hay fichas
+    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
+        if (jugador.getFichas() <= 0) {
+            throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
+        }
     }
 
     @Override
@@ -36,14 +69,14 @@ public class Dados extends Juego {
         
         comprobarfichas();
 
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opciones();
 
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); // Limpiar buffer
 
                 switch (opcion) {
@@ -73,7 +106,7 @@ public class Dados extends Juego {
     // Jugar a los dados
     private void jugarDados(Scanner input) {
         Random random = new Random();
-        int resultado = tirarDados(random);
+        Integer resultado = tirarDados(random);
 
         if (resultado == 7 || resultado == 11) {
             System.out.println("¡Has sacado " + resultado + "! ¡Ganaste!");
@@ -87,7 +120,7 @@ public class Dados extends Juego {
     }
 
     // Jugar el Punto
-    private void jugarPunto(Scanner input, int punto, Random random) {
+    private void jugarPunto(Scanner input, Integer punto, Random random) {
         System.out.println("Tira los dados nuevamente para intentar obtener tu Punto: " + punto + ".");
         System.out.println("Si sacas un 7 antes del Punto, pierdes.");
 
@@ -95,7 +128,7 @@ public class Dados extends Juego {
             System.out.println("Presiona Enter para tirar los dados...");
             input.nextLine();
 
-            int resultado = tirarDados(random);
+            Integer resultado = tirarDados(random);
 
             if (resultado == punto) {
                 System.out.println("¡Has sacado tu Punto! ¡Ganaste!");
@@ -111,10 +144,10 @@ public class Dados extends Juego {
     }
 
     // Tirar los Dados
-    private int tirarDados(Random random) {
-        int dado1 = random.nextInt(6) + 1;
-        int dado2 = random.nextInt(6) + 1;
-        int suma = dado1 + dado2;
+    private Integer tirarDados(Random random) {
+        Integer dado1 = random.nextInt(6) + 1;
+        Integer dado2 = random.nextInt(6) + 1;
+        Integer suma = dado1 + dado2;
 
         interfaz.mostrarResultadoDados(dado1, dado2, suma);
         return suma;

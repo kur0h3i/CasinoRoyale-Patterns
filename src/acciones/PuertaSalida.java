@@ -1,26 +1,63 @@
 // PuertaSalida.java
-package accionesCasino;
+package acciones;
 
 // IO
 import java.io.*;
 
 // Util
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 // Excepciones
 import excep.ExcepcionJugadorNoEncontrado;
-import excep.ExcepcionJugadorSinDinero;
-import excep.ExcepcionJugadorSinFichas;
 
 // Jugador
+import patterns.observer.PullPushModelObservable;
+import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 
 // ASCII
 import ascii.ASCIIPuerta;
 import ascii.ASCIIGeneral;
 
-public class PuertaSalida {
+import static recursos.MensajesEstaticos.interactSave;
+
+public class PuertaSalida implements PullPushModelObserverInteractive {
+
+    // Atributos Adicionales
+    private Integer posX, posY;
+
+    // Constructor con el observer
+    public PuertaSalida(Integer posX, Integer posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    @Override
+    public void interactive() {
+        Scanner input = new Scanner(System.in);
+        interfaz = new ASCIIPuerta(jugador);
+        iniciarPuerta(input);
+    }
+
+    @Override
+    public void update(PullPushModelObservable pullPushModelObservable, Object object) {
+
+        if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
+            Jugador jugadorTMP = (Jugador) pullPushModelObservable;
+            if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
+                interactSave();
+                this.jugador = jugadorTMP;
+                if (this.jugador.getInteract()) interactive();
+            }
+            else {
+                jugador = null; // Se asume de que no hay ningun jugador ocupado // No se si habra multiplayer xd
+            }
+        }
+
+    }
+
 
     // Atributos
     Jugador jugador;
@@ -28,15 +65,12 @@ public class PuertaSalida {
 
     // Constructor
     public PuertaSalida(Jugador jugador) {
-        Scanner input = new Scanner(System.in);
         this.jugador = jugador;
-        interfaz = new ASCIIPuerta(jugador);
-        iniciarPuerta(input);
     }
 
     // Métodos
     public void iniciarPuerta(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 4) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();

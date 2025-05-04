@@ -16,18 +16,51 @@ import excep.ExcepcionJugadorSinFichas;
 // Jugador
 import personas.Jugador;
 
-public class Slot extends Juego {
+public class Slot implements StrategyJuego {
 
     // Atributos
-    private int apuesta;
+    private Integer apuesta;
     private Jugador jugador;
     private ASCIISlot interfaz;
 
     // Constructor
     public Slot(Jugador jugador) {
-        super(jugador);
         this.jugador = jugador;
         this.interfaz = new ASCIISlot(jugador);
+    }
+
+    // Deifinir la apuesta
+    public Integer definirApuesta(Scanner input) {
+        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
+
+        Integer apuesta = 0;
+
+        try {
+            apuesta = input.nextInt();
+            input.nextLine(); // Limpiar buffer
+
+            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
+                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
+            }
+
+            jugador.restarFichas(apuesta);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Intenta de nuevo.");
+            input.nextLine(); // Limpiar buffer en caso de excepción
+            return definirApuesta(input); // Llamada recursiva para repetir el proceso
+        }
+
+        return apuesta;
+    }
+
+
+    // Comprobar si hay fichas
+    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
+        if (jugador.getFichas() <= 0) {
+            throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
+        }
     }
 
     @Override
@@ -36,14 +69,14 @@ public class Slot extends Juego {
         
         comprobarfichas();
         
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opcioes();
 
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); // Limpiar buffer
 
                 switch (opcion) {
@@ -86,7 +119,7 @@ public class Slot extends Juego {
         interfaz.mostrarResultados(simbolo1, simbolo2, simbolo3);
 
         if (simbolo1.equals(simbolo2) && simbolo2.equals(simbolo3)) {
-            int premio = calcularPremio(simbolo1);
+            Integer premio = calcularPremio(simbolo1);
             System.out.println("¡Felicidades! Ganaste " + premio + " fichas.");
             jugador.agregarFichas(premio);
         } else if (simbolo1.equals(simbolo2) || simbolo2.equals(simbolo3) || simbolo1.equals(simbolo3)) {
@@ -98,7 +131,7 @@ public class Slot extends Juego {
         }
     }
 
-    private int calcularPremio(String simbolo) {
+    private Integer calcularPremio(String simbolo) {
         switch (simbolo) {
             case "X":
                 return apuesta * 10; // Jackpot

@@ -1,5 +1,5 @@
 // Cajero.java
-package accionesCasino;
+package acciones;
 
 // Excepciones
 import excep.ExcepcionJugadorSinDinero;
@@ -7,6 +7,7 @@ import excep.ExcepcionJugadorSinFichas;
 
 // Util
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 // ASCII
@@ -14,28 +15,33 @@ import ascii.ASCIICajero;
 import ascii.ASCIIGeneral;
 
 // Jugador
+import patterns.observer.PullPushModelObservable;
+import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 
+import static recursos.MensajesEstaticos.interactATM;
 
-public class Cajero {
+
+public class Cajero implements PullPushModelObserverInteractive {
+
+    // Atributos Adicionales
+    private Integer posX, posY;
+
+    // Constructor con el Observer Implementado
+    public Cajero(Integer posX, Integer posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
 
     // Atributos Cajero
     Jugador jugador;
     ASCIICajero interfaz;
 
-    // Constructor
-    public Cajero(Jugador jugador) throws ExcepcionJugadorSinDinero, ExcepcionJugadorSinFichas{
-        Scanner input = new Scanner (System.in);
-        this.jugador = jugador;
-        interfaz = new ASCIICajero(jugador);
-        iniciarCajero(input);    
-    }
-
     // Metodos
     // Iniciar Cajero
     public void iniciarCajero(Scanner input){
         
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 3) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
@@ -96,7 +102,7 @@ public class Cajero {
     }
 
     // Fichas ---> Dinero
-    public void fichasDinero(int valor) throws ExcepcionJugadorSinFichas {
+    public void fichasDinero(Integer valor) throws ExcepcionJugadorSinFichas {
         comprobarfichas();
         System.out.println("Cambiando " + valor + " fichas por dinero...");
         jugador.restarFichas(valor);
@@ -104,7 +110,7 @@ public class Cajero {
     }
 
     // Dinero ---> Fichas
-    public void dineroFichas(int valor) throws ExcepcionJugadorSinDinero {
+    public void dineroFichas(Integer valor) throws ExcepcionJugadorSinDinero {
         comprobarDinero();
         System.out.println("Cambiando " + valor + " dinero por fichas...");
         jugador.restarDinero(valor);
@@ -112,8 +118,8 @@ public class Cajero {
     }
 
     // Definir Valor
-    public int definirValor(Scanner input) {
-        int valor = -1;
+    public Integer definirValor(Scanner input) {
+        Integer valor = -1;
         while (valor <= 0) { // Asegurar que el valor sea mayor que cero
             System.out.println("¿Cuál es el valor que quieres intercambiar?");
             try {
@@ -127,6 +133,31 @@ public class Cajero {
             }
         }
         return valor;
+    }
+
+    @Override
+    public void update(PullPushModelObservable pullPushModelObservable, Object object) {
+
+        if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
+            Jugador jugadorTMP = (Jugador) pullPushModelObservable;
+
+            if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
+                interactATM();
+                this.jugador = jugadorTMP;
+                if (this.jugador.getInteract()) interactive();
+            }
+            else {
+                jugador = null; // Se asume de que no hay ningun jugador ocupado // No se si habra multiplayer xd
+            }
+        }
+
+    }
+
+    @Override
+    public void interactive() {
+        Scanner input = new Scanner(System.in);
+        interfaz = new ASCIICajero(jugador);
+        iniciarCajero(input);
     }
 }
 

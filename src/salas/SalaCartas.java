@@ -22,7 +22,7 @@ public class SalaCartas extends Sala {
 
 
     public SalaCartas(Jugador jugador) {
-        super(jugador, SalaCartasMapa.mapaAzar,
+        super(jugador, SalaCartasMapa.mapaCartas,
                 // Mesas disponibles (agregar las mesas a la lista)
                 new ArrayList<Mesa>(
                         Arrays.asList(
@@ -44,5 +44,10 @@ public class SalaCartas extends Sala {
     @Override
     public void unsubscribe(Jugador jugador) {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Cartas";
     }
 }

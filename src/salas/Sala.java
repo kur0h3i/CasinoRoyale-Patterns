@@ -20,7 +20,7 @@ public abstract class Sala implements Subscription {
     protected ArrayList<Mesa> mesas;
     protected ArrayList<Pasillo> pasillos;
     private Integer posInitialX, posInitialY;
-    protected Integer posLastTimeSeenX, posLastTimeSeenY;
+    //protected Integer posLastTimeSeenX, posLastTimeSeenY;
 
     Sala(Jugador jugador, Character[][] mapa) {
         this(jugador, mapa, new ArrayList<Mesa>());
@@ -45,8 +45,8 @@ public abstract class Sala implements Subscription {
         this.posInitialX = posInitialX;
         this.posInitialY = posInitialY;
 
-        this.posLastTimeSeenX = posInitialX;
-        this.posLastTimeSeenY = posInitialY;
+        //this.posLastTimeSeenX = posInitialX;
+        //this.posLastTimeSeenY = posInitialY;
 
         if (jugador != null) { // Para iniciar de forma natural la posicion del jugador en las primeras instancias del programa
             if (jugador.getPosX() == null || jugador.getPosY() == null) {
@@ -67,12 +67,9 @@ public abstract class Sala implements Subscription {
         // Instrucciones de control
         instructions();
 
-        // Interacción con mesas // TODO
-
     }
 
     // Mover jugador en el mapa
-    // TODO: SUGERENCIA 1
     protected void moverJugador(Integer dx, Integer dy) {
         Integer nuevaPosX = jugador.getPosX() + dx;
         Integer nuevaPosY = jugador.getPosY() + dy;
@@ -168,9 +165,7 @@ public abstract class Sala implements Subscription {
         return pasillos;
     }
 
-    public Integer getPosLastTimeSeenX() {
-        return posLastTimeSeenX;
-    }
+    /* public Integer getPosLastTimeSeenX() {return posLastTimeSeenX;}
 
     public Integer getPosLastTimeSeenY() {
         return posLastTimeSeenY;
@@ -183,4 +178,6 @@ public abstract class Sala implements Subscription {
     public void setPosLastTimeSeenY(Integer posLastTimeSeenY) {
         this.posLastTimeSeenY = posLastTimeSeenY;
     }
+
+     */
 }

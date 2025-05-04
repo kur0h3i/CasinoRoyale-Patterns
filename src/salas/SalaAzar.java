@@ -6,7 +6,6 @@ import mapas.SalaJuegosAzarMapa;
 import personas.Jugador;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class SalaAzar extends Sala {
@@ -25,7 +24,7 @@ public class SalaAzar extends Sala {
                 new ArrayList<Mesa>(),
                 new ArrayList<Pasillo>(
                 ),
-                SalaJuegosAzarMapa.posX, SalaJuegosAzarMapa.posY);
+                SalaJuegosAzarMapa.posXInicial, SalaJuegosAzarMapa.posYInicial);
     }
 
     @Override
@@ -47,5 +46,10 @@ public class SalaAzar extends Sala {
         if (!Objects.isNull(jugador)) {
             jugador.detachAll();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Azar";
     }
 }

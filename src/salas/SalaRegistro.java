@@ -169,4 +169,9 @@ public class SalaRegistro {
             throw new ExcepcionJugadorMenorEdad("Lo sentimos, pero los menores de edad no pueden entrar al casino.");
         }
     }
+
+    @Override
+    public String toString() {
+        return "Registro";
+    }
 }

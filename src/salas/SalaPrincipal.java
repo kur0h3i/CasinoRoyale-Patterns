@@ -6,7 +6,6 @@ package salas;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Scanner;
 
 // Aciones Casino
 import acciones.Mesa;
@@ -15,8 +14,6 @@ import acciones.PuertaSalida;
 import acciones.Cajero;
 
 // Excepciones
-import excep.ExcepcionJugadorSinDinero;
-import excep.ExcepcionJugadorSinFichas;
 
 //Juegos
 
@@ -25,7 +22,6 @@ import mapas.SalaPrincipalMapa;
 import personas.Jugador;
 
 // ASCII
-import ascii.ASCIIGeneral;
 
 
 public class SalaPrincipal extends Sala {
@@ -62,8 +58,8 @@ public class SalaPrincipal extends Sala {
                         )
                 ),
                 new ArrayList<Pasillo>(), // IMPOSIBLE DE INSTANCIAR VARIOS PASILLOS E INTERCONECTAR POR ACA, MIGRANDO ESTO A MAIN (StackOverflowException)
-                SalaPrincipalMapa.posX,
-                SalaPrincipalMapa.posY
+                SalaPrincipalMapa.posXInicial,
+                SalaPrincipalMapa.posYInicial
                 );
 
         //jugador.setFichas(100); // Fichas iniciales del jugador
@@ -92,5 +88,9 @@ public class SalaPrincipal extends Sala {
         if (!Objects.isNull(jugador)) {
             jugador.detachAll();
         }
+    }
+    @Override
+    public String toString() {
+        return "Principal";
     }
 }

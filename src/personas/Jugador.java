@@ -6,6 +6,7 @@ import excep.ExcepcionJugadorSinFichas;
 import mapas.SalaPrincipalMapa;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
+import salas.Sala;
 import salas.SalaPrincipal;
 
 import java.io.Serializable;
@@ -14,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Jugador implements Serializable, PullPushModelObservable{
-
 
     // Atributos Adicionales
     private Integer posX = null, posY = null;
@@ -92,6 +92,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     Integer edad;
     Double dinero;
     Integer fichas;
+    Sala salaActual;
 
     // Constructor
     public Jugador(String nombre, Integer edad, Double dinero){
@@ -116,6 +117,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     public void setFichas( Integer fichas){
         this.fichas = fichas;
     }
+    public void setSala(Sala salaActual){ this.salaActual = salaActual; }
 
     // Getters
     public String getName(){
@@ -130,6 +132,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     public Integer getFichas(){
         return this.fichas;
     }
+    public Sala getSalaActual(){return this.salaActual;}
 
     // agregar / restar
     public void agregarFichas(Integer fichas){

@@ -167,4 +167,20 @@ public abstract class Sala implements Subscription {
     public ArrayList<Pasillo> getPasillos() {
         return pasillos;
     }
+
+    public Integer getPosLastTimeSeenX() {
+        return posLastTimeSeenX;
+    }
+
+    public Integer getPosLastTimeSeenY() {
+        return posLastTimeSeenY;
+    }
+
+    public void setPosLastTimeSeenX(Integer posLastTimeSeenX) {
+        this.posLastTimeSeenX = posLastTimeSeenX;
+    }
+
+    public void setPosLastTimeSeenY(Integer posLastTimeSeenY) {
+        this.posLastTimeSeenY = posLastTimeSeenY;
+    }
 }

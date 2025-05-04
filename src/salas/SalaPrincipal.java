@@ -39,7 +39,7 @@ public class SalaPrincipal extends Sala {
         return getInstance(null);
     }
 
-
+    // private final Fenrir fenrir = new Fenrir(); // TODO
     private final Cajero cajero = new Cajero(2, 7);
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
 
@@ -48,15 +48,7 @@ public class SalaPrincipal extends Sala {
                 jugador,
                 SalaPrincipalMapa.mapaSalaPrincipal,
                 // Mesas disponibles (agregar las mesas a la lista)
-                new ArrayList<Mesa>(
-                        Arrays.asList(
-                                new Mesa("Ruleta", 1, 9, 4),
-                                new Mesa("Bingo", 1, 14, 11),
-                                new Mesa("Slot", 1, 25, 11),
-                                new Mesa("Dados", 1, 23, 4),
-                                new Mesa("Carta Mas Alta", 1, 37, 4)
-                        )
-                ),
+                new ArrayList<Mesa>(),
                 new ArrayList<Pasillo>(), // IMPOSIBLE DE INSTANCIAR VARIOS PASILLOS E INTERCONECTAR POR ACA, MIGRANDO ESTO A MAIN (StackOverflowException)
                 SalaPrincipalMapa.posXInicial,
                 SalaPrincipalMapa.posYInicial

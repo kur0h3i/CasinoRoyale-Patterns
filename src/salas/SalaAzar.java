@@ -6,6 +6,7 @@ import mapas.SalaJuegosAzarMapa;
 import personas.Jugador;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class SalaAzar extends Sala {
@@ -21,7 +22,14 @@ public class SalaAzar extends Sala {
 
     public SalaAzar(Jugador jugador) {
         super(jugador, SalaJuegosAzarMapa.mapaAzar,
-                new ArrayList<Mesa>(),
+                new ArrayList<Mesa>(
+                        Arrays.asList(
+                                new Mesa("Ruleta", 1, SalaJuegosAzarMapa.posXRuleta, SalaJuegosAzarMapa.posYRuleta),
+                                new Mesa("Bingo", 1, SalaJuegosAzarMapa.posXBingo, SalaJuegosAzarMapa.posYBingo),
+                                new Mesa("Slot", 1, SalaJuegosAzarMapa.posXSlots, SalaJuegosAzarMapa.posYSlots),
+                                new Mesa("Dados", 1, SalaJuegosAzarMapa.posXDados, SalaJuegosAzarMapa.posYDados)
+                        )
+                ),
                 new ArrayList<Pasillo>(
                 ),
                 SalaJuegosAzarMapa.posXInicial, SalaJuegosAzarMapa.posYInicial);

@@ -27,8 +27,8 @@ public class SalaJuegosAzarMapa {
 
     // Mesas
     public static Integer posXRuleta = 9, posYRuleta = 4;
-    public static Integer posXSlots = 2, posYSlots = 10;
-    public static Integer posXBingo = 15, posYBingo = 12;
+    public static Integer posXSlots = 2, posYSlots = 11;
+    public static Integer posXBingo = 15, posYBingo = 13;
     public static Integer posXDados = 24, posYDados = 7;
 
 }

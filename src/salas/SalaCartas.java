@@ -26,6 +26,7 @@ public class SalaCartas extends Sala {
                 // Mesas disponibles (agregar las mesas a la lista)
                 new ArrayList<Mesa>(
                         Arrays.asList(
+                                new Mesa("Carta Mas Alta", 1, SalaCartasMapa.posXCartaMas, SalaCartasMapa.posYCartaMas)
                         )
                 ),
                 new ArrayList<Pasillo>(

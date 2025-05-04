@@ -26,5 +26,5 @@ public class SalaCartasMapa {
     public static Integer posXEntrada = 21, posYEntrada = 1;
 
     // Mesa
-    public static Integer posXCartaMas = 11, posYCartaMas = 13;
+    public static Integer posXCartaMas = 13, posYCartaMas = 2;
 }

@@ -20,6 +20,11 @@ public class SalaCartasMapa {
             {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
             {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
     };
+
+    // Pasillo
     public static Integer posXInicial = 11, posYInicial = 14;
     public static Integer posXEntrada = 21, posYEntrada = 1;
+
+    // Mesa
+    public static Integer posXCartaMas = 11, posYCartaMas = 13;
 }

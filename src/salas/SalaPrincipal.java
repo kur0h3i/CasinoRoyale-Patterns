@@ -28,8 +28,21 @@ import personas.Jugador;
 import ascii.ASCIIGeneral;
 
 
-
 public class SalaPrincipal extends Sala {
+
+    static SalaPrincipal salaPrincipal; // SINGLETON LAZY
+
+    public static SalaPrincipal getInstance(Jugador jugador) {
+        if (Objects.isNull(salaPrincipal)) {
+            salaPrincipal = new SalaPrincipal(jugador);
+        }
+        return salaPrincipal;
+    }
+
+    public static SalaPrincipal getInstance() {
+        return getInstance(null);
+    }
+
 
     private final Cajero cajero = new Cajero(2, 7);
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
@@ -48,31 +61,14 @@ public class SalaPrincipal extends Sala {
                                 new Mesa("Carta Mas Alta", 1, 37, 4)
                         )
                 ),
-                new ArrayList<Pasillo>(
-                        Arrays.asList(
-                                new Pasillo(3, 15, new SalaAzar(null)),
-                                new Pasillo(0, 22, new SalaCartas(null))
-                        )
-                ),
+                new ArrayList<Pasillo>(), // IMPOSIBLE DE INSTANCIAR VARIOS PASILLOS E INTERCONECTAR POR ACA, MIGRANDO ESTO A MAIN (StackOverflowException)
                 SalaPrincipalMapa.posX,
                 SalaPrincipalMapa.posY
                 );
 
         //jugador.setFichas(100); // Fichas iniciales del jugador
 
-        // jugador.setPosX(posInitialX);
-        // jugador.setPosY(posInitialY);
         subscribe(jugador);
-
-        Scanner scanner = new Scanner(System.in);
-        Boolean running = true;
-        while (running) {
-            ASCIIGeneral.limpiarPantalla();
-            interfazPrincipal(jugador, mesas);
-            entradaTerminal(scanner, jugador, mesas);
-        }
-
-        scanner.close();
     }
 
     @Override

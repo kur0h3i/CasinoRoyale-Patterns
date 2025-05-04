@@ -19,7 +19,8 @@ public abstract class Sala implements Subscription {
     private Jugador jugador;
     protected ArrayList<Mesa> mesas;
     protected ArrayList<Pasillo> pasillos;
-    private final Integer posInitialX, posInitialY;
+    private Integer posInitialX, posInitialY;
+    protected Integer posLastTimeSeenX, posLastTimeSeenY;
 
     Sala(Jugador jugador, Character[][] mapa) {
         this(jugador, mapa, new ArrayList<Mesa>());
@@ -43,6 +44,9 @@ public abstract class Sala implements Subscription {
         this.pasillos = pasillos;
         this.posInitialX = posInitialX;
         this.posInitialY = posInitialY;
+
+        this.posLastTimeSeenX = posInitialX;
+        this.posLastTimeSeenY = posInitialY;
 
         if (jugador != null) { // Para iniciar de forma natural la posicion del jugador en las primeras instancias del programa
             if (jugador.getPosX() == null || jugador.getPosY() == null) {
@@ -148,7 +152,6 @@ public abstract class Sala implements Subscription {
 
 
     public void setJugador(Jugador jugador) {
-
         this.jugador = jugador;
         subscribe(jugador);
     }
@@ -159,5 +162,9 @@ public abstract class Sala implements Subscription {
 
     public Integer getPosInitialY() {
         return posInitialY;
+    }
+
+    public ArrayList<Pasillo> getPasillos() {
+        return pasillos;
     }
 }

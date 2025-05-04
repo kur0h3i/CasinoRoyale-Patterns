@@ -146,4 +146,8 @@ public class Slot implements StrategyJuego {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Slots";
+    }
 }

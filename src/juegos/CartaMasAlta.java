@@ -135,4 +135,8 @@ public class CartaMasAlta implements StrategyJuego {
             jugador.agregarFichas(apuesta); 
         }
     }
+
+    public String toString() {
+        return "CartaMasAlta";
+    }
 }

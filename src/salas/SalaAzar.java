@@ -2,6 +2,10 @@ package salas;
 
 import acciones.Mesa;
 import acciones.Pasillo;
+import juegos.Bingo;
+import juegos.Dados;
+import juegos.Ruleta;
+import juegos.Slot;
 import mapas.SalaJuegosAzarMapa;
 import personas.Jugador;
 
@@ -25,9 +29,9 @@ public class SalaAzar extends Sala {
                 new ArrayList<Mesa>(
                         Arrays.asList(
                                 new Mesa("Ruleta", 1, SalaJuegosAzarMapa.posXRuleta, SalaJuegosAzarMapa.posYRuleta),
-                                new Mesa("Bingo", 1, SalaJuegosAzarMapa.posXBingo, SalaJuegosAzarMapa.posYBingo),
-                                new Mesa("Slot", 1, SalaJuegosAzarMapa.posXSlots, SalaJuegosAzarMapa.posYSlots),
-                                new Mesa("Dados", 1, SalaJuegosAzarMapa.posXDados, SalaJuegosAzarMapa.posYDados)
+                                new Mesa("Bingo",1, SalaJuegosAzarMapa.posXBingo, SalaJuegosAzarMapa.posYBingo),
+                                new Mesa("Slot",1, SalaJuegosAzarMapa.posXSlots, SalaJuegosAzarMapa.posYSlots),
+                                new Mesa("Dados",1, SalaJuegosAzarMapa.posXDados, SalaJuegosAzarMapa.posYDados)
                         )
                 ),
                 new ArrayList<Pasillo>(
@@ -39,6 +43,8 @@ public class SalaAzar extends Sala {
     public void subscribe(Jugador jugador) {
         if (!Objects.isNull(jugador)) {
             for (Mesa mesa : this.mesas) {
+                mesa.setJugador(jugador);
+                mesa.putStrategy();
                 jugador.attach(mesa);
             }
 

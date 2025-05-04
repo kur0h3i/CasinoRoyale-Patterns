@@ -153,4 +153,8 @@ public class Dados implements StrategyJuego {
         return suma;
     }
 
+    public String toString() {
+        return "Dados";
+    }
+
 }

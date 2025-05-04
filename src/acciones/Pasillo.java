@@ -43,8 +43,13 @@ public class Pasillo implements PullPushModelObserver {
                     jugadorTMP.setPosY(this.salaSiguiente.getPosInitialY());
                 }
 
+
+
                 jugadorTMP.setSala(this.salaSiguiente);
                 this.salaSiguiente.setJugador(jugadorTMP);
+
+                // Setear mesas
+
                 this.salaSiguiente.iniciarInterfaz();
 
             }

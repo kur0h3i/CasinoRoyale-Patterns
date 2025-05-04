@@ -2,6 +2,7 @@ package salas;
 
 import acciones.Mesa;
 import acciones.Pasillo;
+import juegos.CartaMasAlta;
 import mapas.SalaCartasMapa;
 import personas.Jugador;
 
@@ -26,7 +27,7 @@ public class SalaCartas extends Sala {
                 // Mesas disponibles (agregar las mesas a la lista)
                 new ArrayList<Mesa>(
                         Arrays.asList(
-                                new Mesa("Carta Mas Alta", 1, SalaCartasMapa.posXCartaMas, SalaCartasMapa.posYCartaMas)
+                                new Mesa("CartaMasAlta",1, SalaCartasMapa.posXCartaMas, SalaCartasMapa.posYCartaMas)
                         )
                 ),
                 new ArrayList<Pasillo>(
@@ -43,6 +44,8 @@ public class SalaCartas extends Sala {
     public void subscribe(Jugador jugador) {
         if (!Objects.isNull(jugador)) {
             for (Mesa mesa : this.mesas) {
+                mesa.setJugador(jugador);
+                mesa.putStrategy();
                 jugador.attach(mesa);
             }
 

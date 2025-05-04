@@ -277,4 +277,9 @@ public class Ruleta implements StrategyJuego {
             System.out.println("Lo siento, perdiste.");
         }
     }
+
+    @Override
+    public String toString() {
+        return "Ruleta";
+    }
 }

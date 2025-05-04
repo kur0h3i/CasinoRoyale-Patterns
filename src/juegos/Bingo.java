@@ -237,4 +237,8 @@ public class Bingo implements StrategyJuego {
         }
         return true;
     }
+
+    public String toString() {
+        return "Bingo";
+    }
 }

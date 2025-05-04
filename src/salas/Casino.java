@@ -6,10 +6,14 @@ public class Casino {
     public static void iniciarCasino() {
         SalaPrincipal salaPrincipal = SalaPrincipal.getInstance();
         SalaAzar salaAzar = SalaAzar.getInstance();
+        SalaCartas salaCartas = SalaCartas.getInstance();
 
         // Configurar los pasillos después de crear las salas
         salaPrincipal.getPasillos().add(new Pasillo(3, 15, salaAzar));
+        salaPrincipal.getPasillos().add(new Pasillo(21, 0, salaCartas));
         salaAzar.getPasillos().add(new Pasillo(3, 0, salaPrincipal));
+        salaCartas.getPasillos().add(new Pasillo(11, 15, salaPrincipal));
+
 
         SalaRegistro.jugador.setPosX(salaPrincipal.getPosInitialX());
         SalaRegistro.jugador.setPosY(salaPrincipal.getPosInitialY());

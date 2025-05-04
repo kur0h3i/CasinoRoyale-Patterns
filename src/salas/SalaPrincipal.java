@@ -89,6 +89,7 @@ public class SalaPrincipal extends Sala {
             jugador.detachAll();
         }
     }
+
     @Override
     public String toString() {
         return "Principal";

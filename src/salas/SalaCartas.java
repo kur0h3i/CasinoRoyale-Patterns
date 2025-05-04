@@ -31,14 +31,25 @@ public class SalaCartas extends Sala {
                 new ArrayList<Pasillo>(
                         Arrays.asList(
                         )
-                )
+                ),
+                SalaCartasMapa.posXInicial,
+                SalaCartasMapa.posYInicial
         );
     }
 
 
     @Override
     public void subscribe(Jugador jugador) {
+        if (!Objects.isNull(jugador)) {
+            for (Mesa mesa : this.mesas) {
+                jugador.attach(mesa);
+            }
 
+            for (Pasillo pasillo : this.pasillos) {
+                jugador.attach(pasillo);
+            }
+
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.Scanner;
 import excep.ExcepcionJugadorMenorEdad;
 import excep.ExcepcionJugadorNoEncontrado;
 import personas.Jugador;
+import personas.JugadorFactory;
 
 public class SalaRegistro {
 
@@ -84,7 +85,7 @@ public class SalaRegistro {
                     break;
                 case 3: // DEBUG MOMENTANEO
                     System.out.println("Adiós, espero que se lo haya pasado bien");
-                    return new Jugador("Lediff el travieso", 23, 1000.0);
+                    return JugadorFactory.crearJugador("principal","Lediff el travieso", 23, 1000.0);
                 default:
                     System.out.println("Opción no válida, por favor elige 1, 2 o 3.");
             }
@@ -158,7 +159,7 @@ public class SalaRegistro {
         } while (confirmacion != 'S' && confirmacion != 's');
 
         // Crear el jugador con los datos confirmados
-        return new Jugador(nombre, edad, dinero);
+        return JugadorFactory.crearJugador("principal", nombre, edad, dinero);
     }
 
     // Verificar si el jugador es mayor de edad

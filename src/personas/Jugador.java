@@ -17,7 +17,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
 
 
     // Atributos Adicionales
-    private Integer posX = SalaPrincipalMapa.posX, posY = SalaPrincipalMapa.posY;
+    private Integer posX = null, posY = null;
     private Boolean interact = false;
 
     // Sobrecarga Constructor

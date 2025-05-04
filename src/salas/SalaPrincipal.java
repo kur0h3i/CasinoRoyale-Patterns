@@ -34,9 +34,7 @@ public class SalaPrincipal extends Sala {
     private final Cajero cajero = new Cajero(2, 7);
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
 
-    private Integer posInitialX = SalaPrincipalMapa.posX, posInitialY = SalaPrincipalMapa.posY;
-
-    public SalaPrincipal(Jugador jugador) throws ExcepcionJugadorSinFichas, ExcepcionJugadorSinDinero {
+    public SalaPrincipal(Jugador jugador) {
         super(
                 jugador,
                 SalaPrincipalMapa.mapaSalaPrincipal,
@@ -55,13 +53,15 @@ public class SalaPrincipal extends Sala {
                                 new Pasillo(3, 15, new SalaAzar(null)),
                                 new Pasillo(0, 22, new SalaCartas(null))
                         )
-                )
+                ),
+                SalaPrincipalMapa.posX,
+                SalaPrincipalMapa.posY
                 );
 
         //jugador.setFichas(100); // Fichas iniciales del jugador
 
-        jugador.setPosX(posInitialX);
-        jugador.setPosY(posInitialY);
+        // jugador.setPosX(posInitialX);
+        // jugador.setPosY(posInitialY);
         subscribe(jugador);
 
         Scanner scanner = new Scanner(System.in);

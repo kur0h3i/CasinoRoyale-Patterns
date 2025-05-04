@@ -21,6 +21,6 @@ public class SalaJuegosAzarMapa {
             {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
     };
 
-    public static Integer posX = 0, posY = 3;
+    public static Integer posX = 3, posY = 1;
 
 }

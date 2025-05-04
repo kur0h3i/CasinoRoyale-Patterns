@@ -1,11 +1,8 @@
 package salas;
 
-import acciones.Cajero;
 import acciones.Mesa;
 import acciones.Pasillo;
 import ascii.ASCIIGeneral;
-import excep.ExcepcionJugadorSinDinero;
-import excep.ExcepcionJugadorSinFichas;
 import patterns.observer.Subscription;
 import personas.Jugador;
 
@@ -22,7 +19,7 @@ public abstract class Sala implements Subscription {
     private Jugador jugador;
     protected ArrayList<Mesa> mesas;
     protected ArrayList<Pasillo> pasillos;
-
+    private final Integer posInitialX, posInitialY;
 
     Sala(Jugador jugador, Character[][] mapa) {
         this(jugador, mapa, new ArrayList<Mesa>());
@@ -32,12 +29,28 @@ public abstract class Sala implements Subscription {
         this(jugador, mapa, mesas, new ArrayList<Pasillo>());
     }
 
-    Sala (Jugador jugador, Character[][] mapa,
+    Sala(Jugador jugador, Character[][] mapa,
                   ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos) {
+        this(jugador, mapa, mesas, pasillos, 0, 0);
+    }
+
+    Sala(Jugador jugador, Character[][] mapa,
+         ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos,
+         Integer posInitialX, Integer posInitialY) {
         this.jugador = jugador;
         this.mapa = mapa;
         this.mesas = mesas;
         this.pasillos = pasillos;
+        this.posInitialX = posInitialX;
+        this.posInitialY = posInitialY;
+
+        if (jugador != null) { // Para iniciar de forma natural la posicion del jugador en las primeras instancias del programa
+            if (jugador.getPosX() == null || jugador.getPosY() == null) {
+                jugador.setPosX(this.posInitialX);
+                jugador.setPosY(this.posInitialY);
+            }
+        }
+
     }
 
     protected void interfazPrincipal(Jugador jugador, ArrayList<Mesa> mesas){
@@ -140,4 +153,11 @@ public abstract class Sala implements Subscription {
         subscribe(jugador);
     }
 
+    public Integer getPosInitialX() {
+        return posInitialX;
+    }
+
+    public Integer getPosInitialY() {
+        return posInitialY;
+    }
 }

@@ -10,7 +10,6 @@ import java.util.Objects;
 public class Pasillo implements PullPushModelObserver {
 
     private final Integer posX, posY;
-
     private final Sala salaPosterior; // Necesito a que sala me llevara
 
     public Pasillo(Integer posX, Integer posY, Sala salaPosterior) {
@@ -25,7 +24,11 @@ public class Pasillo implements PullPushModelObserver {
             Jugador jugadorTMP = (Jugador) pullPushModelObservable;
 
             if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
+
                 jugadorTMP.detachAll();
+
+                jugadorTMP.setPosX(this.salaPosterior.getPosInitialX());
+                jugadorTMP.setPosY(this.salaPosterior.getPosInitialY());
 
                 this.salaPosterior.setJugador(jugadorTMP);
                 this.salaPosterior.iniciarInterfaz();

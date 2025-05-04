@@ -28,10 +28,8 @@ public class Pasillo implements PullPushModelObserver {
             
             if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
 
-
                 jugadorTMP.detachAll();
 
-                // if
                 if (jugadorTMP.getSalaActual().toString().equals("Cartas")) {
                     jugadorTMP.setPosX(SalaCartasMapa.posXEntrada);
                     jugadorTMP.setPosY(SalaCartasMapa.posYEntrada);
@@ -47,9 +45,6 @@ public class Pasillo implements PullPushModelObserver {
 
                 jugadorTMP.setSala(this.salaSiguiente);
                 this.salaSiguiente.setJugador(jugadorTMP);
-
-                // Setear mesas
-
                 this.salaSiguiente.iniciarInterfaz();
 
             }

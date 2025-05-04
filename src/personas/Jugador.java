@@ -2,104 +2,22 @@
 package personas;
 
 // IO
-import excep.ExcepcionJugadorSinFichas;
-import mapas.SalaPrincipalMapa;
-import patterns.observer.PullPushModelObservable;
-import patterns.observer.PullPushModelObserver;
-import salas.Sala;
-import salas.SalaPrincipal;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-public class Jugador implements Serializable, PullPushModelObservable{
-
-    // Atributos Adicionales
-    private Integer posX = null, posY = null;
-    private Boolean interact = false;
-
-    // Sobrecarga Constructor
-    public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY){
-        this.nombre = nombre;
-        this.edad = edad;
-        this.dinero = dinero;
-
-        this.posX = posX;
-        this.posY = posY;
-    }
-
-    public Integer getPosX() {
-        return posX;
-    }
-
-    public Integer getPosY() {
-        return posY;
-    }
-
-    public void setPosX(Integer posX) {
-        this.posX = posX;
-    }
-
-    public void setPosY(Integer posY) {
-        this.posY = posY;
-    }
-
-    public Boolean getInteract() {
-        return interact;
-    }
-
-    public void move(Integer x, Integer y) {
-        this.posX = x;
-        this.posY = y;
-        notifyObservers();
-    }
-
-    public void interacting() {
-        this.interact = true;
-        notifyObservers();
-        this.interact = false;
-    }
-
-    private List<PullPushModelObserver> observers = new ArrayList<>();
-
-    @Override
-    public void attach(PullPushModelObserver observer) {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void detach(PullPushModelObserver observer) {
-        this.observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (PullPushModelObserver observer : this.observers) { // for each
-            try {
-                observer.update(this, null); // TODO: SUGERENCIA 2
-                if (this.observers.isEmpty()) return;
-            } catch (ExcepcionJugadorSinFichas e) {
-                e.printStackTrace();
-            }
-        }
-    }
+public class Jugador implements Serializable{
     
     // Atributos
     private static final long serialVersionUID = 1L;
     String nombre;
-    Integer edad;
-    Double dinero;
-    Integer fichas;
-    Sala salaActual;
+    int edad;
+    double dinero;
+    int fichas;
 
     // Constructor
-    public Jugador(String nombre, Integer edad, Double dinero){
+    public Jugador(String nombre, int edad, double dinero){
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
-        this.fichas = 0;
     }
 
     // Metodos
@@ -108,46 +26,44 @@ public class Jugador implements Serializable, PullPushModelObservable{
     public void setNombre( String nombre){
         this.nombre = nombre;
     }
-    public void setEdad( Integer edad){
+    public void setEdad( int edad){
         this.edad = edad;
     }
-    public void setDinero( Double dinero){
+    public void setDinero( double dinero){
         this.dinero = dinero;
     }
-    public void setFichas( Integer fichas){
+    public void setFichas( int fichas){
         this.fichas = fichas;
     }
-    public void setSala(Sala salaActual){ this.salaActual = salaActual; }
 
     // Getters
     public String getName(){
         return this.nombre;
     }
-    public Integer getEdad(){
+    public int getEdad(){
         return this.edad;
     }
-    public Double getDinero(){
+    public double getDinero(){
         return this.dinero;
     }
-    public Integer getFichas(){
+    public int getFichas(){
         return this.fichas;
     }
-    public Sala getSalaActual(){return this.salaActual;}
 
     // agregar / restar
-    public void agregarFichas(Integer fichas){
+    public void agregarFichas(int fichas){
         this.fichas += fichas;
     }
 
-    public void restarFichas(Integer fichas){
+    public void restarFichas(int fichas){
         this.fichas -= fichas;
     }
 
-    public void agregarDinero(Integer dinero){
+    public void agregarDinero(int dinero){
         this.dinero += dinero;
     }
 
-    public void restarDinero(Integer dinero){
+    public void restarDinero(int dinero){
         this.dinero -= dinero;
     }
 
@@ -178,10 +94,5 @@ public class Jugador implements Serializable, PullPushModelObservable{
                 + this.dinero
                 + "\nFichas : "
                 + this.fichas;
-    }
-
-    @Override
-    public void detachAll() {
-        observers.clear();
     }
 }

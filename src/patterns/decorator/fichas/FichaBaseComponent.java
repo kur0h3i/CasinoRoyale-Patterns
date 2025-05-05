@@ -1,9 +1,9 @@
-package patterns.decorator;
+package patterns.decorator.fichas;
 
-public class FichaBase implements Ficha {
+public class FichaBaseComponent implements FichaComponent {
     private int cantidad;
 
-    public FichaBase(int cantidadInicial) {
+    public FichaBaseComponent(int cantidadInicial) {
         this.cantidad = cantidadInicial;
     }
 

@@ -1,9 +1,9 @@
-package patterns.decorator;
+package patterns.decorator.fichas;
 
-public abstract class FichaDecorator implements Ficha {
-    protected Ficha fichaDecorada;
+public abstract class FichaDecorator implements FichaComponent {
+    protected FichaComponent fichaDecorada;
 
-    public FichaDecorator(Ficha fichaDecorada) {
+    public FichaDecorator(FichaComponent fichaDecorada) {
         this.fichaDecorada = fichaDecorada;
     }
 

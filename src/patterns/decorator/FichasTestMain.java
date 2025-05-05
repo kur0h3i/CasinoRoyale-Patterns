@@ -1,6 +1,6 @@
 package patterns.decorator;
 
-public class Main {
+public class FichasTestMain {
     public static void main(String[] args) {
         Jugador jugador = new Jugador("Luis", 10);
 

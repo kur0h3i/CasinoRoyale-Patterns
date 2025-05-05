@@ -1,9 +1,9 @@
-package patterns.decorator;
+package patterns.decorator.fichas;
 
-public class QuitarFichas extends FichaDecorator {
+public class QuitarFichasComponentDecorator extends FichaDecorator {
     private int cantidadQuitar;
 
-    public QuitarFichas(Ficha fichaDecorada, int cantidadQuitar) {
+    public QuitarFichasComponentDecorator(FichaComponent fichaDecorada, int cantidadQuitar) {
         super(fichaDecorada);
         this.cantidadQuitar = cantidadQuitar;
     }

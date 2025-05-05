@@ -1,9 +1,9 @@
-package patterns.decorator;
+package patterns.decorator.fichas;
 
-public class AgregarFichas extends FichaDecorator {
+public class AgregarFichasComponentDecorator extends FichaDecorator {
     private int cantidadAgregar;
 
-    public AgregarFichas(Ficha fichaDecorada, int cantidadAgregar) {
+    public AgregarFichasComponentDecorator(FichaComponent fichaDecorada, int cantidadAgregar) {
         super(fichaDecorada);
         this.cantidadAgregar = cantidadAgregar;
     }

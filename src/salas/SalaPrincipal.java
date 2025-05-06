@@ -24,26 +24,58 @@ import personas.Jugador;
 
 // ASCII
 
-
+/**
+ * Clase unica donde aparecera el jugador, heredado de la clase padre Sala.
+ * Existen elementos en esta sala como el Cajero, Puerta de Salida y el bar Fenrir
+ * @see salas.Sala
+ * @author Luis Fidel Blanco Grau
+ * @version 1.0
+ * */
 public class SalaPrincipal extends Sala {
 
+    /**
+     * Elemento Singleton
+     * */
     static SalaPrincipal salaPrincipal; // SINGLETON LAZY
 
+    /**
+     * Metodo de invocacion por Singleton
+     * @param jugador Personaje para que este presente en la sala, si es null, se actualizara mediante getters y setters.
+     */
     public static SalaPrincipal getInstance(Jugador jugador) {
         if (Objects.isNull(salaPrincipal)) {
             salaPrincipal = new SalaPrincipal(jugador);
         }
         return salaPrincipal;
     }
-
+    /**
+     * Metodo de invocacion por Singleton
+     */
     public static SalaPrincipal getInstance() {
         return getInstance(null);
     }
 
-    // private final Fenrir fenrir = new Fenrir(); // TODO
+    /**
+     * Elemento Cajero que aparecera en la sala Principal
+     * @see Cajero
+     * */
     private final Cajero cajero = new Cajero(2, 7);
+    /**
+     * Elemento Cajero que aparecera en la sala Principal
+     * @see PuertaSalida
+     * */
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
+    /**
+     * Elemento Cajero que aparecera en la sala Principal
+     * @see Fenrir
+     */
     private final Fenrir fenrir = new Fenrir(12, 5);
+
+    /**
+     * Constructor de Sala Principal
+     * Se almacena los datos en la clase padre. Ejecuta una funcion para subscribirse el jugador los observadores.
+     * @param jugador Personaje para que este presente en la sala, si es null, se actualizara mediante getters y setters
+     * */
     public SalaPrincipal(Jugador jugador) {
         super(
                 jugador,

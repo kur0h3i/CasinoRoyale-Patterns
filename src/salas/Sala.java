@@ -119,8 +119,23 @@ public abstract class Sala implements Subscription {
                         break;
                     case "e":
                         System.out.println("He pulsado la tecla E!");
-                        jugador.interacting();
+                        
+                        if (jugador.getInventario()){
+                            jugador.usarItems();
+                            ASCIIGeneral.esperarTecla();
+                        }else{
+                            jugador.interacting();
+                        }
                         break;
+                        // Hacer que haya un voton para mostartlo y potro para usarlo y que pasar usarlo hay que limpiar interfaz y numerar los items
+                    case "i":
+                        ASCIIGeneral.limpiarPantalla();
+                        jugador.setInvetario(true);
+                        jugador.usarItems();
+                        ASCIIGeneral.esperarTecla();
+                        jugador.setInvetario(false);
+                        break;
+
                     default:
                         validInput = false;
                         badCommand();

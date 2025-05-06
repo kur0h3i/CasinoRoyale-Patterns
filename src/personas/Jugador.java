@@ -2,23 +2,23 @@
 package personas;
 
 // IO
+import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinFichas;
-import mapas.SalaPrincipalMapa;
+import items.Items;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import salas.Sala;
-import salas.SalaPrincipal;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class Jugador implements Serializable, PullPushModelObservable{
 
     // Atributos Adicionales
     private Integer posX = null, posY = null;
     private Boolean interact = false;
+    private ArrayList<Items> items = new ArrayList<>();
+    private Boolean inventario = false;
 
     // Sobrecarga Constructor
     public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY){
@@ -119,6 +119,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     }
     public void setSala(Sala salaActual){ this.salaActual = salaActual; }
 
+    public void setInvetario(Boolean inventario){ this.inventario = inventario; }
     // Getters
     public String getName(){
         return this.nombre;
@@ -134,6 +135,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     }
     public Sala getSalaActual(){return this.salaActual;}
 
+    public Boolean getInventario() {return this.inventario; }
     // agregar / restar
     public void agregarFichas(Integer fichas){
         this.fichas += fichas;
@@ -143,11 +145,11 @@ public class Jugador implements Serializable, PullPushModelObservable{
         this.fichas -= fichas;
     }
 
-    public void agregarDinero(Integer dinero){
+    public void agregarDinero(Double dinero){
         this.dinero += dinero;
     }
 
-    public void restarDinero(Integer dinero){
+    public void restarDinero(Double dinero){
         this.dinero -= dinero;
     }
 
@@ -183,5 +185,67 @@ public class Jugador implements Serializable, PullPushModelObservable{
     @Override
     public void detachAll() {
         observers.clear();
+    }
+
+    // Mostrar inventario jugador
+    public void mostrarInventario() {
+        
+        if (items.isEmpty()) {
+            System.out.println("El inventario está vacío.");
+        } else {
+            System.out.println("Inventario de " + nombre + ":");
+            for (int i = 0; i < items.size(); i++) {
+                Items item = items.get(i);
+                System.out.println(i + 1 + " "
+                    + item.getNombre() 
+                    + " | " + item.getDescripcion() 
+                    + " | Precio: " + item.getPrecio());
+            }
+        }
+    }
+
+
+   public void usarItems() {
+        if (items.isEmpty()) {
+            System.out.println("No hay items para usar.");
+            return;
+        }
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            mostrarInventario();
+            System.out.print("Elige el número del item a usar (0 para salir): ");
+            int opcion;
+            try {
+                opcion = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Intenta de nuevo.");
+                continue;
+            }
+            if (opcion == 0) {
+                System.out.println("Saliendo del uso de items.");
+                break;
+            }
+            if (opcion < 1 || opcion > items.size()) {
+                System.out.println("Opción fuera de rango. Intenta de nuevo.");
+                continue;
+            }
+            Items seleccionado = items.get(opcion - 1);
+            ASCIIGeneral.limpiarPantalla();
+            System.out.println("Usando " + seleccionado.getNombre() + "...");
+            seleccionado.usar();
+            items.remove(opcion - 1);
+            if (items.isEmpty()) {
+                System.out.println("Ya no quedan items en el inventario.");
+                break;
+            }
+            System.out.println(); // línea en blanco antes de la siguiente iteración
+        }
+    }
+
+    public void agregarItem(Items item) {
+        items.add(item);
+        System.out.println("Se ha añadido al inventario: " 
+            + item.getNombre() 
+            + " (Precio: " + item.getPrecio() + ")");
     }
 }

@@ -8,6 +8,20 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
+            "mainClass": "personas.Main",
+            "projectName": "Casino-Patterns_e4b9e1e3"
+        },
+        {
+            "type": "java",
+            "name": "MainCasino",
+            "request": "launch",
+            "mainClass": "MainCasino",
+            "projectName": "Casino-Patterns_e4b9e1e3"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
             "mainClass": "blackjack.Main",
             "projectName": "Casino-CLI_825f4220"
         },

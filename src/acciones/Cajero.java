@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
+import personas.FondosDecorator;
 import personas.Jugador;
 import static recursos.MensajesEstaticos.interactATM;
 
@@ -34,7 +35,8 @@ public class Cajero implements PullPushModelObserverInteractive {
             if (Objects.equals(j.getPosX(), posX) && Objects.equals(j.getPosY(), posY)) {
                 interactATM();
                 this.jugador = j;
-                if (j.getInteract()) interactive();
+                if (j.getInteract())
+                    interactive();
             } else {
                 this.jugador = null;
             }
@@ -80,34 +82,35 @@ public class Cajero implements PullPushModelObserverInteractive {
         }
     }
 
+    // Métodos de actualización de fondos
     private void cambiarDineroAFichas(Scanner input) {
-        float importe = definirImporteDinero(input);
         try {
             comprobarDinero();
-            System.out.printf("Cambiando %.2f€ por fichas…%n", importe);
-            // restamos dinero (Jugador usa Double)
-            jugador.restarDinero((double) importe);
-            // añadimos fichas (solo enteras)
-            jugador.agregarFichas((int) importe);
-            System.out.println("Operación completada.");
+            double cantidad = definirImporteDinero(input);
+            if (jugador instanceof FondosDecorator) {
+                FondosDecorator jugadorConFondos = (FondosDecorator) jugador;
+                jugadorConFondos.restarDinero(cantidad); // Restamos dinero
+                jugadorConFondos.agregarFichas(cantidad); // Añadimos fichas
+                System.out.println("Operación completada.");
+            }
         } catch (ExcepcionJugadorSinDinero e) {
-            System.out.println("No tienes suficiente dinero.");
+            System.out.println(e.getMessage());
         }
         ASCIIGeneral.esperarTecla();
     }
 
     private void cambiarFichasADinero(Scanner input) {
-        int cantidad = definirCantidadFichas(input);
         try {
             comprobarFichas();
-            System.out.printf("Cambiando %d fichas por dinero…%n", cantidad);
-            // restamos fichas
-            jugador.restarFichas(cantidad);
-            // añadimos dinero como Double
-            jugador.agregarDinero((double) cantidad);
-            System.out.println("Operación completada.");
+            double cantidad = definirCantidadFichas(input);
+            if (jugador instanceof FondosDecorator) {
+                FondosDecorator jugadorConFondos = (FondosDecorator) jugador;
+                jugadorConFondos.restarFichas(cantidad); // Restamos fichas
+                jugadorConFondos.agregarDinero(cantidad); // Añadimos dinero
+                System.out.println("Operación completada.");
+            }
         } catch (ExcepcionJugadorSinFichas e) {
-            System.out.println("No tienes suficientes fichas.");
+            System.out.println(e.getMessage());
         }
         ASCIIGeneral.esperarTecla();
     }

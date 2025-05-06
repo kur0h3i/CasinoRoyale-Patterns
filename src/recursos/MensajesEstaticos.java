@@ -32,4 +32,8 @@ public class MensajesEstaticos {
         System.out.println("Comando no válido. Intenta de nuevo.");
     }
 
+    public static void interactFenrir() {
+        System.out.println("Pulsa E para entrar al Fenrir");
+    }
+
 }

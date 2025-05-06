@@ -13,6 +13,7 @@ import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
+import static recursos.MensajesEstaticos.interactFenrir;
 
 public class Fenrir implements PullPushModelObserverInteractive {
 
@@ -22,7 +23,6 @@ public class Fenrir implements PullPushModelObserverInteractive {
     private ASCIIFenrir interfaz;
 
     public Fenrir(Integer posX, Integer posY) {
-        this.jugador = jugador;
         // Inicializa la carta de bebidas
         bebidasDisponibles.add(new Bebida("Cerveza", 2.50, "Bien fría"));
         bebidasDisponibles.add(new Bebida("Refresco",1.50, "Dulce y burbujeante"));
@@ -103,6 +103,7 @@ public class Fenrir implements PullPushModelObserverInteractive {
             Jugador j = (Jugador) obs;
             if (Objects.equals(j.getPosX(), posX) && Objects.equals(j.getPosY(), posY)) {
                 this.jugador = j;
+                interactFenrir();
                 if (j.getInteract()) interactive();
             } else {
                 this.jugador = null;

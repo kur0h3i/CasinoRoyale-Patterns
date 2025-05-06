@@ -14,8 +14,8 @@ public class ASCIIFenrir {
     }
 
     public void opcionesBar() {
-        System.out.println("1) Comprar bebida (pagar con dinero)");
-        System.out.println("2) Salir del bar");
+        System.out.println("1. Comprar bebida");
+        System.out.println("2. Salir del bar");
         System.out.print("Selecciona una opción: ");
     }
 

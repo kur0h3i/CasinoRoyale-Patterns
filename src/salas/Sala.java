@@ -131,12 +131,9 @@ public abstract class Sala implements Subscription {
                     case "i":
                         ASCIIGeneral.limpiarPantalla();
                         jugador.setInvetario(true);
-                        jugador.mostrarInventario();
+                        jugador.usarItems();
                         ASCIIGeneral.esperarTecla();
                         jugador.setInvetario(false);
-                        break;
-                    case "u":
-                        jugador.usarItems();
                         break;
 
                     default:

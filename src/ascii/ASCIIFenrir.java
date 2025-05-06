@@ -19,14 +19,24 @@ public class ASCIIFenrir {
         System.out.print("Selecciona una opción: ");
     }
 
-     public void mostrarMenuBebidas(List<Items> bebidas) {
-        System.out.println("----- Carta de Bebidas -----");
-        for (int i = 0; i < bebidas.size(); i++) {
-            Items b = bebidas.get(i);
-            System.out.printf("%2d) %s – %s (€%.2f)%n",
-                i + 1, b.getNombre(), b.getDescripcion(), b.getPrecio());
-        }
+    public void mostrarMenuBebidas(List<Items> bebidas) {
+        System.out.println("------------- Carta de Bebidas ----------------");
+        
+        System.out.println("--------------------------");
+
         System.out.print("¿Qué deseas pedir? ");
+    }
+
+    public void carta() {
+        System.out.println("_____________________________ CARTA _____________________________");
+        System.out.println("| Num                    | Bebida           | Precio             |");
+        System.out.println("|------------------------|------------------|--------------------|");
+        System.out.println("| 1                      | Cerveza          | 2.50€              |");
+        System.out.println("| 2                      | Copa de Vino     | 3.00€              |");
+        System.out.println("| 3                      | Redbull          | 1.59€              |");
+        System.out.println("| 4                      | Cacaolat         | 1.10€              |");
+        System.out.println("| 5                      | Bifrutas         | 1.42€              |");
+        System.out.println("|________________________|__________________|____________________|");
     }
     
 }

@@ -2,10 +2,10 @@ package items;
 
 public class Bebida implements Items {
     private String nombre;
-    private double precio;           
+    private Double precio;           
     private String descripcion;
 
-    public Bebida(String nombre, double precio, String descripcion) {
+    public Bebida(String nombre, Double precio, String descripcion) {
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;

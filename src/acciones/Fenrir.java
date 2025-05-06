@@ -25,9 +25,10 @@ public class Fenrir implements PullPushModelObserverInteractive {
     public Fenrir(Integer posX, Integer posY) {
         // Inicializa la carta de bebidas
         bebidasDisponibles.add(new Bebida("Cerveza", 2.50, "Bien fría"));
-        bebidasDisponibles.add(new Bebida("Refresco",1.50, "Dulce y burbujeante"));
         bebidasDisponibles.add(new Bebida("Copa de vino", 3.00, "Tinto de la casa"));
         bebidasDisponibles.add(new Bebida("Redbull", 1.59, "Te da alas"));
+        bebidasDisponibles.add(new Bebida("Cacaolat", 1.59, "Te da alas"));
+        bebidasDisponibles.add(new Bebida("FireBall", 1.59, "Te da alas"));
 
         // posiciones
         this.posX = posX;
@@ -47,7 +48,7 @@ public class Fenrir implements PullPushModelObserverInteractive {
                 input.nextLine();
                 switch (opcion) {
                     case 1:
-                        comprarBebidaConDinero(input);
+                        comprarBebida(input);
                         break;
                     case 2:
                         System.out.println("Saliendo del bar...");
@@ -65,8 +66,8 @@ public class Fenrir implements PullPushModelObserverInteractive {
         }
     }
 
-    private void comprarBebidaConDinero(Scanner input) {
-        interfaz.mostrarMenuBebidas(bebidasDisponibles);
+    private void comprarBebida(Scanner input) {
+        interfaz.carta();
         try {
             Integer id = input.nextInt();
             input.nextLine();

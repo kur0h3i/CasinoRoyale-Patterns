@@ -13,4 +13,6 @@ public class JugadorPrincipal extends Jugador {
         System.out.println("Fichas : " + this.getFichas());
         System.out.println("----------------------------");
     }
+
+    
 }

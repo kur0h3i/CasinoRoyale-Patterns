@@ -2,6 +2,7 @@
 package personas;
 
 // IO
+import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinFichas;
 import items.Items;
 import java.io.Serializable;
@@ -193,8 +194,9 @@ public class Jugador implements Serializable, PullPushModelObservable{
             System.out.println("El inventario está vacío.");
         } else {
             System.out.println("Inventario de " + nombre + ":");
-            for (Items item : items) {
-                System.out.println("- " 
+            for (int i = 0; i < items.size(); i++) {
+                Items item = items.get(i);
+                System.out.println(i + 1 + " "
                     + item.getNombre() 
                     + " | " + item.getDescripcion() 
                     + " | Precio: " + item.getPrecio());
@@ -228,6 +230,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
                 continue;
             }
             Items seleccionado = items.get(opcion - 1);
+            ASCIIGeneral.limpiarPantalla();
             System.out.println("Usando " + seleccionado.getNombre() + "...");
             seleccionado.usar();
             items.remove(opcion - 1);

@@ -3,22 +3,19 @@ package personas;
 
 // IO
 import excep.ExcepcionJugadorSinFichas;
-import mapas.SalaPrincipalMapa;
+import items.Items;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import salas.Sala;
-import salas.SalaPrincipal;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class Jugador implements Serializable, PullPushModelObservable{
 
     // Atributos Adicionales
     private Integer posX = null, posY = null;
     private Boolean interact = false;
+    private ArrayList<Items> items = new ArrayList<>();
 
     // Sobrecarga Constructor
     public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY){
@@ -183,5 +180,10 @@ public class Jugador implements Serializable, PullPushModelObservable{
     @Override
     public void detachAll() {
         observers.clear();
+    }
+
+    // Mostrar inventario jugador
+    public void inventario(){
+
     }
 }

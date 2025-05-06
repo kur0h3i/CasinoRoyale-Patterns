@@ -121,6 +121,11 @@ public abstract class Sala implements Subscription {
                         System.out.println("He pulsado la tecla E!");
                         jugador.interacting();
                         break;
+                    case "i":
+                        ASCIIGeneral.limpiarPantalla();
+                        jugador.mostrarInventario();
+                        ASCIIGeneral.esperarTecla();
+                        break;
                     default:
                         validInput = false;
                         badCommand();

@@ -7,6 +7,7 @@ import items.Items;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import salas.Sala;
@@ -140,11 +141,11 @@ public class Jugador implements Serializable, PullPushModelObservable{
         this.fichas -= fichas;
     }
 
-    public void agregarDinero(Integer dinero){
+    public void agregarDinero(Double dinero){
         this.dinero += dinero;
     }
 
-    public void restarDinero(Integer dinero){
+    public void restarDinero(Double dinero){
         this.dinero -= dinero;
     }
 
@@ -183,7 +184,61 @@ public class Jugador implements Serializable, PullPushModelObservable{
     }
 
     // Mostrar inventario jugador
-    public void inventario(){
+    public void mostrarInventario() {
+        if (items.isEmpty()) {
+            System.out.println("El inventario está vacío.");
+        } else {
+            System.out.println("Inventario de " + nombre + ":");
+            for (Items item : items) {
+                System.out.println("- " 
+                    + item.getNombre() 
+                    + " | " + item.getDescripcion() 
+                    + " | Precio: " + item.getPrecio());
+            }
+        }
+    }
 
+
+   public void usarItems() {
+        if (items.isEmpty()) {
+            System.out.println("No hay items para usar.");
+            return;
+        }
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            mostrarInventario();
+            System.out.print("Elige el número del item a usar (0 para salir): ");
+            int opcion;
+            try {
+                opcion = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Intenta de nuevo.");
+                continue;
+            }
+            if (opcion == 0) {
+                System.out.println("Saliendo del uso de items.");
+                break;
+            }
+            if (opcion < 1 || opcion > items.size()) {
+                System.out.println("Opción fuera de rango. Intenta de nuevo.");
+                continue;
+            }
+            Items seleccionado = items.get(opcion - 1);
+            System.out.println("Usando " + seleccionado.getNombre() + "...");
+            seleccionado.usar();
+            items.remove(opcion - 1);
+            if (items.isEmpty()) {
+                System.out.println("Ya no quedan items en el inventario.");
+                break;
+            }
+            System.out.println(); // línea en blanco antes de la siguiente iteración
+        }
+    }
+
+    public void agregarItem(Items item) {
+        items.add(item);
+        System.out.println("Se ha añadido al inventario: " 
+            + item.getNombre() 
+            + " (Precio: " + item.getPrecio() + ")");
     }
 }

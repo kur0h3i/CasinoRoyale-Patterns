@@ -32,6 +32,8 @@ public class Fenrir implements PullPushModelObserverInteractive {
         // posiciones
         this.posX = posX;
         this.posY = posY;
+
+        interfaz = new ASCIIFenrir();
     }
 
     public void iniciarBar(Scanner input) {

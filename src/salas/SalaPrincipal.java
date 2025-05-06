@@ -43,7 +43,7 @@ public class SalaPrincipal extends Sala {
     // private final Fenrir fenrir = new Fenrir(); // TODO
     private final Cajero cajero = new Cajero(2, 7);
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
-    private final Fenrir fenrir = new Fenrir(12, 6);
+    private final Fenrir fenrir = new Fenrir(12, 5);
     public SalaPrincipal(Jugador jugador) {
         super(
                 jugador,

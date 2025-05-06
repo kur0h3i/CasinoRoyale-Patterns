@@ -17,6 +17,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     private Integer posX = null, posY = null;
     private Boolean interact = false;
     private ArrayList<Items> items = new ArrayList<>();
+    private Boolean inventario = false;
 
     // Sobrecarga Constructor
     public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY){
@@ -117,6 +118,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     }
     public void setSala(Sala salaActual){ this.salaActual = salaActual; }
 
+    public void setInvetario(Boolean inventario){ this.inventario = inventario; }
     // Getters
     public String getName(){
         return this.nombre;
@@ -132,6 +134,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
     }
     public Sala getSalaActual(){return this.salaActual;}
 
+    public Boolean getInventario() {return this.inventario; }
     // agregar / restar
     public void agregarFichas(Integer fichas){
         this.fichas += fichas;
@@ -185,6 +188,7 @@ public class Jugador implements Serializable, PullPushModelObservable{
 
     // Mostrar inventario jugador
     public void mostrarInventario() {
+        
         if (items.isEmpty()) {
             System.out.println("El inventario está vacío.");
         } else {

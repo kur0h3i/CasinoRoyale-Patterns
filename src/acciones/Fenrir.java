@@ -14,19 +14,24 @@ import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 
-public class Bar implements PullPushModelObserverInteractive {
+public class Fenrir implements PullPushModelObserverInteractive {
 
     private Integer posX, posY;
     private Jugador jugador;
     private List<Items> bebidasDisponibles = new ArrayList<>();
     private ASCIIFenrir interfaz;
 
-    public Bar(Jugador jugador) {
+    public Fenrir(Integer posX, Integer posY) {
         this.jugador = jugador;
         // Inicializa la carta de bebidas
-        bebidasDisponibles.add(new Bebida("Cerveza",      2.50, "Bien fría"));
-        bebidasDisponibles.add(new Bebida("Refresco",     1.50, "Dulce y burbujeante"));
+        bebidasDisponibles.add(new Bebida("Cerveza", 2.50, "Bien fría"));
+        bebidasDisponibles.add(new Bebida("Refresco",1.50, "Dulce y burbujeante"));
         bebidasDisponibles.add(new Bebida("Copa de vino", 3.00, "Tinto de la casa"));
+        bebidasDisponibles.add(new Bebida("Redbull", 1.59, "Te da alas"));
+
+        // posiciones
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public void iniciarBar(Scanner input) {

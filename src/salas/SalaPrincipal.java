@@ -12,6 +12,7 @@ import acciones.Mesa;
 import acciones.Pasillo;
 import acciones.PuertaSalida;
 import acciones.Cajero;
+import acciones.Fenrir;
 
 // Excepciones
 
@@ -42,7 +43,7 @@ public class SalaPrincipal extends Sala {
     // private final Fenrir fenrir = new Fenrir(); // TODO
     private final Cajero cajero = new Cajero(2, 7);
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
-
+    private final Fenrir fenrir = new Fenrir(12, 6);
     public SalaPrincipal(Jugador jugador) {
         super(
                 jugador,
@@ -72,6 +73,7 @@ public class SalaPrincipal extends Sala {
 
             jugador.attach(this.cajero);
             jugador.attach(this.puertaSalida);
+            jugador.attach(this.fenrir);
         }
     }
 

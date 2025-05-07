@@ -1,199 +1,195 @@
+
 package salas;
 
 import acciones.Mesa;
 import acciones.Pasillo;
 import ascii.ASCIIGeneral;
-import patterns.observer.Subscription;
 import personas.Jugador;
+import patterns.observer.Subscription;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-// Mensajes
 import static recursos.MensajesEstaticos.*;
 
+/**
+ * Clase Sala => Clase abstracta para representar una sala en el casino.
+ * Gestiona el mapa ASCII, la posición inicial del jugador, mesas y pasillos.
+ * Implementa Subscription para suscripción del jugador a eventos de movimiento e interacción.
+ */
 public abstract class Sala extends Subscription {
 
+    /** Mapa ASCII bidimensional de la sala */
     private Character[][] mapa;
+    /** Jugador actualmente en la sala */
     private Jugador jugador;
+    /** Mesas de juego disponibles en esta sala */
     protected ArrayList<Mesa> mesas;
+    /** Pasillos que conectan con otras salas */
     protected ArrayList<Pasillo> pasillos;
-    private Integer posInitialX, posInitialY;
-    // protected Integer posLastTimeSeenX, posLastTimeSeenY;
+    /** Coordenada X donde aparece el jugador al entrar */
+    private Integer posInitialX;
+    /** Coordenada Y donde aparece el jugador al entrar */
+    private Integer posInitialY;
 
-    Sala(Jugador jugador, Character[][] mapa) {
-        this(jugador, mapa, new ArrayList<Mesa>());
+    /**
+     * Constructor principal.
+     * @param jugador jugador que entra en la sala
+     * @param mapa representación ASCII de la sala
+     */
+    protected Sala(Jugador jugador, Character[][] mapa) {
+        this(jugador, mapa, new ArrayList<>(), new ArrayList<>(), 0, 0);
     }
 
-    Sala(Jugador jugador, Character[][] mapa, ArrayList<Mesa> mesas) {
-        this(jugador, mapa, mesas, new ArrayList<Pasillo>());
-    }
-
-    Sala(Jugador jugador, Character[][] mapa,
-            ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos) {
+    /**
+     * Constructor con listado de mesas y pasillos.
+     */
+    protected Sala(Jugador jugador,
+                   Character[][] mapa,
+                   ArrayList<Mesa> mesas,
+                   ArrayList<Pasillo> pasillos) {
         this(jugador, mapa, mesas, pasillos, 0, 0);
     }
 
-    Sala(Jugador jugador, Character[][] mapa,
-            ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos,
-            Integer posInitialX, Integer posInitialY) {
+    /**
+     * Constructor completo con posición inicial.
+     */
+    protected Sala(Jugador jugador,
+                   Character[][] mapa,
+                   ArrayList<Mesa> mesas,
+                   ArrayList<Pasillo> pasillos,
+                   Integer posInitialX,
+                   Integer posInitialY) {
         this.jugador = jugador;
         this.mapa = mapa;
         this.mesas = mesas;
         this.pasillos = pasillos;
         this.posInitialX = posInitialX;
         this.posInitialY = posInitialY;
-
-        // this.posLastTimeSeenX = posInitialX;
-        // this.posLastTimeSeenY = posInitialY;
-
-        if (jugador != null) { // Para iniciar de forma natural la posicion del jugador en las primeras
-                               // instancias del programa
-            if (jugador.getPosX() == null || jugador.getPosY() == null) {
-                jugador.setPosX(this.posInitialX);
-                jugador.setPosY(this.posInitialY);
-            }
+        // Si el jugador no tiene posición, asignarle la inicial
+        if (jugador != null && (jugador.getPosX() == null || jugador.getPosY() == null)) {
+            jugador.setPosX(posInitialX);
+            jugador.setPosY(posInitialY);
         }
-
     }
 
-    protected void interfazPrincipal(Jugador jugador, ArrayList<Mesa> mesas) {
-        // Interfaz del jugador
+    /**
+     * Dibuja la UI principal: datos del jugador, mapa y ayuda de controles.
+     * @param jugador jugador actual
+     */
+    protected void interfazPrincipal(Jugador jugador) {
+        // Mostrar panel de jugador
         playerUI(jugador);
-
-        // Mostrar el mapa del casino
+        // Mostrar mapa ASCII con la posición del jugador
         mostrarMapa();
-
-        // Instrucciones de control
+        // Mostrar instrucciones de movimiento e interacción
         instructions();
-
     }
 
-    // Mover jugador en el mapa
-    protected void moverJugador(Integer dx, Integer dy) {
-        Integer nuevaPosX = jugador.getPosX() + dx;
-        Integer nuevaPosY = jugador.getPosY() + dy;
-
-        // Comprobar que la nueva posición esté dentro de los límites
-        if (nuevaPosX >= 0 && nuevaPosX < mapa[0].length && nuevaPosY >= 0 && nuevaPosY < mapa.length
-                && mapa[nuevaPosY][nuevaPosX] == ' ') {
-            jugador.move(nuevaPosX, nuevaPosY);
+    /**
+     * Mueve al jugador, verifica colisión con paredes ('#') y notifica observadores.
+     */
+    protected void moverJugador(int dx, int dy) {
+        int newX = jugador.getPosX() + dx;
+        int newY = jugador.getPosY() + dy;
+        // Limitar dentro de los bordes y suelo transitable (' ')
+        if (newX >= 0 && newX < mapa[0].length
+                && newY >= 0 && newY < mapa.length
+                && mapa[newY][newX] == ' ') {
+            jugador.move(newX, newY);
         }
     }
 
-    // Mostrar mapa del casino (Jugador P)
+    /**
+     * Dibuja el mapa en consola, marcando la posición del jugador con 'P'.
+     */
     private void mostrarMapa() {
-        for (Integer i = 0; i < mapa.length; i++) {
-            for (Integer j = 0; j < mapa[i].length; j++) {
-                if (i == jugador.getPosY() && j == jugador.getPosX()) {
+        for (int y = 0; y < mapa.length; y++) {
+            for (int x = 0; x < mapa[y].length; x++) {
+                if (y == jugador.getPosY() && x == jugador.getPosX()) {
                     System.out.print("P ");
                 } else {
-                    System.out.print(mapa[i][j] + " ");
+                    System.out.print(mapa[y][x] + " ");
                 }
             }
             System.out.println();
         }
     }
 
-    // Manejo de la Terminal
-    protected void entradaTerminal(Scanner scanner, Jugador jugador, ArrayList<Mesa> mesas) {
-        Boolean validInput = false;
-
-        while (!validInput) {
-
+    /**
+     * Procesa la entrada de teclado (WASD, E, I) para mover o interactuar.
+     */
+    protected void entradaTerminal(Scanner scanner) {
+        boolean valid = false;
+        while (!valid) {
             try {
-                String input = scanner.nextLine().toLowerCase();
-                validInput = true;
+                String input = scanner.nextLine().trim().toLowerCase();
+                valid = true;
                 switch (input) {
-                    case "w":
-                        moverJugador(0, -1);
-                        break;
-                    case "s":
-                        moverJugador(0, 1);
-                        break;
-                    case "a":
-                        moverJugador(-1, 0);
-                        break;
-                    case "d":
-                        moverJugador(1, 0);
-                        break;
+                    case "w": moverJugador(0, -1); break;
+                    case "s": moverJugador(0, 1); break;
+                    case "a": moverJugador(-1, 0); break;
+                    case "d": moverJugador(1, 0); break;
                     case "e":
-                        System.out.println("He pulsado la tecla E!");
-
+                        // Interactuar con mesa o pasillo
                         if (jugador.getInventario()) {
                             jugador.usarItems();
-                            ASCIIGeneral.esperarTecla();
                         } else {
                             jugador.interacting();
                         }
+                        ASCIIGeneral.esperarTecla();
                         break;
-                    // Hacer que haya un voton para mostartlo y potro para usarlo y que pasar usarlo
-                    // hay que limpiar interfaz y numerar los items
                     case "i":
+                        // Abrir inventario
                         ASCIIGeneral.limpiarPantalla();
                         jugador.setInvetario(true);
                         jugador.usarItems();
                         ASCIIGeneral.esperarTecla();
                         jugador.setInvetario(false);
                         break;
-
                     default:
-                        validInput = false;
+                        valid = false;
                         badCommand();
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Por favor, ingresa un comando válido.");
-                scanner.nextLine();
-                validInput = false;
+            } catch (InputMismatchException ex) {
+                System.out.println("Entrada no válida. Por favor, usa WASD, E o I.");
+                valid = false;
             }
         }
     }
 
+    /**
+     * Bucle principal que mantiene la interfaz viva hasta cerrar la aplicación.
+     */
     public void iniciarInterfaz() {
-        Boolean running = true;
         Scanner scanner = new Scanner(System.in);
-
-        while (running) {
+        while (true) {
             ASCIIGeneral.limpiarPantalla();
-            interfazPrincipal(jugador, mesas);
-            entradaTerminal(scanner, jugador, mesas);
+            interfazPrincipal(jugador);
+            entradaTerminal(scanner);
         }
-
-        scanner.close();
+        // scanner.close(); // Normalmente no se cierra para no inhabilitar System.in
     }
 
+    /** Establece el jugador conectado y se suscribe a los eventos de movimiento. */
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
         subscribe(jugador);
     }
 
+    /** @return coordenada X inicial */
     public Integer getPosInitialX() {
         return posInitialX;
     }
 
+    /** @return coordenada Y inicial */
     public Integer getPosInitialY() {
         return posInitialY;
     }
 
+    /** @return lista de pasillos conectados */
     public ArrayList<Pasillo> getPasillos() {
         return pasillos;
     }
-
-    /*
-     * public Integer getPosLastTimeSeenX() {return posLastTimeSeenX;}
-     * 
-     * public Integer getPosLastTimeSeenY() {
-     * return posLastTimeSeenY;
-     * }
-     * 
-     * public void setPosLastTimeSeenX(Integer posLastTimeSeenX) {
-     * this.posLastTimeSeenX = posLastTimeSeenX;
-     * }
-     * 
-     * public void setPosLastTimeSeenY(Integer posLastTimeSeenY) {
-     * this.posLastTimeSeenY = posLastTimeSeenY;
-     * }
-     * 
-     */
 }

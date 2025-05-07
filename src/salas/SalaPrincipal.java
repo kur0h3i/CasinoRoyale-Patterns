@@ -1,121 +1,120 @@
-// SalaPrincipal.java
 
 package salas;
 
-// Util
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-
-// Aciones Casino
-import acciones.Mesa;
-import acciones.Pasillo;
-import acciones.PuertaSalida;
 import acciones.Cajero;
 import acciones.Fenrir;
-
-// Excepciones
-
-//Juegos
-
-// Jugador
-import mapas.SalaPrincipalMapa;
+import acciones.Pasillo;
+import acciones.PuertaSalida;
+import acciones.Mesa;
+import ascii.ASCIIGeneral;
 import personas.Jugador;
+import mapas.SalaPrincipalMapa;
 
-// ASCII
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static recursos.MensajesEstaticos.*;
 
 /**
- * Clase unica donde aparecera el jugador, heredado de la clase padre Sala.
- * Existen elementos en esta sala como el Cajero, Puerta de Salida y el bar Fenrir
- * @see salas.Sala
- * @author Luis Fidel Blanco Grau
- * @version 1.0
- * */
+ * SalaPrincipal => Sala principal del casino donde aparecen el cajero, puerta de salida y el bar Fenrir.
+ * Aplica el patrón Singleton para garantizar una única instancia. Extiende de Sala para
+ * heredar la lógica de interfaz ASCII, movimiento e interacción.
+ *
+ * En esta sala se configuran además los observadores que gestionan las acciones:
+ *  - Cajero automático (ATM)
+ *  - Puerta de salida (guardar/cargar/salir)
+ *  - Bar Fenrir (comprar bebidas)
+ *
+ * Uso:
+ *  SalaPrincipal sala = SalaPrincipal.getInstance(jugador);
+ *  sala.iniciarInterfaz();
+ *
+ * @see Sala
+ */
 public class SalaPrincipal extends Sala {
 
-    /**
-     * Elemento Singleton
-     * */
-    static SalaPrincipal salaPrincipal; // SINGLETON LAZY
+    /** Instancia Singleton de SalaPrincipal */
+    private static SalaPrincipal instancia;
+
+    /** Cajero automático disponible en la sala */
+    private final Cajero cajero = new Cajero(2, 7);
+    /** Puerta de salida para guardar, cargar o salir del casino */
+    private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
+    /** Bar Fenrir donde comprar bebidas */
+    private final Fenrir fenrir = new Fenrir(12, 5);
 
     /**
-     * Metodo de invocacion por Singleton
-     * @param jugador Personaje para que este presente en la sala, si es null, se actualizara mediante getters y setters.
+     * Obtiene la instancia de SalaPrincipal, creando la primera vez.
+     * @param jugador jugador que ingresa a la sala (puede ser null)
+     * @return instancia única de SalaPrincipal
      */
     public static SalaPrincipal getInstance(Jugador jugador) {
-        if (Objects.isNull(salaPrincipal)) {
-            salaPrincipal = new SalaPrincipal(jugador);
+        if (Objects.isNull(instancia)) {
+            instancia = new SalaPrincipal(jugador);
         }
-        return salaPrincipal;
+        return instancia;
     }
+
     /**
-     * Metodo de invocacion por Singleton
+     * Obtiene la instancia existente de SalaPrincipal sin cambiar el jugador.
+     * @return instancia única de SalaPrincipal
      */
     public static SalaPrincipal getInstance() {
         return getInstance(null);
     }
 
     /**
-     * Elemento Cajero que aparecera en la sala Principal
-     * @see Cajero
-     * */
-    private final Cajero cajero = new Cajero(2, 7);
-    /**
-     * Elemento Cajero que aparecera en la sala Principal
-     * @see PuertaSalida
-     * */
-    private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
-    /**
-     * Elemento Cajero que aparecera en la sala Principal
-     * @see Fenrir
+     * Constructor privado de SalaPrincipal.
+     * Inicializa el mapa ASCII y la posición de entrada.
+     * Suscribe al jugador a los observadores internos.
+     *
+     * @param jugador jugador que ocupa la sala (null inicializa sin asignar)
      */
-    private final Fenrir fenrir = new Fenrir(12, 5);
-
-    /**
-     * Constructor de Sala Principal
-     * Se almacena los datos en la clase padre. Ejecuta una funcion para subscribirse el jugador los observadores.
-     * @param jugador Personaje para que este presente en la sala, si es null, se actualizara mediante getters y setters
-     * */
-    public SalaPrincipal(Jugador jugador) {
+    private SalaPrincipal(Jugador jugador) {
         super(
                 jugador,
                 SalaPrincipalMapa.mapaSalaPrincipal,
-                // Mesas disponibles (agregar las mesas a la lista)
-                new ArrayList<Mesa>(),
-                new ArrayList<Pasillo>(), // IMPOSIBLE DE INSTANCIAR VARIOS PASILLOS E INTERCONECTAR POR ACA, MIGRANDO ESTO A MAIN (StackOverflowException)
+                new ArrayList<Mesa>(),   // Sin mesas de juego en sala principal
+                new ArrayList<Pasillo>(), // Pasillos definidos externamente
                 SalaPrincipalMapa.posXInicial,
                 SalaPrincipalMapa.posYInicial
-                );
-
-        //jugador.setFichas(100); // Fichas iniciales del jugador
-
+        );
         subscribe(jugador);
     }
 
+    /**
+     * Suscribe al jugador a los elementos interactivos de la sala:
+     * cajero, puerta de salida y Fenrir.
+     * @param jugador jugador a suscribir (ignorado si null)
+     */
     @Override
     public void subscribe(Jugador jugador) {
-        if (!Objects.isNull(jugador)) {
-            for (Mesa mesa : this.mesas) {
-                jugador.attach(mesa);
-            }
-
-            for (Pasillo pasillo : this.pasillos) {
-                jugador.attach(pasillo);
-            }
-
-            jugador.attach(this.cajero);
-            jugador.attach(this.puertaSalida);
-            jugador.attach(this.fenrir);
+        if (Objects.isNull(jugador)) return;
+        // No hay mesas en esta sala, pero sí observadores adicionales
+        jugador.attach(cajero);
+        jugador.attach(puertaSalida);
+        jugador.attach(fenrir);
+        // Suscribir también pasillos heredados si se configuran
+        for (Pasillo pasillo : getPasillos()) {
+            jugador.attach(pasillo);
         }
     }
 
+    /**
+     * Desuscribe al jugador de todos los observables conectados.
+     * @param jugador jugador a desuscribir (ignorado si null)
+     */
     @Override
     public void unsubscribe(Jugador jugador) {
-        if (!Objects.isNull(jugador)) {
-            jugador.detachAll();
-        }
+        if (Objects.isNull(jugador)) return;
+        jugador.detachAll();
     }
 
+    /**
+     * Retorna el nombre de la sala para menús o logs.
+     * @return "Principal"
+     */
     @Override
     public String toString() {
         return "Principal";

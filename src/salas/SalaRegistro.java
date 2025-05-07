@@ -1,4 +1,4 @@
-// Salaregisttro
+
 package salas;
 
 import java.io.File;
@@ -6,171 +6,181 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Scanner;
+import java.util.Objects;
 
 import excep.ExcepcionJugadorMenorEdad;
 import excep.ExcepcionJugadorNoEncontrado;
 import personas.Jugador;
 import personas.JugadorFactory;
 
+/**
+ * SalaRegistro => Punto de entrada para registrar o cargar un jugador antes de iniciar el casino.
+ * Muestra arte ASCII, información de bienvenida y gestiona la creación o carga de perfiles.
+ * Verifica que el jugador sea mayor de edad antes de continuar.
+ *
+ * Uso:
+ *   SalaRegistro registro = new SalaRegistro();
+ *   Jugador jugador = SalaRegistro.jugador;
+ */
 public class SalaRegistro {
 
-    // Atributos
+    /**
+     * Jugador seleccionado o creado durante el registro.
+     */
     public static Jugador jugador;
 
-    // Constructor
+    /**
+     * Constructor: muestra arte ASCII, información del casino,
+     * inicia el flujo de registro y verifica la mayoría de edad.
+     */
     public SalaRegistro() {
-        // ASCII ART
         asciiArt();
-        // Información sobre el Casino
         informacionCasino();
-        // Crear al jugador
         jugador = iniciarJugador();
-        
-        // Verificar si es mayor de edad
-        try { 
-            mayorEdad();
+        try {
+            verificarMayorEdad();
         } catch (ExcepcionJugadorMenorEdad e) {
-            // Manejar la excepción y terminar el registro
             System.out.println(e.getMessage());
-            System.out.println("Registro cancelado");
-            System.exit(0); // Finalizar el programa
+            System.out.println("Registro cancelado.");
+            System.exit(0);
         }
     }
 
-    // ASCII ART
+    /**
+     * Muestra arte ASCII de bienvenida.
+     */
     public void asciiArt() {
         System.out.println(
-            "   ______           _                  ____                    __   \n" +
-            "  / ____/___ ______(_)___  ____       / __ \\____  __  ______ _/ /__ \n" +
-            " / /   / __ `/ ___/ / __ \\/ __ \\     / /_/ / __ \\/ / / / __ `/ / _ \\\n" +
-            "/ /___/ /_/ (__  ) / / / / /_/ /    / _, _/ /_/ / /_/ / /_/ / /  __/\n" +
-            "\\____/\\__,_/____/_/_/ /_/\\____/    /_/ |_|\\____/\\__, /\\__,_/_/\\___/ \n" +
-            "                                               /____/               \n"
+                "   ______           _                  ____                    __   \n" +
+                        "  / ____/___ ______(_)___  ____       / __ \\____  __  ______ _/ /__ \n" +
+                        " / /   / __ `/ ___/ / __ \\/ __ \\     / /_/ / __ \\/ / / / __ `/ / _ \\\\n" +
+                        "/ /___/ /_/ (__  ) / / / / /_/ /    / _, _/ /_/ / /_/ / /_/ / /  __/\n" +
+                        "\\____\\__,_/____/_/_/ /_/\\____/    /_/ |_|\\____/\\__, /\\__,_/_/\\___/ \n" +
+                        "                                               /____/               \n"
         );
     }
 
-    // Información sobre el Casino
+    /**
+     * Muestra la descripción y reglas básicas del casino.
+     */
     public void informacionCasino() {
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Bienvenidos a Casino Royale, un emocionante juego de casino dodne tendras que usar tu mayor ingenio en el juego para poder hacer una gran cantidad de dinero.");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        System.out.println("Bienvenido a Casino Royale: pon a prueba tu suerte y habilidad para ganar fichas.");
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
     }
 
-    // Crea o usa un usuario ya existente
+    /**
+     * Inicia el flujo de registro: cargar o crear un jugador.
+     *
+     * @return instancia de Jugador válido
+     */
     public Jugador iniciarJugador() {
         Scanner input = new Scanner(System.in);
-        Integer opcion;
-        Jugador jugadorSeleccionado = null;
-
+        Jugador sel = null;
+        int opcion;
         do {
-            System.out.println("Buenos días, Sr.");
-            System.out.println("1. Iniciar Sesión Socio");
-            System.out.println("2. Registrar un nuevo Socio");
+            System.out.println("1. Iniciar sesión de socio");
+            System.out.println("2. Registrar nuevo socio");
             System.out.println("3. Salir");
-
+            System.out.print("Elige una opción (1-3): ");
             while (!input.hasNextInt()) {
-                System.out.println("Por favor, introduce una opción válida (1-3):");
+                System.out.print("Por favor ingresa un número (1-3): ");
                 input.next();
             }
-
             opcion = input.nextInt();
             input.nextLine();
-
             switch (opcion) {
                 case 1:
-                    jugadorSeleccionado = cargarJugador();
+                    sel = cargarJugador();
                     break;
                 case 2:
-                    jugadorSeleccionado = crearJugador();
+                    sel = crearJugador();
                     break;
-                case 3: // DEBUG MOMENTANEO
-                    System.out.println("Adiós, espero que se lo haya pasado bien");
-                    return JugadorFactory.crearJugador("principal","Lediff el travieso", 23, 1000.0);
+                case 3:
+                    System.out.println("Gracias por visitarnos. ¡Hasta pronto!");
+                    System.exit(0);
+                    break;
                 default:
-                    System.out.println("Opción no válida, por favor elige 1, 2 o 3.");
+                    System.out.println("Opción no válida.");
             }
-        } while (jugadorSeleccionado == null);
-
-        return jugadorSeleccionado;
+        } while (sel == null);
+        return sel;
     }
 
-    // Iniciar Sesion
+    /**
+     * Carga un jugador desde un archivo de guardado.
+     *
+     * @return Jugador cargado o null si falla
+     */
     public Jugador cargarJugador() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Nombre del jugador que quieres cargar: ");
-        String nombreJugador = input.nextLine();
-
-        File archivo = new File("saves/" + nombreJugador + ".dat");
-
+        System.out.print("Nombre del jugador a cargar: ");
+        String nombre = input.nextLine().trim();
+        File archivo = new File("saves/" + nombre + ".dat");
         try {
             if (!archivo.exists()) {
-                throw new ExcepcionJugadorNoEncontrado("El jugador con nombre '" + nombreJugador + "' no existe.");
+                throw new ExcepcionJugadorNoEncontrado(
+                        "El jugador '" + nombre + "' no existe.");
             }
-
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-                Jugador jugadorCargado = (Jugador) ois.readObject();
-                System.out.println("Partida cargada exitosamente:");
-                System.out.println(jugadorCargado);
-
-                return jugadorCargado;
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    new FileInputStream(archivo))) {
+                Jugador cargado = (Jugador) ois.readObject();
+                System.out.println("Partida cargada exitosamente.\n" + cargado);
+                return cargado;
             }
         } catch (ExcepcionJugadorNoEncontrado e) {
             System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error al cargar los datos del jugador: " + e.getMessage());
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al cargar partida: " + e.getMessage());
         }
-
-        return null; // Si ocurre un error, devuelve null
+        return null;
     }
 
-
-    // Crear Jugador
+    /**
+     * Solicita datos y crea un nuevo jugador.<br>
+     * Verifica nombre y edad mediante confirmación.
+     *
+     * @return Jugador recién creado
+     */
     public Jugador crearJugador() {
         Scanner input = new Scanner(System.in);
-        // Atributos Jugador
-        String nombre = " ";
-        Integer edad = 0;
-        Character confirmacion = ' ';
-        Double dinero = 100.0;
-
-        // Crear al jugador
-        System.out.println("Cuéntame un poco sobre ti:");
+        String nombre;
+        int edad;
+        char confirma;
         do {
-            // Nombre
-            System.out.println("¿Cuál es tu nombre?");
-            nombre = input.nextLine();
-            System.out.println("Con que te llamas " + nombre);
-
-            // Edad
-            System.out.println(nombre + ", ¿cuántos años tienes?");
+            System.out.print("Tu nombre: ");
+            nombre = input.nextLine().trim();
+            System.out.print("Tu edad: ");
             while (!input.hasNextInt()) {
-                System.out.println("Por favor, ingresa una edad válida.");
+                System.out.print("Edad inválida. Ingresa un número: ");
                 input.next();
             }
             edad = input.nextInt();
             input.nextLine();
-
-            // Confirmación de los datos
-            System.out.println("Te llamas " + nombre + " y tienes " + edad + " años, ¿es correcto? S/n");
-            confirmacion = input.nextLine().charAt(0);
-
-        } while (confirmacion != 'S' && confirmacion != 's');
-
-        // Crear el jugador con los datos confirmados
-        return JugadorFactory.crearJugador("principal", nombre, edad, dinero);
+            System.out.print("¿Confirmas nombre '" + nombre + "' y edad " + edad + "? (S/N): ");
+            confirma = input.nextLine().trim().toUpperCase().charAt(0);
+        } while (confirma != 'S');
+        // saldo inicial fijo
+        return JugadorFactory.crearJugador("principal", nombre, edad, 100.0);
     }
 
-    // Verificar si el jugador es mayor de edad
-    public Boolean mayorEdad() throws ExcepcionJugadorMenorEdad {
-        if (jugador.getEdad() >= 18) {
-            return true;
-        } else {
-            throw new ExcepcionJugadorMenorEdad("Lo sentimos, pero los menores de edad no pueden entrar al casino.");
+    /**
+     * Verifica que el jugador sea mayor de 18 años.
+     *
+     * @throws ExcepcionJugadorMenorEdad si no cumple la edad mínima
+     */
+    public void verificarMayorEdad() throws ExcepcionJugadorMenorEdad {
+        if (jugador.getEdad() < 18) {
+            throw new ExcepcionJugadorMenorEdad(
+                    "Lo sentimos, menores de edad no pueden entrar al casino.");
         }
     }
 
+    /**
+     * Identificador textual de esta sala de registro.
+     *
+     * @return "Registro"
+     */
     @Override
     public String toString() {
         return "Registro";

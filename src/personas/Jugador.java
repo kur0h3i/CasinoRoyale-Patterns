@@ -1,7 +1,6 @@
-// Jugador.java
+
 package personas;
 
-// IO
 import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinFichas;
 import items.Items;
@@ -12,23 +11,126 @@ import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import salas.Sala;
-public class Jugador implements Serializable, PullPushModelObservable{
 
-    // Atributos Adicionales
-    private Integer posX = null, posY = null;
-    private Boolean interact = false;
-    private ArrayList<Items> items = new ArrayList<>();
-    private Boolean inventario = false;
+/**
+ * Clase Jugador => Representa al usuario en el casino, con posición, fondos,
+ * fichas, inventario de ítems y suscripción al patrón Observer para recibir
+ * notificaciones de cambios de estado.
+ * Implementa Serializable para persistencia y PullPushModelObservable para
+ * notificar a observadores cuando se mueve o interactúa.
+ */
+public class Jugador implements Serializable, PullPushModelObservable {
 
-    // Sobrecarga Constructor
-    public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY){
+    private static final long serialVersionUID = 1L;
+
+    /** Coordenada X actual del jugador en el mapa */
+    private Integer posX;
+    /** Coordenada Y actual del jugador en el mapa */
+    private Integer posY;
+    /** Indicador de que el jugador ha pulsado la tecla de interactuar */
+    private Boolean interact;
+    /** Lista de ítems en el inventario del jugador */
+    private final List<Items> items;
+    /** Indicador de si el inventario está abierto */
+    private Boolean inventario;
+
+    /** Nombre del jugador */
+    private String nombre;
+    /** Edad del jugador */
+    private Integer edad;
+    /** Dinero en euros disponible */
+    private Double dinero;
+    /** Fichas disponibles para apostar */
+    private Integer fichas;
+    /** Sala actual donde se encuentra el jugador */
+    private Sala salaActual;
+
+    /** Observadores suscritos al jugador */
+    private final List<PullPushModelObserver> observers;
+
+    /**
+     * Constructor completo con posición inicial.
+     *
+     * @param nombre nombre del jugador
+     * @param edad edad del jugador
+     * @param dinero saldo inicial en euros
+     * @param posX coordenada X en el mapa
+     * @param posY coordenada Y en el mapa
+     */
+    public Jugador(String nombre, Integer edad, Double dinero, Integer posX, Integer posY) {
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
-
+        this.fichas = 0;
         this.posX = posX;
         this.posY = posY;
+        this.interact = false;
+        this.items = new ArrayList<>();
+        this.inventario = false;
+        this.observers = new ArrayList<>();
     }
+
+    /**
+     * Constructor básico sin posición: asigna 0 fichas.
+     *
+     * @param nombre nombre del jugador
+     * @param edad edad del jugador
+     * @param dinero saldo inicial en euros
+     */
+    public Jugador(String nombre, Integer edad, Double dinero) {
+        this(nombre, edad, dinero, null, null);
+    }
+
+    // ==================== Observer Pattern ====================
+
+    @Override
+    public void attach(PullPushModelObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void detach(PullPushModelObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void detachAll() {
+        observers.clear();
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (PullPushModelObserver obs : new ArrayList<>(observers)) {
+            try {
+                obs.update(this, null);
+            } catch (ExcepcionJugadorSinFichas e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Mueve la posición del jugador y notifica a los observadores.
+     *
+     * @param x nueva coordenada X
+     * @param y nueva coordenada Y
+     */
+    public void move(Integer x, Integer y) {
+        this.posX = x;
+        this.posY = y;
+        notifyObservers();
+    }
+
+    /**
+     * Marca la interacción (press) y notifica, luego resetea el estado.
+     */
+    public void interacting() {
+        this.interact = true;
+        notifyObservers();
+        this.interact = false;
+    }
+
+    // ==================== Getters & Setters ====================
 
     public Integer getPosX() {
         return posX;
@@ -50,162 +152,127 @@ public class Jugador implements Serializable, PullPushModelObservable{
         return interact;
     }
 
-    public void move(Integer x, Integer y) {
-        this.posX = x;
-        this.posY = y;
-        notifyObservers();
+    public String getName() {
+        return nombre;
     }
 
-    public void interacting() {
-        this.interact = true;
-        notifyObservers();
-        this.interact = false;
-    }
-
-    private List<PullPushModelObserver> observers = new ArrayList<>();
-
-    @Override
-    public void attach(PullPushModelObserver observer) {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void detach(PullPushModelObserver observer) {
-        this.observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (PullPushModelObserver observer : this.observers) { // for each
-            try {
-                observer.update(this, null); // TODO: SUGERENCIA 2
-                if (this.observers.isEmpty()) return;
-            } catch (ExcepcionJugadorSinFichas e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // Atributos
-    private static final long serialVersionUID = 1L;
-    String nombre;
-    Integer edad;
-    Double dinero;
-    Integer fichas;
-    Sala salaActual;
-
-    // Constructor
-    public Jugador(String nombre, Integer edad, Double dinero){
-        this.nombre = nombre;
-        this.edad = edad;
-        this.dinero = dinero;
-        this.fichas = 0;
-    }
-
-    // Metodos
-
-    // Setters
-    public void setNombre( String nombre){
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public void setEdad( Integer edad){
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
         this.edad = edad;
     }
-    public void setDinero( Double dinero){
+
+    public Double getDinero() {
+        return dinero;
+    }
+
+    public void setDinero(Double dinero) {
         this.dinero = dinero;
     }
-    public void setFichas( Integer fichas){
+
+    public Integer getFichas() {
+        return fichas;
+    }
+
+    public void setFichas(Integer fichas) {
         this.fichas = fichas;
     }
-    public void setSala(Sala salaActual){ this.salaActual = salaActual; }
 
-    public void setInvetario(Boolean inventario){ this.inventario = inventario; }
-    // Getters
-    public String getName(){
-        return this.nombre;
+    public Sala getSalaActual() {
+        return salaActual;
     }
-    public Integer getEdad(){
-        return this.edad;
-    }
-    public Double getDinero(){
-        return this.dinero;
-    }
-    public Integer getFichas(){
-        return this.fichas;
-    }
-    public Sala getSalaActual(){return this.salaActual;}
 
-    public Boolean getInventario() {return this.inventario; }
-    // agregar / restar
-    public void agregarFichas(Integer fichas){
+    public void setSala(Sala salaActual) {
+        this.salaActual = salaActual;
+    }
+
+    public Boolean getInventario() {
+        return inventario;
+    }
+
+    public void setInvetario(Boolean inventario) {
+        this.inventario = inventario;
+    }
+
+    // ==================== Fondos y Fichas ====================
+
+    /**
+     * Incrementa las fichas del jugador.
+     *
+     * @param fichas cantidad de fichas a agregar
+     */
+    public void agregarFichas(Integer fichas) {
         this.fichas += fichas;
     }
 
-    public void restarFichas(Integer fichas){
+    /**
+     * Decrementa las fichas del jugador.
+     *
+     * @param fichas cantidad de fichas a restar
+     */
+    public void restarFichas(Integer fichas) {
         this.fichas -= fichas;
     }
 
-    public void agregarDinero(Double dinero){
+    /**
+     * Incrementa el dinero del jugador.
+     *
+     * @param dinero cantidad en euros a agregar
+     */
+    public void agregarDinero(Double dinero) {
         this.dinero += dinero;
     }
 
-    public void restarDinero(Double dinero){
+    /**
+     * Decrementa el dinero del jugador.
+     *
+     * @param dinero cantidad en euros a restar
+     */
+    public void restarDinero(Double dinero) {
         this.dinero -= dinero;
     }
 
-    // Mostrar Datos de usuario
-    public void datosUsuarioEnPartida(){
-        System.out.println("----------------------------");
-        System.out.println("Nombre :  " + this.getName());
-        System.out.println("Fichas : " + this.getFichas());
-        System.out.println("----------------------------");
+    // ==================== Inventario y Items ====================
+
+    /**
+     * Añade un ítem al inventario y muestra mensaje.
+     *
+     * @param item objeto Items a agregar
+     */
+    public void agregarItem(Items item) {
+        items.add(item);
+        System.out.println("Se ha añadido al inventario: " + item.getNombre() +
+                " (Precio: " + item.getPrecio() + ")");
     }
 
-    public void actualizarDesde(Jugador jugadorCargado) {
-        this.nombre = jugadorCargado.getName();
-        this.edad = jugadorCargado.getEdad();
-        this.dinero = jugadorCargado.getDinero();
-        this.fichas = jugadorCargado.getFichas();
-
-    }
-
-    // to String
-    @Override
-    public String toString(){
-        return "Jugador : "
-                + this.nombre
-                + "\nEdad  : "
-                + this.edad
-                + "\nDinero : "
-                + this.dinero
-                + "\nFichas : "
-                + this.fichas;
-    }
-
-    @Override
-    public void detachAll() {
-        observers.clear();
-    }
-
-    // Mostrar inventario jugador
+    /**
+     * Muestra el listado de ítems en el inventario.
+     */
     public void mostrarInventario() {
-        
         if (items.isEmpty()) {
             System.out.println("El inventario está vacío.");
         } else {
             System.out.println("Inventario de " + nombre + ":");
             for (int i = 0; i < items.size(); i++) {
                 Items item = items.get(i);
-                System.out.println(i + 1 + " "
-                    + item.getNombre() 
-                    + " | " + item.getDescripcion() 
-                    + " | Precio: " + item.getPrecio());
+                System.out.println((i + 1) + ". " + item.getNombre() +
+                        " | " + item.getDescripcion() +
+                        " | Precio: " + item.getPrecio());
             }
         }
     }
 
-
-   public void usarItems() {
+    /**
+     * Permite al jugador usar un ítem del inventario, invocando su método usar.
+     * Elimina el ítem tras su uso.
+     */
+    public void usarItems() {
         if (items.isEmpty()) {
             System.out.println("No hay items para usar.");
             return;
@@ -238,14 +305,42 @@ public class Jugador implements Serializable, PullPushModelObservable{
                 System.out.println("Ya no quedan items en el inventario.");
                 break;
             }
-            System.out.println(); // línea en blanco antes de la siguiente iteración
+            System.out.println();
         }
     }
 
-    public void agregarItem(Items item) {
-        items.add(item);
-        System.out.println("Se ha añadido al inventario: " 
-            + item.getNombre() 
-            + " (Precio: " + item.getPrecio() + ")");
+    // ==================== Información de Usuario ====================
+
+    /**
+     * Imprime los datos básicos del jugador (nombre y fichas).
+     */
+    public void datosUsuarioEnPartida() {
+        System.out.println("----------------------------");
+        System.out.println("Nombre : " + nombre);
+        System.out.println("Fichas : " + fichas);
+        System.out.println("----------------------------");
+    }
+
+    /**
+     * Actualiza los campos del jugador con los datos de otro instanciado (p.ej. al cargar).
+     *
+     * @param jugadorCargado Jugador con datos a copiar
+     */
+    public void actualizarDesde(Jugador jugadorCargado) {
+        this.nombre = jugadorCargado.getName();
+        this.edad = jugadorCargado.getEdad();
+        this.dinero = jugadorCargado.getDinero();
+        this.fichas = jugadorCargado.getFichas();
+    }
+
+    /**
+     * Representación textual del jugador: muestra nombre, edad, dinero y fichas.
+     */
+    @Override
+    public String toString() {
+        return "Jugador : " + nombre +
+                "\nEdad    : " + edad +
+                "\nDinero  : " + dinero +
+                "\nFichas  : " + fichas;
     }
 }

@@ -1,61 +1,78 @@
-// Baraja.java
+
 package recursos;
 
-// Util
 import java.util.Random;
 
+/**
+ * Clase Baraja => Modelo de una baraja estándar de 52 cartas.
+ * Permite mezclar, repartir y reiniciar la baraja.
+ */
 public class Baraja {
 
-    // Atributos
-    private Carta[] cartas; 
-    private Integer cartasDisponibles; 
+    /** Array que contiene las 52 cartas de la baraja */
+    private Carta[] cartas;
+    /** Número de cartas aún disponibles para repartir */
+    private int cartasDisponibles;
 
-    // Constructor
+    /**
+     * Constructor: crea el array de 52 cartas y las mezcla.
+     * Genera todas las combinaciones de valor y palo.
+     */
     public Baraja() {
         String[] valores = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-        String[] tipos = {"C", "D", "H", "S"};
-        cartas = new Carta[52]; // Total de cartas en una baraja estándar son 52
-        Integer index = 0;
-
-        // Crear todas las cartas
-        for (String tipo : tipos) {
+        String[] palos = {"C", "D", "H", "S"}; // C=Clubs, D=Diamonds, H=Hearts, S=Spades
+        cartas = new Carta[52];
+        int index = 0;
+        for (String palo : palos) {
             for (String valor : valores) {
-                cartas[index++] = new Carta(valor, tipo);
+                cartas[index++] = new Carta(valor, palo);
             }
         }
-
-        cartasDisponibles = 52;
+        cartasDisponibles = cartas.length;
         mezclar();
     }
 
-    // Mezclar las cartas de la baraja
+    /**
+     * Mezcla aleatoriamente el orden de las cartas en el mazo.
+     * Utiliza el algoritmo de Fisher-Yates.
+     */
     public void mezclar() {
-        Random random = new Random();
-        for (Integer i = 0; i < cartas.length; i++) {
-            Integer randomIndex = random.nextInt(cartas.length);
+        Random rnd = new Random();
+        for (int i = cartas.length - 1; i > 0; i--) {
+            int j = rnd.nextInt(i + 1);
             Carta temp = cartas[i];
-            cartas[i] = cartas[randomIndex];
-            cartas[randomIndex] = temp;
+            cartas[i] = cartas[j];
+            cartas[j] = temp;
         }
+        cartasDisponibles = cartas.length;
     }
 
-    // Repartir cartas de la baraja
+    /**
+     * Reparte la siguiente carta del mazo si hay disponibles.
+     * Decrementa el contador de cartas.
+     *
+     * @return la carta repartida, o null si no quedan cartas.
+     */
     public Carta repartir() {
-        if (cartasDisponibles == 0) {
+        if (cartasDisponibles <= 0) {
             System.out.println("No hay más cartas en la baraja.");
             return null;
         }
         return cartas[--cartasDisponibles];
     }
 
-    // Numeero de cartas que quedan en la baraja
-    public Integer cartasRestantes() {
+    /**
+     * @return número de cartas que quedan por repartir
+     */
+    public int cartasRestantes() {
         return cartasDisponibles;
     }
 
-    // Reiniciar la baraja
+    /**
+     * Reinicia el mazo a 52 cartas y mezcla de nuevo.
+     */
     public void reiniciar() {
-        cartasDisponibles = 52; 
+        cartasDisponibles = cartas.length;
         mezclar();
     }
 }

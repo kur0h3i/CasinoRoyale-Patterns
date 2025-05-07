@@ -1,91 +1,114 @@
-// CartaMasAlta.java
+
 package juegos;
 
-// ASCII
+// Interfaces ASCII para limpiar pantalla y mostrar opciones de CartaMasAlta
 import ascii.ASCIIGeneral;
 import ascii.ASCIICartaMasAlta;
 
+// Utilidades de entrada y manejo de excepciones de usuario
 import java.util.InputMismatchException;
-// Util
 import java.util.Scanner;
 
-// Recursos
+// Recursos de baraja y cartas
 import recursos.Baraja;
 import recursos.Carta;
 
-// Jugador
+// Representación del jugador
 import personas.Jugador;
 
-// Excepcion
+// Excepción para falta de fichas
 import excep.ExcepcionJugadorSinFichas;
 
+/**
+ * Clase CartaMasAlta => Estrategia de juego que implementa StrategyJuego.
+ * El jugador apuesta fichas, se reparte una carta al jugador y otra a la IA,
+ * y quien tenga el valor más alto gana la apuesta.
+ */
 public class CartaMasAlta implements StrategyJuego {
 
-    // Atributos
+    /** Mazo de cartas para repartir */
     private Baraja baraja;
+    /** Interfaz ASCII específica para CartaMasAlta */
     private ASCIICartaMasAlta interfaz;
-    Jugador jugador;
+    /** Jugador que participa en la partida */
+    private Jugador jugador;
+    /** Apuesta actual en fichas */
     private Integer apuesta;
 
-    // Constructor
+    /**
+     * Constructor: inicializa baraja, interfaz y asigna el jugador.
+     * 
+     * @param jugador objeto Jugador que jugará la partida
+     */
     public CartaMasAlta(Jugador jugador) {
         this.jugador = jugador;
         this.baraja = new Baraja();
         this.interfaz = new ASCIICartaMasAlta(jugador);
     }
 
-    // Deifinir la apuesta
+    /**
+     * Solicita al usuario la apuesta en fichas.
+     * Valida que sea un entero positivo y no supere sus fichas disponibles.
+     * En caso de entrada inválida o apuesta no válida, repite la petición.
+     * 
+     * @param input Scanner para leer la entrada del usuario
+     * @return cantidad de fichas apostadas
+     */
     public Integer definirApuesta(Scanner input) {
         System.out.println("¿Cuántas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
-
-        Integer apuesta = 0;
-
+        Integer apuestaLocal = 0;
         try {
-            apuesta = input.nextInt();
-            input.nextLine(); // Limpiar buffer
-
-            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
+            apuestaLocal = input.nextInt();
+            input.nextLine(); // limpiar buffer
+            if (apuestaLocal <= 0 || apuestaLocal > jugador.getFichas()) {
                 System.out.println("Apuesta no válida. Intenta de nuevo.");
-                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
+                return definirApuesta(input);
             }
-
-            jugador.restarFichas(apuesta);
+            // Descontar fichas del jugador
+            jugador.restarFichas(apuestaLocal);
         } catch (InputMismatchException e) {
             System.out.println("Entrada inválida. Intenta de nuevo.");
-            input.nextLine(); // Limpiar buffer en caso de excepción
-            return definirApuesta(input); // Llamada recursiva para repetir el proceso
+            input.nextLine(); // limpiar buffer en caso de texto
+            return definirApuesta(input);
         }
-
-        return apuesta;
+        return apuestaLocal;
     }
 
-
-    // Comprobar si hay fichas
-    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
+    /**
+     * Comprueba que el jugador tenga al menos una ficha antes de iniciar partida.
+     * 
+     * @throws ExcepcionJugadorSinFichas si el jugador no tiene fichas suficientes
+     */
+    public void comprobarFichas() throws ExcepcionJugadorSinFichas {
         if (jugador.getFichas() <= 0) {
             throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
         }
     }
 
+    /**
+     * Flujo principal de la partida CartaMásAlta.
+     * Muestra menú para apostar, ver hoja de referencia o salir.
+     * Lanza excepción si el jugador no tiene fichas.
+     * 
+     * @throws ExcepcionJugadorSinFichas si no hay fichas para jugar
+     */
     @Override
     public void iniciarPartida() throws ExcepcionJugadorSinFichas {
         Scanner input = new Scanner(System.in);
-
-        comprobarfichas();
-
-        Boolean continuar = true;
+        // Verificar que haya fichas para jugar
+        comprobarFichas();
+        boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opciones();
-
             try {
                 Integer opcion = input.nextInt();
-                input.nextLine(); 
-
+                input.nextLine();
                 switch (opcion) {
                     case 1:
+                        // Apostar y jugar una ronda
                         ASCIIGeneral.limpiarPantalla();
                         interfaz.titulo();
                         apuesta = definirApuesta(input);
@@ -93,14 +116,16 @@ public class CartaMasAlta implements StrategyJuego {
                         ASCIIGeneral.esperarTecla();
                         break;
                     case 2:
+                        // Mostrar hoja de trucos (valores de cartas)
                         ASCIIGeneral.limpiarPantalla();
                         interfaz.titulo();
                         interfaz.cheatsheet();
                         ASCIIGeneral.esperarTecla();
                         break;
                     case 3:
+                        // Salir del juego
                         continuar = false;
-                        System.out.println("Saliendo ...");
+                        System.out.println("Saliendo...");
                         break;
                     default:
                         System.out.println("Opción no válida. Intenta de nuevo.");
@@ -112,30 +137,40 @@ public class CartaMasAlta implements StrategyJuego {
         }
     }
 
-    // Jugar ronda
+    /**
+     * Ejecuta una ronda: reparte una carta al jugador y otra a la IA,
+     * compara valores y asigna fichas según el resultado.
+     * 
+     * @param apuesta cantidad de fichas apostadas por el jugador
+     */
     private void jugarRonda(Integer apuesta) {
+        // Barajar antes de repartir
         baraja.mezclar();
-
         Carta cartaJugador = baraja.repartir();
         Carta cartaIA = baraja.repartir();
-
         System.out.println("Tu carta: " + cartaJugador);
         System.out.println("Carta de la IA: " + cartaIA);
-
-        Integer valorJugador = cartaJugador.getValorNumerico();
-        Integer valorIA = cartaIA.getValorNumerico();
-
+        int valorJugador = cartaJugador.getValorNumerico();
+        int valorIA = cartaIA.getValorNumerico();
         if (valorJugador > valorIA) {
             System.out.println("¡Has ganado esta ronda con " + cartaJugador + "!");
+            // Gana doble la apuesta
             jugador.agregarFichas(apuesta * 2);
         } else if (valorJugador < valorIA) {
             System.out.println("La IA gana esta ronda con " + cartaIA + ".");
         } else {
+            // Empate: devuelve la apuesta
             System.out.println("¡Empate! Ambas cartas son iguales.");
-            jugador.agregarFichas(apuesta); 
+            jugador.agregarFichas(apuesta);
         }
     }
 
+    /**
+     * Representación textual de la estrategia para mostrar en menús.
+     * 
+     * @return "CartaMasAlta"
+     */
+    @Override
     public String toString() {
         return "CartaMasAlta";
     }

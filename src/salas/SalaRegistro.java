@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Scanner;
-import java.util.Objects;
 
 import excep.ExcepcionJugadorMenorEdad;
 import excep.ExcepcionJugadorNoEncontrado;
@@ -167,13 +166,17 @@ public class SalaRegistro {
     /**
      * Verifica que el jugador sea mayor de 18 años.
      *
+     * @return
      * @throws ExcepcionJugadorMenorEdad si no cumple la edad mínima
      */
-    public void verificarMayorEdad() throws ExcepcionJugadorMenorEdad {
+    public Boolean verificarMayorEdad() throws ExcepcionJugadorMenorEdad {
         if (jugador.getEdad() < 18) {
             throw new ExcepcionJugadorMenorEdad(
                     "Lo sentimos, menores de edad no pueden entrar al casino.");
+        } else {
+            return Boolean.TRUE;
         }
+
     }
 
     /**

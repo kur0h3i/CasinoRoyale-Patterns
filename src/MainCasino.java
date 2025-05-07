@@ -13,7 +13,7 @@ import excep.ExcepcionJugadorSinFichas;
 public class MainCasino {
     public static void main(String[] args) throws IOException, ExcepcionJugadorSinFichas, ExcepcionJugadorMenorEdad, ExcepcionJugadorSinDinero {
         SalaRegistro registro = new SalaRegistro();
-        if (registro.mayorEdad()){
+        if (registro.verificarMayorEdad()){
             Casino.iniciarCasino();
         }
     }

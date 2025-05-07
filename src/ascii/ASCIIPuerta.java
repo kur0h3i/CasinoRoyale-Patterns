@@ -4,9 +4,15 @@ package ascii;
 //Jugador
 import personas.Jugador;
 
-public class ASCIIPuerta {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ASCIIPuerta implements Serializable {
     
     // Atributos
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     Jugador jugador;
     
     // Constructor

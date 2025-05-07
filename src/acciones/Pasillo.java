@@ -13,6 +13,8 @@ import personas.Jugador;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -23,7 +25,10 @@ import java.util.Objects;
  * al movimiento del jugador (Pull-Push), desconectarlo de la sala actual y
  * cargar la siguiente.
  */
-public class Pasillo implements PullPushModelObserver {
+public class Pasillo implements PullPushModelObserver, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Coordenada X donde se activa el pasillo */
     private final Integer posX;

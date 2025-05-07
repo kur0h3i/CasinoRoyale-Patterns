@@ -4,6 +4,8 @@ package personas;
 import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinFichas;
 import items.Items;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import salas.Sala;
  */
 public class Jugador implements Serializable, PullPushModelObservable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /** Coordenada X actual del jugador en el mapa */
@@ -152,9 +155,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
         return interact;
     }
 
-    public String getName() {
-        return nombre;
-    }
+    public String getName() { return nombre; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

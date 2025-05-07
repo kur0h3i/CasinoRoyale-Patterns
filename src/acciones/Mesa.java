@@ -17,6 +17,8 @@ import ascii.ASCIIGeneral;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 import static recursos.MensajesEstaticos.interactTable;
@@ -28,7 +30,10 @@ import static recursos.MensajesEstaticos.interactTable;
  * y el patrón Strategy para seleccionar dinámicamente el juego según el tipo de
  * mesa.
  */
-public class Mesa implements PullPushModelObserverInteractive {
+public class Mesa implements PullPushModelObserverInteractive, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * Nombre identificador de la mesa ("Slot", "Ruleta", "Bingo", "Dados",

@@ -1,10 +1,16 @@
 package ascii;
 
 import items.Items;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class ASCIIFenrir {
-    
+public class ASCIIFenrir implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public void titulo(){
         System.out.println("_____               _   ");
         System.out.println("|  ___|__ _ __  _ __(_)_ __ ");

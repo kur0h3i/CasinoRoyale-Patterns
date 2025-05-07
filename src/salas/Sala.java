@@ -13,14 +13,14 @@ import java.util.Scanner;
 // Mensajes
 import static recursos.MensajesEstaticos.*;
 
-public abstract class Sala implements Subscription {
+public abstract class Sala extends Subscription {
 
     private Character[][] mapa;
     private Jugador jugador;
     protected ArrayList<Mesa> mesas;
     protected ArrayList<Pasillo> pasillos;
     private Integer posInitialX, posInitialY;
-    //protected Integer posLastTimeSeenX, posLastTimeSeenY;
+    // protected Integer posLastTimeSeenX, posLastTimeSeenY;
 
     Sala(Jugador jugador, Character[][] mapa) {
         this(jugador, mapa, new ArrayList<Mesa>());
@@ -31,13 +31,13 @@ public abstract class Sala implements Subscription {
     }
 
     Sala(Jugador jugador, Character[][] mapa,
-                  ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos) {
+            ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos) {
         this(jugador, mapa, mesas, pasillos, 0, 0);
     }
 
     Sala(Jugador jugador, Character[][] mapa,
-         ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos,
-         Integer posInitialX, Integer posInitialY) {
+            ArrayList<Mesa> mesas, ArrayList<Pasillo> pasillos,
+            Integer posInitialX, Integer posInitialY) {
         this.jugador = jugador;
         this.mapa = mapa;
         this.mesas = mesas;
@@ -45,10 +45,11 @@ public abstract class Sala implements Subscription {
         this.posInitialX = posInitialX;
         this.posInitialY = posInitialY;
 
-        //this.posLastTimeSeenX = posInitialX;
-        //this.posLastTimeSeenY = posInitialY;
+        // this.posLastTimeSeenX = posInitialX;
+        // this.posLastTimeSeenY = posInitialY;
 
-        if (jugador != null) { // Para iniciar de forma natural la posicion del jugador en las primeras instancias del programa
+        if (jugador != null) { // Para iniciar de forma natural la posicion del jugador en las primeras
+                               // instancias del programa
             if (jugador.getPosX() == null || jugador.getPosY() == null) {
                 jugador.setPosX(this.posInitialX);
                 jugador.setPosY(this.posInitialY);
@@ -57,7 +58,7 @@ public abstract class Sala implements Subscription {
 
     }
 
-    protected void interfazPrincipal(Jugador jugador, ArrayList<Mesa> mesas){
+    protected void interfazPrincipal(Jugador jugador, ArrayList<Mesa> mesas) {
         // Interfaz del jugador
         playerUI(jugador);
 
@@ -119,15 +120,16 @@ public abstract class Sala implements Subscription {
                         break;
                     case "e":
                         System.out.println("He pulsado la tecla E!");
-                        
-                        if (jugador.getInventario()){
+
+                        if (jugador.getInventario()) {
                             jugador.usarItems();
                             ASCIIGeneral.esperarTecla();
-                        }else{
+                        } else {
                             jugador.interacting();
                         }
                         break;
-                        // Hacer que haya un voton para mostartlo y potro para usarlo y que pasar usarlo hay que limpiar interfaz y numerar los items
+                    // Hacer que haya un voton para mostartlo y potro para usarlo y que pasar usarlo
+                    // hay que limpiar interfaz y numerar los items
                     case "i":
                         ASCIIGeneral.limpiarPantalla();
                         jugador.setInvetario(true);
@@ -161,8 +163,6 @@ public abstract class Sala implements Subscription {
         scanner.close();
     }
 
-
-
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
         subscribe(jugador);
@@ -180,19 +180,20 @@ public abstract class Sala implements Subscription {
         return pasillos;
     }
 
-    /* public Integer getPosLastTimeSeenX() {return posLastTimeSeenX;}
-
-    public Integer getPosLastTimeSeenY() {
-        return posLastTimeSeenY;
-    }
-
-    public void setPosLastTimeSeenX(Integer posLastTimeSeenX) {
-        this.posLastTimeSeenX = posLastTimeSeenX;
-    }
-
-    public void setPosLastTimeSeenY(Integer posLastTimeSeenY) {
-        this.posLastTimeSeenY = posLastTimeSeenY;
-    }
-
+    /*
+     * public Integer getPosLastTimeSeenX() {return posLastTimeSeenX;}
+     * 
+     * public Integer getPosLastTimeSeenY() {
+     * return posLastTimeSeenY;
+     * }
+     * 
+     * public void setPosLastTimeSeenX(Integer posLastTimeSeenX) {
+     * this.posLastTimeSeenX = posLastTimeSeenX;
+     * }
+     * 
+     * public void setPosLastTimeSeenY(Integer posLastTimeSeenY) {
+     * this.posLastTimeSeenY = posLastTimeSeenY;
+     * }
+     * 
      */
 }

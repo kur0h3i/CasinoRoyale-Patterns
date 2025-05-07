@@ -2,9 +2,10 @@ package patterns.observer;
 
 import personas.Jugador;
 
-public interface Subscription {
+public abstract class Subscription {
 
-    void subscribe(Jugador jugador);
-    void unsubscribe(Jugador jugador);
+    public abstract void subscribe(Jugador jugador);
+
+    public abstract void unsubscribe(Jugador jugador);
 
 }

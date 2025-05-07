@@ -4,6 +4,7 @@ package salas;
 import acciones.Mesa;
 import acciones.Pasillo;
 import ascii.ASCIIGeneral;
+import patterns.template.NewStageTemplate;
 import personas.Jugador;
 import patterns.observer.Subscription;
 
@@ -20,7 +21,7 @@ import static recursos.MensajesEstaticos.*;
  * Gestiona el mapa ASCII, la posicion inicial del jugador, mesas y pasillos.
  * Implementa Subscription para suscripcion del jugador a eventos de movimiento e interaccion.
  */
-public abstract class Sala extends Subscription implements Serializable{
+public abstract class Sala extends NewStageTemplate implements Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -166,6 +167,7 @@ public abstract class Sala extends Subscription implements Serializable{
     /**
      * Bucle principal que mantiene la interfaz viva hasta cerrar la aplicacion.
      */
+    @Override
     public void iniciarInterfaz() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -174,6 +176,14 @@ public abstract class Sala extends Subscription implements Serializable{
             entradaTerminal(scanner);
         }
         // scanner.close(); // Normalmente no se cierra para no inhabilitar System.in
+    }
+
+    @Override
+    public void enterNewStage(Jugador jugador) {
+        // Adjunta al jugador como observador de la nueva sala
+        this.setJugador(jugador);
+        // Inicializa la interfaz grefica o ASCII de la sala
+        this.iniciarInterfaz();
     }
 
     /** Establece el jugador conectado y se suscribe a los eventos de movimiento. */

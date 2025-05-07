@@ -119,4 +119,5 @@ public class SalaPrincipal extends Sala {
     public String toString() {
         return "Principal";
     }
+
 }

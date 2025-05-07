@@ -1,145 +1,166 @@
-// Ruelta.java
+
 package juegos;
 
-// Util
+// Interfaces ASCII para limpieza de pantalla y la ruleta
+import ascii.ASCIIGeneral;
+import ascii.ASCIIRuleta;
+
+// Utilidades de entrada y aleatoriedad
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Jugador
-import personas.Jugador;
-
-// Excepcion
+// Excepción personalizada para falta de fichas
 import excep.ExcepcionJugadorSinFichas;
 
-// ASCII
-import ascii.ASCIIRuleta;
-import ascii.ASCIIGeneral;
+// Representación del jugador
+import personas.Jugador;
 
+/**
+ * Clase Ruleta => Estrategia de juego que implementa StrategyJuego.
+ * El jugador apuesta fichas y puede elegir entre varias opciones de apuesta:
+ * - Color (Rojo/Negro)
+ * - Par/Impar
+ * - Número exacto (0-36)
+ * - Docena (1-12, 13-24, 25-36)
+ * - Mitad (1-18, 19-36)
+ * Luego se gira la ruleta y se determina el resultado, ajustando fichas según
+ * el tipo de apuesta.
+ */
 public class Ruleta implements StrategyJuego {
 
-    // Atributos
+    /** Apuesta realizada por el jugador */
     private Integer apuesta;
-    private Jugador jugador; // Jugador participando en la partida
-    ASCIIRuleta interfaz;
+    /** Jugador participante en la partida */
+    private Jugador jugador;
+    /** Interfaz ASCII específica para mostrar la ruleta */
+    private ASCIIRuleta interfaz;
 
-    // Constructor
+    /**
+     * Constructor: inicializa la interfaz y asigna el jugador.
+     * 
+     * @param jugador instancia de Jugador que jugará
+     */
     public Ruleta(Jugador jugador) {
         this.jugador = jugador;
         this.interfaz = new ASCIIRuleta(jugador);
     }
 
-    // Metodos
-
-    // Deifinir la apuesta
-    public Integer definirApuesta(Scanner input) {
-        System.out.println("¿Cuántas fichas deseas apostar?");
-        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
-
-        Integer apuesta = 0;
-
-        try {
-            apuesta = input.nextInt();
-            input.nextLine(); // Limpiar buffer
-
-            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
-                System.out.println("Apuesta no válida. Intenta de nuevo.");
-                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
-            }
-
-            jugador.restarFichas(apuesta);
-        } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Intenta de nuevo.");
-            input.nextLine(); // Limpiar buffer en caso de excepción
-            return definirApuesta(input); // Llamada recursiva para repetir el proceso
-        }
-
-        return apuesta;
-    }
-
-
-    // Comprobar si hay fichas
-    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
+    /**
+     * Comprueba que el jugador tenga al menos una ficha antes de iniciar partida.
+     * 
+     * @throws ExcepcionJugadorSinFichas si no hay fichas suficientes
+     */
+    private void comprobarFichas() throws ExcepcionJugadorSinFichas {
         if (jugador.getFichas() <= 0) {
             throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
         }
     }
 
+    /**
+     * Flujo principal de la partida de Ruleta.
+     * Muestra el menú inicial y gestiona la interacción del usuario.
+     * 
+     * @throws ExcepcionJugadorSinFichas si el jugador no tiene fichas para apostar
+     */
     @Override
-    public void iniciarPartida() throws ExcepcionJugadorSinFichas{
-        Scanner input = new Scanner(System.in); 
-        comprobarfichas();
-        menuPartida(input);       
-    }
-
-    // Menu partida
-    private void menuPartida(Scanner input){
-        Integer opcion = 0;
+    public void iniciarPartida() throws ExcepcionJugadorSinFichas {
+        Scanner input = new Scanner(System.in);
+        // Validar fichas antes de comenzar
+        comprobarFichas();
+        int opcion = 0;
         while (opcion != 4) {
-            // Monstrar Interfaz
+            // Mostrar interfaz principal de ruleta
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.interfazRuleta();
             interfaz.opciones();
-
             try {
                 opcion = input.nextInt();
-                input.nextLine(); // Limpiar el buffer
-
-                // Opciones del menú principal
+                input.nextLine(); // limpiar buffer
                 switch (opcion) {
                     case 1:
+                        // Definir apuesta y elegir tipo
                         ASCIIGeneral.limpiarPantalla();
                         interfaz.titulo();
-                        apuesta = definirApuesta(input); 
+                        apuesta = definirApuesta(input);
                         opcionesDeApuesta(input);
                         ASCIIGeneral.esperarTecla();
                         break;
                     case 2:
+                        // Girar ruleta sin apostar
                         ASCIIGeneral.limpiarPantalla();
                         interfaz.titulo();
-                        tirarRuleta();
+                        int resultado = tirarRuleta();
+                        System.out.println("Resultado: " + resultado);
                         ASCIIGeneral.esperarTecla();
                         break;
                     case 3:
+                        // Mostrar hoja de trucos
                         ASCIIGeneral.limpiarPantalla();
                         interfaz.titulo();
                         interfaz.cheetsheet();
                         ASCIIGeneral.esperarTecla();
                         break;
                     case 4:
-                        System.out.println("Saliendo del juego...");
+                        // Salir de ruleta
+                        System.out.println("Saliendo de la ruleta...");
                         ASCIIGeneral.limpiarPantalla();
                         break;
                     default:
                         System.out.println("Opción no válida. Intenta de nuevo.");
+                        ASCIIGeneral.esperarTecla();
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Intenta de nuevo.");
-                // Limpiar Buffer
-                input.nextLine(); 
+                System.out.println("Entrada inválida. Introduce un número.");
+                input.nextLine();
+                ASCIIGeneral.esperarTecla();
             }
         }
     }
-    
 
-    public Integer tirarRuleta() {
-        Random random = new Random();
-        Integer resultado = random.nextInt(37);
-        System.out.println("La ruleta gira... El número es: " + resultado);
-        return resultado;
+    /**
+     * Solicita al usuario la cantidad de fichas a apostar.
+     * Valida que sea positiva y no supere las disponibles.
+     * 
+     * @param input Scanner para leer la entrada del usuario
+     * @return número de fichas apostadas
+     */
+    private Integer definirApuesta(Scanner input) {
+        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
+        int ap = 0;
+        try {
+            ap = input.nextInt();
+            input.nextLine();
+            if (ap <= 0 || ap > jugador.getFichas()) {
+                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                return definirApuesta(input);
+            }
+            // Descontar fichas
+            jugador.restarFichas(ap);
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Intenta de nuevo.");
+            input.nextLine();
+            return definirApuesta(input);
+        }
+        return ap;
     }
 
-    public void opcionesDeApuesta(Scanner input) {
-        Integer opcion = 0;
-        ASCIIGeneral.limpiarPantalla();
+    /**
+     * Muestra el submenú de tipos de apuesta y procesa la selección.
+     * 
+     * @param input Scanner para leer la entrada del usuario
+     */
+    private void opcionesDeApuesta(Scanner input) {
+        int opcion = 0;
         while (opcion != 6) {
-            //interaz partida
+            ASCIIGeneral.limpiarPantalla();
             interfaz.interfazPartida();
-            System.out.print("Elige una opción: ");
+            System.out.print("Elige una apuesta (1-6): ");
             try {
                 opcion = input.nextInt();
-
+                input.nextLine();
                 switch (opcion) {
                     case 1:
                         apostarPorColor(input);
@@ -157,127 +178,155 @@ public class Ruleta implements StrategyJuego {
                         apostarMitad(input);
                         break;
                     case 6:
-                        System.out.println("Saliendo de las opciones de apuesta...");
+                        System.out.println("Volviendo al menú principal...");
                         break;
                     default:
-                        System.out.println("Opción no válida. Intenta de nuevo.");
+                        System.out.println("Opción no válida.");
                 }
+                if (opcion >= 1 && opcion <= 5)
+                    ASCIIGeneral.esperarTecla();
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Intenta de nuevo.");
+                System.out.println("Entrada inválida. Intenta de nuevo.");
                 input.nextLine();
+                ASCIIGeneral.esperarTecla();
             }
         }
     }
 
-    // Saber si un numero es rojo
-    private Boolean esNumeroRojo(Integer numero) {
-        Integer [] rojos = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
-        for (Integer rojo : rojos) {
-            if (numero == rojo) {
+    /**
+     * Gira la ruleta y retorna un número entre 0 y 36.
+     * 
+     * @return resultado de la ruleta
+     */
+    private Integer tirarRuleta() {
+        Random rand = new Random();
+        int res = rand.nextInt(37);
+        System.out.println("La ruleta gira... Número: " + res);
+        return res;
+    }
+
+    /**
+     * Apuesta por color (Rojo/Negro).
+     * 
+     * @param input Scanner para leer la elección del usuario
+     */
+    private void apostarPorColor(Scanner input) {
+        System.out.print("Elige color: 1=Rojo, 2=Negro: ");
+        int color = input.nextInt();
+        int res = tirarRuleta();
+        boolean esRojo = esNumeroRojo(res);
+        if ((color == 1 && esRojo) || (color == 2 && !esRojo)) {
+            System.out.println("¡Ganaste! Premiación 1:1.");
+            jugador.agregarFichas(apuesta * 2);
+        } else {
+            System.out.println("Perdiste la apuesta por color.");
+        }
+    }
+
+    /**
+     * Apuesta por par o impar.
+     * 
+     * @param input Scanner para leer la elección del usuario
+     */
+    private void apostarParImpar(Scanner input) {
+        System.out.print("Elige: 1=Par, 2=Impar: ");
+        int elec = input.nextInt();
+        int res = tirarRuleta();
+        boolean esPar = (res != 0 && res % 2 == 0);
+        if ((elec == 1 && esPar) || (elec == 2 && !esPar)) {
+            System.out.println("¡Ganaste! Premiación 1:1.");
+            jugador.agregarFichas(apuesta * 2);
+        } else {
+            System.out.println("Perdiste la apuesta par/impar.");
+        }
+    }
+
+    /**
+     * Apuesta por un número exacto (0-36).
+     * 
+     * @param input Scanner para leer el número apostado
+     */
+    private void apostarPorNumero(Scanner input) {
+        System.out.print("Elige un número (0-36): ");
+        int num = input.nextInt();
+        if (num < 0 || num > 36) {
+            System.out.println("Número inválido.");
+            return;
+        }
+        int res = tirarRuleta();
+        if (res == num) {
+            System.out.println("¡Ganaste! Premiación 35:1.");
+            jugador.agregarFichas(apuesta * 36);
+        } else {
+            System.out.println("Perdiste la apuesta por número.");
+        }
+    }
+
+    /**
+     * Apuesta por docena (1-12, 13-24, 25-36).
+     * 
+     * @param input Scanner para leer la elección del usuario
+     */
+    private void apostarPorDocena(Scanner input) {
+        System.out.print("Elige docena: 1=(1-12), 2=(13-24), 3=(25-36): ");
+        int doc = input.nextInt();
+        if (doc < 1 || doc > 3) {
+            System.out.println("Docena inválida.");
+            return;
+        }
+        int res = tirarRuleta();
+        boolean acierto = (doc == 1 && res <= 12) || (doc == 2 && res <= 24 && res >= 13)
+                || (doc == 3 && res <= 36 && res >= 25);
+        if (acierto) {
+            System.out.println("¡Ganaste! Premiación 2:1.");
+            jugador.agregarFichas(apuesta * 3);
+        } else {
+            System.out.println("Perdiste la apuesta por docena.");
+        }
+    }
+
+    /**
+     * Apuesta por mitad (1-18 o 19-36).
+     * 
+     * @param input Scanner para leer la elección del usuario
+     */
+    private void apostarMitad(Scanner input) {
+        System.out.print("Elige mitad: 1=(1-18), 2=(19-36): ");
+        int mitad = input.nextInt();
+        if (mitad != 1 && mitad != 2) {
+            System.out.println("Mitad inválida.");
+            return;
+        }
+        int res = tirarRuleta();
+        boolean acierto = (mitad == 1 && res <= 18 && res >= 1) || (mitad == 2 && res <= 36 && res >= 19);
+        if (acierto) {
+            System.out.println("¡Ganaste! Premiación 1:1.");
+            jugador.agregarFichas(apuesta * 2);
+        } else {
+            System.out.println("Perdiste la apuesta por mitad.");
+        }
+    }
+
+    /**
+     * Determina si un número de ruleta es rojo según la lista estándar.
+     * 
+     * @param numero número de la ruleta
+     * @return true si es rojo, false si es negro o 0
+     */
+    private boolean esNumeroRojo(int numero) {
+        int[] rojos = { 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36 };
+        for (int r : rojos) {
+            if (numero == r)
                 return true;
-            }
         }
         return false;
     }
 
-    // Apuesta por Color
-    public void apostarPorColor(Scanner input) {
-        System.out.println("Elige un color: 1 para Rojo, 2 para Negro:");
-        Integer color = input.nextInt();
-
-        Integer resultado = tirarRuleta();
-        Boolean esRojo = esNumeroRojo(resultado);
-    
-        if ((color == 1 && esRojo) || (color == 2 && !esRojo)) {
-            System.out.println("¡Felicidades! Ganaste x1 tu apuesta.");
-            jugador.agregarFichas(apuesta * 2); // Ganancia: la apuesta inicial más el premio
-        } else {
-            System.out.println("Lo siento, perdiste.");
-        }
-    }
-    
-    // Apuesta Por Par/Impar
-    public void apostarParImpar(Scanner input) {
-        System.out.println("Elige: 1 para Par, 2 para Impar:");
-        Integer eleccion = input.nextInt();
-
-        Integer resultado = tirarRuleta();
-    
-        Boolean esPar = (resultado != 0 && resultado % 2 == 0);
-        if ((eleccion == 1 && esPar) || (eleccion == 2 && !esPar)) {
-            System.out.println("¡Felicidades! Ganaste x1 tu apuesta.");
-            jugador.agregarFichas(apuesta * 2);
-        } else {
-            System.out.println("Lo siento, perdiste.");
-        }
-    }
-    
-    // Apuesta por un numero
-    public void apostarPorNumero(Scanner input) {
-        System.out.println("Elige un número entre 0 y 36:");
-        Integer numeroApostado = input.nextInt();
-    
-        if (numeroApostado < 0 || numeroApostado > 36) {
-            System.out.println("Número inválido. Intenta de nuevo.");
-            return;
-        }
-
-        Integer resultado = tirarRuleta();
-    
-        if (numeroApostado == resultado) {
-            System.out.println("¡Felicidades! Ganaste x35 tu apuesta!");
-            jugador.agregarFichas(apuesta * 36);
-        } else {
-            System.out.println("Lo siento, perdiste.");
-        }
-    }
-
-    // Apuesta por Docena
-    public void apostarPorDocena(Scanner input) {
-    
-        System.out.println("Elige una docena: 1 (1-12), 2 (13-24), o 3 (25-36):");
-        Integer docena = input.nextInt();
-    
-        if (docena < 1 || docena > 3) {
-            System.out.println("Docena inválida. Intenta de nuevo.");
-            return;
-        }
-
-        Integer resultado = tirarRuleta();
-    
-        if ((docena == 1 && resultado >= 1 && resultado <= 12) ||
-            (docena == 2 && resultado >= 13 && resultado <= 24) ||
-            (docena == 3 && resultado >= 25 && resultado <= 36)) {
-            System.out.println("¡Felicidades! Ganaste x2 tu apuesta.");
-            jugador.agregarFichas(apuesta * 3); // Ganancia: apuesta inicial más premio
-        } else {
-            System.out.println("Lo siento, perdiste.");
-        }
-    }
-    
-    
-    // Apuesta por Mitad
-    public void apostarMitad(Scanner input) {
-    
-        System.out.println("Elige una mitad: 1 (1-18) o 2 (19-36):");
-        Integer mitad = input.nextInt();
-    
-        if (mitad != 1 && mitad != 2) {
-            System.out.println("Mitad inválida. Intenta de nuevo.");
-            return;
-        }
-
-        Integer resultado = tirarRuleta();
-    
-        if ((mitad == 1 && resultado >= 1 && resultado <= 18) ||
-            (mitad == 2 && resultado >= 19 && resultado <= 36)) {
-            System.out.println("¡Felicidades! Ganaste x1 tu apuesta.");
-            jugador.agregarFichas(apuesta * 2); // Ganancia: apuesta inicial más premio
-        } else {
-            System.out.println("Lo siento, perdiste.");
-        }
-    }
-
+    /**
+     * Representación textual de la estrategia para mostrar en menús.
+     * 
+     * @return "Ruleta"
+     */
     @Override
     public String toString() {
         return "Ruleta";

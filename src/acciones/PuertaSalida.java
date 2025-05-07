@@ -31,7 +31,7 @@ import ascii.ASCIIGeneral;
 import static recursos.MensajesEstaticos.interactSave;
 
 /**
- * Clase PuertaSalida => Gestiona la interacción de salida del casino.
+ * Gestiona la interacción de salida del casino.
  * Cuando el jugador se acerca a la puerta, ofrece opciones para
  * guardar, cargar partida, salir del juego o volver al casino.
  * Implementa el patrón Observer para detectar posición e interacción del

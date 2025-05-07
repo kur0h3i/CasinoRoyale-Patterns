@@ -17,7 +17,7 @@ import java.util.Objects;
 import static recursos.MensajesEstaticos.*;
 
 /**
- * SalaPrincipal => Sala principal del casino donde aparecen el cajero, puerta de salida y el bar Fenrir.
+ * Sala principal del casino donde aparecen el cajero, puerta de salida y el bar Fenrir.
  * Aplica el patrón Singleton para garantizar una única instancia. Extiende de Sala para
  * heredar la lógica de interfaz ASCII, movimiento e interacción.
  *

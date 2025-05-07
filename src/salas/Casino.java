@@ -4,7 +4,7 @@ package salas;
 import acciones.Pasillo;
 
 /**
- * Clase Casino => Clase de inicio que configura las salas del casino y corredores entre ellas.
+ * Clase de inicio que configura las salas del casino y corredores entre ellas.
  * Punto de entrada para iniciar la experiencia del casino.
  * Se encarga de:
  *  1. Obtener instancias singleton de las salas (principal, azar, cartas).

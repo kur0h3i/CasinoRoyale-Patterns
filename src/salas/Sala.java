@@ -14,7 +14,7 @@ import java.util.Scanner;
 import static recursos.MensajesEstaticos.*;
 
 /**
- * Clase Sala => Clase abstracta para representar una sala en el casino.
+ * Clase abstracta para representar una sala en el casino.
  * Gestiona el mapa ASCII, la posición inicial del jugador, mesas y pasillos.
  * Implementa Subscription para suscripción del jugador a eventos de movimiento e interacción.
  */

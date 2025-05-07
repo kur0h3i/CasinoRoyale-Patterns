@@ -15,7 +15,7 @@ import personas.Jugador;
 import static recursos.MensajesEstaticos.interactATM;
 
 /**
- * Clase Cajero => Permite a un jugador convertir dinero en fichas y viceversa
+ * Permite a un jugador convertir dinero en fichas y viceversa
  * mediante una interfaz ASCII.
  * Implementa el patrón Observer (Pull-Push) para reaccionar a la posición e
  * interacción del jugador.

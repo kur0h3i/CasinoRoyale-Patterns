@@ -3,7 +3,7 @@ package patterns.observer;
 
 
 /**
- * PullPushModelObservable: interfaz que define el contrato para un sujeto observable
+ * Interfaz que define el contrato para un sujeto observable
  * en el patrón Observer (Pull-Push). Permite gestionar observadores que reaccionan
  * a cambios de estado mediante métodos de adjuntar, eliminar y notificar.
  */

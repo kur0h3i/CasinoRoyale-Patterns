@@ -16,7 +16,7 @@ import patterns.observer.PullPushModelObserver;
 import java.util.Objects;
 
 /**
- * Clase Pasillo => Representa un corredor que traslada al jugador de una sala a
+ * Representa un corredor que traslada al jugador de una sala a
  * otra
  * al entrar en las coordenadas definidas. Implementa el patrón Observer para
  * reaccionar

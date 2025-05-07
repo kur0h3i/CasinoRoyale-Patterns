@@ -22,7 +22,7 @@ import java.util.Objects;
 import static recursos.MensajesEstaticos.interactTable;
 
 /**
- * Clase Mesa => Representa una mesa de juego en el casino.
+ * Representa una mesa de juego en el casino.
  * Combina el patrón Observer (Pull-Push) para detectar la posición e
  * interacción del jugador
  * y el patrón Strategy para seleccionar dinámicamente el juego según el tipo de

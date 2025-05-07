@@ -17,7 +17,7 @@ import excep.ExcepcionJugadorSinFichas;
 import personas.Jugador;
 
 /**
- * Clase Dados => Estrategia de juego que implementa StrategyJuego.
+ * Estrategia de juego que implementa StrategyJuego.
  * El jugador apuesta fichas y lanza dos dados. Según la suma:
  * - 7 u 11: gana dobla la apuesta.
  * - 2, 3 o 12: pierde la apuesta.

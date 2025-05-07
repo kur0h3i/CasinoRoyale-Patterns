@@ -18,7 +18,7 @@ import personas.Jugador;
 import static recursos.MensajesEstaticos.interactFenrir;
 
 /**
- * Clase Fenrir => Representa un bar donde el jugador puede comprar bebidas
+ * Representa un bar donde el jugador puede comprar bebidas
  * usando
  * dinero.
  * Implementa el patrón Observer (Pull-Push) para reaccionar a la posición e

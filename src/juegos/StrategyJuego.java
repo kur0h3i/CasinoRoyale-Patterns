@@ -4,7 +4,7 @@ package juegos;
 import excep.ExcepcionJugadorSinFichas;
 
 /**
- * StrategyJuego => Interfaz que define el contrato para las diferentes
+ * Interfaz que define el contrato para las diferentes
  * estrategias de juego
  * disponibles en el casino virtual.
  * Cada implementación representa un juego concreto (Bingo, Ruleta, Dados, etc.)

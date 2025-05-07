@@ -20,7 +20,7 @@ import personas.Jugador;
 import excep.ExcepcionJugadorSinFichas;
 
 /**
- * Clase CartaMasAlta => Estrategia de juego que implementa StrategyJuego.
+ * Estrategia de juego que implementa StrategyJuego.
  * El jugador apuesta fichas, se reparte una carta al jugador y otra a la IA,
  * y quien tenga el valor más alto gana la apuesta.
  */

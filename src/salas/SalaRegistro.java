@@ -13,7 +13,7 @@ import personas.Jugador;
 import personas.JugadorFactory;
 
 /**
- * SalaRegistro => Punto de entrada para registrar o cargar un jugador antes de iniciar el casino.
+ * Punto de entrada para registrar o cargar un jugador antes de iniciar el casino.
  * Muestra arte ASCII, información de bienvenida y gestiona la creación o carga de perfiles.
  * Verifica que el jugador sea mayor de edad antes de continuar.
  *

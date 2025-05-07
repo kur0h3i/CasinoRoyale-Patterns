@@ -2,7 +2,7 @@
 package items;
 
 /**
- * Clase Bebida => Implementación de Items que representa una bebida consumible.
+ * Implementación de Items que representa una bebida consumible.
  * Permite obtener nombre, precio, descripción y usar la bebida con un mensaje.
  */
 public class Bebida implements Items {

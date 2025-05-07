@@ -13,7 +13,7 @@ import patterns.observer.PullPushModelObserver;
 import salas.Sala;
 
 /**
- * Clase Jugador => Representa al usuario en el casino, con posición, fondos,
+ * Representa al usuario en el casino, con posición, fondos,
  * fichas, inventario de ítems y suscripción al patrón Observer para recibir
  * notificaciones de cambios de estado.
  * Implementa Serializable para persistencia y PullPushModelObservable para

@@ -2,7 +2,7 @@
 package recursos;
 
 /**
- * Enum Games => Define los nombres de las estrategias de juego disponibles en el casino.
+ * Define los nombres de las estrategias de juego disponibles en el casino.
  * Cada constante representa un juego y almacena su identificador de cadena.
  */
 public enum Games {

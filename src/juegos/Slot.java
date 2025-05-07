@@ -17,7 +17,7 @@ import excep.ExcepcionJugadorSinFichas;
 import personas.Jugador;
 
 /**
- * Clase Slot => Estrategia de juego que implementa StrategyJuego.
+ * Estrategia de juego que implementa StrategyJuego.
  * El jugador apuesta fichas y gira una máquina tragamonedas de tres símbolos:
  * - Tres símbolos iguales: premio multiplicado según el símbolo
  * - Dos símbolos iguales: recupera la apuesta

@@ -2,7 +2,7 @@
 package personas;
 
 /**
- * JugadorFactory => clase de fábrica para instanciar diferentes tipos de jugadores.
+ * Clase de fábrica para instanciar diferentes tipos de jugadores.
  * Permite crear tanto al jugador principal como NPC basándose en un identificador de tipo.
  */
 public class JugadorFactory {

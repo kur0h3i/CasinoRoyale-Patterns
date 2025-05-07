@@ -4,7 +4,7 @@ package mapas;
 public class SalaJuegosAzarMapa {
 
     /**
-     * Clase SalaJuegosAzarMapa => Define la representación y posiciones clave de la sala de juegos de azar en el casino.
+     * Define la representación y posiciones clave de la sala de juegos de azar en el casino.
      * Contiene un mapa de caracteres que modela el plano de la sala, junto con coordenadas
      * estáticas para la posición inicial del jugador, la entrada desde pasillos y la ubicación de mesas específicas.
      */

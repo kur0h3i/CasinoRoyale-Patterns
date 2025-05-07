@@ -11,7 +11,7 @@ import patterns.observer.PullPushModelObserver;
 import salas.Sala;
 
 /**
- * JugadorNPC => extensión de Jugador que representa un personaje no controlado por el usuario.
+ * Extensión de Jugador que representa un personaje no controlado por el usuario.
  * Se utiliza para simular participantes controlados por la IA en el casino.
  */
 public class JugadorNPC extends Jugador {

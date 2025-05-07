@@ -3,7 +3,7 @@ package recursos;
 
 /**
  * Representa una carta de la baraja con un valor y un palo.
- * Proporciona métodos para obtener su representación, valor numérico y nombre de archivo.
+ * Proporciona metodos para obtener su representacion, valor numerico y nombre de archivo.
  */
 public class Carta {
 
@@ -46,10 +46,10 @@ public class Carta {
   }
 
   /**
-   * Calcula el valor numérico de la carta para comparaciones:
-   * A=14, K=13, Q=12, J=11, 2-10 según su número.
+   * Calcula el valor numerico de la carta para comparaciones:
+   * A=14, K=13, Q=12, J=11, 2-10 segun su numero.
    *
-   * @return valor numérico entero
+   * @return valor numerico entero
    */
   public Integer getValorNumerico() {
     switch (valor) {
@@ -67,7 +67,7 @@ public class Carta {
   }
 
   /**
-   * Determina la prioridad del palo según criterio interno:
+   * Determina la prioridad del palo segun criterio interno:
    * S (Picas)=4, H (Treboles)=3, D (Diamantes)=2, C (Corazones)=1.
    *
    * @return prioridad del palo
@@ -90,14 +90,14 @@ public class Carta {
   /**
    * Genera un nombre de archivo para la carta (p.ej. "A-C.png").
    *
-   * @return nombre de archivo con extensión
+   * @return nombre de archivo con extension
    */
   public String getNombreArchivo() {
     return valor + "-" + tipo + ".png";
   }
 
   /**
-   * Representación textual de la carta (p.ej. "A de C").
+   * Representacion textual de la carta (p.ej. "A de C").
    *
    * @return cadena con valor y palo
    */

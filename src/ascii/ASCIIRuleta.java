@@ -44,7 +44,7 @@ public class ASCIIRuleta {
         System.out.println("__________________________ CHEET SHEET __________________________");
         System.out.println("| Tipo de Apuesta         | Ejemplo        | Pago               |");
         System.out.println("|-------------------------|----------------|--------------------|");
-        System.out.println("| Número Individual       | 7              | x35                |");
+        System.out.println("| Numero Individual       | 7              | x35                |");
         System.out.println("| Docena (1st, 2nd, 3rd)  | 1st 12         | x2                 |");
         System.out.println("| Mitad (1-18 o 19-36)    | 1-18           | x1                 |");
         System.out.println("| Rojo / Negro            | Rojo           | x1                 |");
@@ -59,7 +59,7 @@ public class ASCIIRuleta {
             System.out.println("| Opciones de Apuesta   |");
             System.out.println("| 1. Color (Rojo/Negro) |");
             System.out.println("| 2. Par / Impar        |");
-            System.out.println("| 3. Número Individual  |");
+            System.out.println("| 3. Numero Individual  |");
             System.out.println("| 4. Docena             |");
             System.out.println("| 5. Mitad              |");
             System.out.println("| 6. Salir              |");

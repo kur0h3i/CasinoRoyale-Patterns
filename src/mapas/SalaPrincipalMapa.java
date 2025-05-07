@@ -5,9 +5,9 @@ public class SalaPrincipalMapa {
 
     /**
      * Representa el mapa de la sala principal del casino.
-     * Contiene un plano ASCII bidimensional con paredes, pasillos y símbolos
+     * Contiene un plano ASCII bidimensional con paredes, pasillos y simbolos
      * que indican puertas, entradas y conexiones a otras salas.
-     * Además, define la posición inicial del jugador al entrar.
+     * Ademes, define la posicion inicial del jugador al entrar.
      */
     public static final Character[][] mapaSalaPrincipal = {
             { '#','#','#','#',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ','^','#','#','#'},

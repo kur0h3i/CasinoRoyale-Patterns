@@ -1,11 +1,11 @@
 
 package acciones;
 
-// Mapas de entrada para salas específicas
+// Mapas de entrada para salas especificas
 import mapas.SalaCartasMapa;
 import mapas.SalaJuegosAzarMapa;
 
-// Representación de salas y jugadores
+// Representacion de salas y jugadores
 import salas.Sala;
 import personas.Jugador;
 
@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * Representa un corredor que traslada al jugador de una sala a
  * otra
- * al entrar en las coordenadas definidas. Implementa el patrón Observer para
+ * al entrar en las coordenadas definidas. Implementa el patron Observer para
  * reaccionar
  * al movimiento del jugador (Pull-Push), desconectarlo de la sala actual y
  * cargar la siguiente.
@@ -40,9 +40,9 @@ public class Pasillo implements PullPushModelObserver, Serializable {
     /**
      * Constructor de Pasillo.
      *
-     * @param posX          coordenada X de activación del pasillo
-     * @param posY          coordenada Y de activación del pasillo
-     * @param salaSiguiente sala a la que se transportará al jugador
+     * @param posX          coordenada X de activacion del pasillo
+     * @param posY          coordenada Y de activacion del pasillo
+     * @param salaSiguiente sala a la que se transportare al jugador
      */
     public Pasillo(Integer posX, Integer posY, Sala salaSiguiente) {
         this.posX = posX;
@@ -51,7 +51,7 @@ public class Pasillo implements PullPushModelObserver, Serializable {
     }
 
     /**
-     * Método update del Observer: se invoca cuando el jugador se mueve.
+     * Metodo update del Observer: se invoca cuando el jugador se mueve.
      * Si el jugador llega a las coordenadas del pasillo, se procede a:
      * 1. Desconectarlo de todos los observables de la sala actual.
      * 2. Reubicarlo en la entrada apropiada de la siguiente sala.
@@ -67,14 +67,14 @@ public class Pasillo implements PullPushModelObserver, Serializable {
             return; // Solo procesar notificaciones de Jugador
         }
         Jugador jugadorTMP = (Jugador) obs;
-        // Comprueba si el jugador está en la posición del pasillo
+        // Comprueba si el jugador este en la posicion del pasillo
         if (Objects.equals(jugadorTMP.getPosX(), this.posX)
                 && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
 
             // Desconecta al jugador de todos los observables de la sala actual
             jugadorTMP.detachAll();
 
-            // Establece la posición de entrada según la sala previa
+            // Establece la posicion de entrada segun la sala previa
             String salaActual = jugadorTMP.getSalaActual().toString();
             if ("Cartas".equals(salaActual)) {
                 jugadorTMP.setPosX(SalaCartasMapa.posXEntrada);
@@ -83,7 +83,7 @@ public class Pasillo implements PullPushModelObserver, Serializable {
                 jugadorTMP.setPosX(SalaJuegosAzarMapa.posXEntrada);
                 jugadorTMP.setPosY(SalaJuegosAzarMapa.posYEntrada);
             } else {
-                // Entrada genérica de la salaDestino
+                // Entrada generica de la salaDestino
                 jugadorTMP.setPosX(this.salaSiguiente.getPosInitialX());
                 jugadorTMP.setPosY(this.salaSiguiente.getPosInitialY());
             }
@@ -92,7 +92,7 @@ public class Pasillo implements PullPushModelObserver, Serializable {
             jugadorTMP.setSala(this.salaSiguiente);
             // Adjunta al jugador como observador de la nueva sala
             this.salaSiguiente.setJugador(jugadorTMP);
-            // Inicializa la interfaz gráfica o ASCII de la sala
+            // Inicializa la interfaz grefica o ASCII de la sala
             this.salaSiguiente.iniciarInterfaz();
         }
     }

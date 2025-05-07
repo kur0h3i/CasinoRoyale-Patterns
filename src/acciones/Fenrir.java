@@ -24,8 +24,8 @@ import static recursos.MensajesEstaticos.interactFenrir;
  * Representa un bar donde el jugador puede comprar bebidas
  * usando
  * dinero.
- * Implementa el patrón Observer (Pull-Push) para reaccionar a la posición e
- * interacción del jugador.
+ * Implementa el patron Observer (Pull-Push) para reaccionar a la posicion e
+ * interaccion del jugador.
  */
 public class Fenrir implements PullPushModelObserverInteractive, Serializable {
 
@@ -36,22 +36,22 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
     private Integer posX;
     /** Coordenada Y del bar Fenrir en la sala */
     private Integer posY;
-    /** Jugador que interactúa actualmente (null si ninguno está cerca) */
+    /** Jugador que interactua actualmente (null si ninguno este cerca) */
     private Jugador jugador;
     /** Lista de bebidas disponibles en el bar */
     private List<Items> bebidasDisponibles = new ArrayList<>();
-    /** Interfaz ASCII específica del bar para mostrar menús y mensajes */
+    /** Interfaz ASCII especifica del bar para mostrar menus y mensajes */
     private ASCIIFenrir interfaz;
 
     /**
-     * Constructor de Fenrir: inicializa la carta de bebidas y la posición en sala.
+     * Constructor de Fenrir: inicializa la carta de bebidas y la posicion en sala.
      *
      * @param posX coordenada X del bar
      * @param posY coordenada Y del bar
      */
     public Fenrir(Integer posX, Integer posY) {
-        // Inicializa carta de bebidas con nombre, precio y descripción
-        bebidasDisponibles.add(new Bebida("Cerveza", 2.50, "Bien fría"));
+        // Inicializa carta de bebidas con nombre, precio y descripcion
+        bebidasDisponibles.add(new Bebida("Cerveza", 2.50, "Bien fria"));
         bebidasDisponibles.add(new Bebida("Copa de vino", 3.00, "Tinto de la casa"));
         bebidasDisponibles.add(new Bebida("Redbull", 1.59, "Te da alas"));
         bebidasDisponibles.add(new Bebida("Cacaolat", 1.59, "Chocolate"));
@@ -63,8 +63,8 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
     }
 
     /**
-     * Método llamado por el observable (Jugador) cuando cambia de estado.
-     * Si el jugador está en la posición del bar, muestra mensaje de interacción y
+     * Metodo llamado por el observable (Jugador) cuando cambia de estado.
+     * Si el jugador este en la posicion del bar, muestra mensaje de interaccion y
      * espera input.
      *
      * @param obs observable (debe ser instancia de Jugador)
@@ -74,11 +74,11 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
     public void update(PullPushModelObservable obs, Object obj) {
         if (obs instanceof Jugador) {
             Jugador j = (Jugador) obs;
-            // Comprueba si el jugador está en la misma coordenada que el bar
+            // Comprueba si el jugador este en la misma coordenada que el bar
             if (Objects.equals(j.getPosX(), posX) && Objects.equals(j.getPosY(), posY)) {
                 this.jugador = j;
                 interactFenrir();
-                // Si el jugador pulsa la tecla de interactuar, abre menú
+                // Si el jugador pulsa la tecla de interactuar, abre menu
                 if (j.getInteract()) {
                     interactive();
                 }
@@ -90,7 +90,7 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
     }
 
     /**
-     * Inicia la interacción con el bar: crea Scanner y llama al bucle de menú.
+     * Inicia la interaccion con el bar: crea Scanner y llama al bucle de menu.
      */
     @Override
     public void interactive() {
@@ -101,13 +101,13 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
     /**
      * Bucle principal de opciones: comprar bebida o salir del bar.
      *
-     * @param input Scanner para leer la opción del usuario
+     * @param input Scanner para leer la opcion del usuario
      */
     public void iniciarBar(Scanner input) {
         int opcion = 0;
         while (opcion != 2) {
             ASCIIGeneral.limpiarPantalla();
-            interfaz.titulo(); // Muestra título ASCII del bar
+            interfaz.titulo(); // Muestra titulo ASCII del bar
             interfaz.opcionesBar(); // Muestra opciones del bar (1: comprar, 2: salir)
             try {
                 opcion = input.nextInt();
@@ -121,11 +121,11 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
                         ASCIIGeneral.limpiarPantalla();
                         break;
                     default:
-                        System.out.println("Opción no válida. Elige 1 o 2.");
+                        System.out.println("Opcion no velida. Elige 1 o 2.");
                         ASCIIGeneral.esperarTecla();
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Usa números.");
+                System.out.println("Entrada no velida. Usa numeros.");
                 input.nextLine(); // limpia buffer
                 ASCIIGeneral.esperarTecla();
             }
@@ -133,25 +133,25 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
     }
 
     /**
-     * Muestra la carta de bebidas y procesa la selección del usuario.
+     * Muestra la carta de bebidas y procesa la seleccion del usuario.
      *
-     * @param input Scanner para leer el índice de bebida
+     * @param input Scanner para leer el indice de bebida
      */
     private void comprarBebida(Scanner input) {
         interfaz.carta();
         try {
             Integer id = input.nextInt();
             input.nextLine();
-            // Valida selección dentro del rango
+            // Valida seleccion dentro del rango
             if (id < 1 || id > bebidasDisponibles.size()) {
-                System.out.println("Selección inválida.");
+                System.out.println("Seleccion invelida.");
                 ASCIIGeneral.esperarTecla();
                 return;
             }
             Items bebida = bebidasDisponibles.get(id - 1);
             procesarCompraDinero(bebida);
         } catch (InputMismatchException e) {
-            System.out.println("Debe introducir un número.");
+            System.out.println("Debe introducir un numero.");
             input.nextLine();
             ASCIIGeneral.esperarTecla();
         }
@@ -159,7 +159,7 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
 
     /**
      * Comprueba si el jugador tiene suficiente dinero y, en caso afirmativo,
-     * descuenta el precio y añade el ítem al inventario.
+     * descuenta el precio y añade el item al inventario.
      *
      * @param bebida objeto Items con nombre y precio
      */

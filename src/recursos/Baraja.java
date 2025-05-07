@@ -4,14 +4,14 @@ package recursos;
 import java.util.Random;
 
 /**
- * Modelo de una baraja estándar de 52 cartas.
+ * Modelo de una baraja estendar de 52 cartas.
  * Permite mezclar, repartir y reiniciar la baraja.
  */
 public class Baraja {
 
     /** Array que contiene las 52 cartas de la baraja */
     private Carta[] cartas;
-    /** Número de cartas aún disponibles para repartir */
+    /** Numero de cartas aun disponibles para repartir */
     private int cartasDisponibles;
 
     /**
@@ -55,14 +55,14 @@ public class Baraja {
      */
     public Carta repartir() {
         if (cartasDisponibles <= 0) {
-            System.out.println("No hay más cartas en la baraja.");
+            System.out.println("No hay mes cartas en la baraja.");
             return null;
         }
         return cartas[--cartasDisponibles];
     }
 
     /**
-     * @return número de cartas que quedan por repartir
+     * @return numero de cartas que quedan por repartir
      */
     public int cartasRestantes() {
         return cartasDisponibles;

@@ -483,19 +483,19 @@ ascii
 
 
 excep
-    Excepción ExcepcionJugadorMenorEdad
+    Excepcion ExcepcionJugadorMenorEdad
 
     ExcepcionJugadorMenorEdad(String)
 
-    Excepción ExcepcionJugadorNoEncontrado
+    Excepcion ExcepcionJugadorNoEncontrado
 
     ExcepcionJugadorNoEncontrado(String)
 
-    Excepción ExcepcionJugadorSinDinero
+    Excepcion ExcepcionJugadorSinDinero
 
     ExcepcionJugadorSinDinero(String)
 
-    Excepción ExcepcionJugadorSinFichas
+    Excepcion ExcepcionJugadorSinFichas
 
     ExcepcionJugadorSinFichas(String)
 

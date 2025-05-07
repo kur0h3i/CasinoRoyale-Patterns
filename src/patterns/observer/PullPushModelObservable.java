@@ -4,22 +4,22 @@ package patterns.observer;
 
 /**
  * Interfaz que define el contrato para un sujeto observable
- * en el patrón Observer (Pull-Push). Permite gestionar observadores que reaccionan
- * a cambios de estado mediante métodos de adjuntar, eliminar y notificar.
+ * en el patron Observer (Pull-Push). Permite gestionar observadores que reaccionan
+ * a cambios de estado mediante metodos de adjuntar, eliminar y notificar.
  */
 public interface PullPushModelObservable {
 
     /**
      * Adjunta un observador a este observable.
      *
-     * @param observer instancia de PullPushModelObserver que se añadirá
+     * @param observer instancia de PullPushModelObserver que se añadire
      */
     void attach(PullPushModelObserver observer);
 
     /**
      * Elimina un observador de este observable.
      *
-     * @param observer instancia de PullPushModelObserver que se eliminará
+     * @param observer instancia de PullPushModelObserver que se eliminare
      */
     void detach(PullPushModelObserver observer);
 

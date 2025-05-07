@@ -14,7 +14,7 @@ import personas.JugadorFactory;
 
 /**
  * Punto de entrada para registrar o cargar un jugador antes de iniciar el casino.
- * Muestra arte ASCII, información de bienvenida y gestiona la creación o carga de perfiles.
+ * Muestra arte ASCII, informacion de bienvenida y gestiona la creacion o carga de perfiles.
  * Verifica que el jugador sea mayor de edad antes de continuar.
  *
  * Uso:
@@ -29,8 +29,8 @@ public class SalaRegistro {
     public static Jugador jugador;
 
     /**
-     * Constructor: muestra arte ASCII, información del casino,
-     * inicia el flujo de registro y verifica la mayoría de edad.
+     * Constructor: muestra arte ASCII, informacion del casino,
+     * inicia el flujo de registro y verifica la mayoria de edad.
      */
     public SalaRegistro() {
         asciiArt();
@@ -60,7 +60,7 @@ public class SalaRegistro {
     }
 
     /**
-     * Muestra la descripción y reglas básicas del casino.
+     * Muestra la descripcion y reglas besicas del casino.
      */
     public void informacionCasino() {
         System.out.println("----------------------------------------------------------------------------------------------------------------");
@@ -71,19 +71,19 @@ public class SalaRegistro {
     /**
      * Inicia el flujo de registro: cargar o crear un jugador.
      *
-     * @return instancia de Jugador válido
+     * @return instancia de Jugador velido
      */
     public Jugador iniciarJugador() {
         Scanner input = new Scanner(System.in);
         Jugador sel = null;
         int opcion;
         do {
-            System.out.println("1. Iniciar sesión de socio");
+            System.out.println("1. Iniciar sesion de socio");
             System.out.println("2. Registrar nuevo socio");
             System.out.println("3. Salir");
-            System.out.print("Elige una opción (1-3): ");
+            System.out.print("Elige una opcion (1-3): ");
             while (!input.hasNextInt()) {
-                System.out.print("Por favor ingresa un número (1-3): ");
+                System.out.print("Por favor ingresa un numero (1-3): ");
                 input.next();
             }
             opcion = input.nextInt();
@@ -100,7 +100,7 @@ public class SalaRegistro {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no velida.");
             }
         } while (sel == null);
         return sel;
@@ -137,9 +137,9 @@ public class SalaRegistro {
 
     /**
      * Solicita datos y crea un nuevo jugador.<br>
-     * Verifica nombre y edad mediante confirmación.
+     * Verifica nombre y edad mediante confirmacion.
      *
-     * @return Jugador recién creado
+     * @return Jugador recien creado
      */
     public Jugador crearJugador() {
         Scanner input = new Scanner(System.in);
@@ -151,7 +151,7 @@ public class SalaRegistro {
             nombre = input.nextLine().trim();
             System.out.print("Tu edad: ");
             while (!input.hasNextInt()) {
-                System.out.print("Edad inválida. Ingresa un número: ");
+                System.out.print("Edad invelida. Ingresa un numero: ");
                 input.next();
             }
             edad = input.nextInt();
@@ -167,7 +167,7 @@ public class SalaRegistro {
      * Verifica que el jugador sea mayor de 18 años.
      *
      * @return
-     * @throws ExcepcionJugadorMenorEdad si no cumple la edad mínima
+     * @throws ExcepcionJugadorMenorEdad si no cumple la edad minima
      */
     public Boolean verificarMayorEdad() throws ExcepcionJugadorMenorEdad {
         if (jugador.getEdad() < 18) {

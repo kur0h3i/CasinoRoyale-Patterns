@@ -10,10 +10,10 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Excepción personalizada para falta de fichas
+// Excepcion personalizada para falta de fichas
 import excep.ExcepcionJugadorSinFichas;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
 /**
@@ -21,10 +21,10 @@ import personas.Jugador;
  * El jugador apuesta fichas y puede elegir entre varias opciones de apuesta:
  * - Color (Rojo/Negro)
  * - Par/Impar
- * - Número exacto (0-36)
+ * - Numero exacto (0-36)
  * - Docena (1-12, 13-24, 25-36)
  * - Mitad (1-18, 19-36)
- * Luego se gira la ruleta y se determina el resultado, ajustando fichas según
+ * Luego se gira la ruleta y se determina el resultado, ajustando fichas segun
  * el tipo de apuesta.
  */
 public class Ruleta implements StrategyJuego {
@@ -33,13 +33,13 @@ public class Ruleta implements StrategyJuego {
     private Integer apuesta;
     /** Jugador participante en la partida */
     private Jugador jugador;
-    /** Interfaz ASCII específica para mostrar la ruleta */
+    /** Interfaz ASCII especifica para mostrar la ruleta */
     private ASCIIRuleta interfaz;
 
     /**
      * Constructor: inicializa la interfaz y asigna el jugador.
      * 
-     * @param jugador instancia de Jugador que jugará
+     * @param jugador instancia de Jugador que jugare
      */
     public Ruleta(Jugador jugador) {
         this.jugador = jugador;
@@ -59,7 +59,7 @@ public class Ruleta implements StrategyJuego {
 
     /**
      * Flujo principal de la partida de Ruleta.
-     * Muestra el menú inicial y gestiona la interacción del usuario.
+     * Muestra el menu inicial y gestiona la interaccion del usuario.
      * 
      * @throws ExcepcionJugadorSinFichas si el jugador no tiene fichas para apostar
      */
@@ -108,11 +108,11 @@ public class Ruleta implements StrategyJuego {
                         ASCIIGeneral.limpiarPantalla();
                         break;
                     default:
-                        System.out.println("Opción no válida. Intenta de nuevo.");
+                        System.out.println("Opcion no velida. Intenta de nuevo.");
                         ASCIIGeneral.esperarTecla();
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Introduce un número.");
+                System.out.println("Entrada invelida. Introduce un numero.");
                 input.nextLine();
                 ASCIIGeneral.esperarTecla();
             }
@@ -124,23 +124,23 @@ public class Ruleta implements StrategyJuego {
      * Valida que sea positiva y no supere las disponibles.
      * 
      * @param input Scanner para leer la entrada del usuario
-     * @return número de fichas apostadas
+     * @return numero de fichas apostadas
      */
     private Integer definirApuesta(Scanner input) {
-        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("¿Cuentas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
         int ap = 0;
         try {
             ap = input.nextInt();
             input.nextLine();
             if (ap <= 0 || ap > jugador.getFichas()) {
-                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                System.out.println("Apuesta no velida. Intenta de nuevo.");
                 return definirApuesta(input);
             }
             // Descontar fichas
             jugador.restarFichas(ap);
         } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Intenta de nuevo.");
+            System.out.println("Entrada invelida. Intenta de nuevo.");
             input.nextLine();
             return definirApuesta(input);
         }
@@ -148,7 +148,7 @@ public class Ruleta implements StrategyJuego {
     }
 
     /**
-     * Muestra el submenú de tipos de apuesta y procesa la selección.
+     * Muestra el submenu de tipos de apuesta y procesa la seleccion.
      * 
      * @param input Scanner para leer la entrada del usuario
      */
@@ -178,15 +178,15 @@ public class Ruleta implements StrategyJuego {
                         apostarMitad(input);
                         break;
                     case 6:
-                        System.out.println("Volviendo al menú principal...");
+                        System.out.println("Volviendo al menu principal...");
                         break;
                     default:
-                        System.out.println("Opción no válida.");
+                        System.out.println("Opcion no velida.");
                 }
                 if (opcion >= 1 && opcion <= 5)
                     ASCIIGeneral.esperarTecla();
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Intenta de nuevo.");
+                System.out.println("Entrada invelida. Intenta de nuevo.");
                 input.nextLine();
                 ASCIIGeneral.esperarTecla();
             }
@@ -194,21 +194,21 @@ public class Ruleta implements StrategyJuego {
     }
 
     /**
-     * Gira la ruleta y retorna un número entre 0 y 36.
+     * Gira la ruleta y retorna un numero entre 0 y 36.
      * 
      * @return resultado de la ruleta
      */
     private Integer tirarRuleta() {
         Random rand = new Random();
         int res = rand.nextInt(37);
-        System.out.println("La ruleta gira... Número: " + res);
+        System.out.println("La ruleta gira... Numero: " + res);
         return res;
     }
 
     /**
      * Apuesta por color (Rojo/Negro).
      * 
-     * @param input Scanner para leer la elección del usuario
+     * @param input Scanner para leer la eleccion del usuario
      */
     private void apostarPorColor(Scanner input) {
         System.out.print("Elige color: 1=Rojo, 2=Negro: ");
@@ -216,7 +216,7 @@ public class Ruleta implements StrategyJuego {
         int res = tirarRuleta();
         boolean esRojo = esNumeroRojo(res);
         if ((color == 1 && esRojo) || (color == 2 && !esRojo)) {
-            System.out.println("¡Ganaste! Premiación 1:1.");
+            System.out.println("¡Ganaste! Premiacion 1:1.");
             jugador.agregarFichas(apuesta * 2);
         } else {
             System.out.println("Perdiste la apuesta por color.");
@@ -226,7 +226,7 @@ public class Ruleta implements StrategyJuego {
     /**
      * Apuesta por par o impar.
      * 
-     * @param input Scanner para leer la elección del usuario
+     * @param input Scanner para leer la eleccion del usuario
      */
     private void apostarParImpar(Scanner input) {
         System.out.print("Elige: 1=Par, 2=Impar: ");
@@ -234,7 +234,7 @@ public class Ruleta implements StrategyJuego {
         int res = tirarRuleta();
         boolean esPar = (res != 0 && res % 2 == 0);
         if ((elec == 1 && esPar) || (elec == 2 && !esPar)) {
-            System.out.println("¡Ganaste! Premiación 1:1.");
+            System.out.println("¡Ganaste! Premiacion 1:1.");
             jugador.agregarFichas(apuesta * 2);
         } else {
             System.out.println("Perdiste la apuesta par/impar.");
@@ -242,43 +242,43 @@ public class Ruleta implements StrategyJuego {
     }
 
     /**
-     * Apuesta por un número exacto (0-36).
+     * Apuesta por un numero exacto (0-36).
      * 
-     * @param input Scanner para leer el número apostado
+     * @param input Scanner para leer el numero apostado
      */
     private void apostarPorNumero(Scanner input) {
-        System.out.print("Elige un número (0-36): ");
+        System.out.print("Elige un numero (0-36): ");
         int num = input.nextInt();
         if (num < 0 || num > 36) {
-            System.out.println("Número inválido.");
+            System.out.println("Numero invelido.");
             return;
         }
         int res = tirarRuleta();
         if (res == num) {
-            System.out.println("¡Ganaste! Premiación 35:1.");
+            System.out.println("¡Ganaste! Premiacion 35:1.");
             jugador.agregarFichas(apuesta * 36);
         } else {
-            System.out.println("Perdiste la apuesta por número.");
+            System.out.println("Perdiste la apuesta por numero.");
         }
     }
 
     /**
      * Apuesta por docena (1-12, 13-24, 25-36).
      * 
-     * @param input Scanner para leer la elección del usuario
+     * @param input Scanner para leer la eleccion del usuario
      */
     private void apostarPorDocena(Scanner input) {
         System.out.print("Elige docena: 1=(1-12), 2=(13-24), 3=(25-36): ");
         int doc = input.nextInt();
         if (doc < 1 || doc > 3) {
-            System.out.println("Docena inválida.");
+            System.out.println("Docena invelida.");
             return;
         }
         int res = tirarRuleta();
         boolean acierto = (doc == 1 && res <= 12) || (doc == 2 && res <= 24 && res >= 13)
                 || (doc == 3 && res <= 36 && res >= 25);
         if (acierto) {
-            System.out.println("¡Ganaste! Premiación 2:1.");
+            System.out.println("¡Ganaste! Premiacion 2:1.");
             jugador.agregarFichas(apuesta * 3);
         } else {
             System.out.println("Perdiste la apuesta por docena.");
@@ -288,19 +288,19 @@ public class Ruleta implements StrategyJuego {
     /**
      * Apuesta por mitad (1-18 o 19-36).
      * 
-     * @param input Scanner para leer la elección del usuario
+     * @param input Scanner para leer la eleccion del usuario
      */
     private void apostarMitad(Scanner input) {
         System.out.print("Elige mitad: 1=(1-18), 2=(19-36): ");
         int mitad = input.nextInt();
         if (mitad != 1 && mitad != 2) {
-            System.out.println("Mitad inválida.");
+            System.out.println("Mitad invelida.");
             return;
         }
         int res = tirarRuleta();
         boolean acierto = (mitad == 1 && res <= 18 && res >= 1) || (mitad == 2 && res <= 36 && res >= 19);
         if (acierto) {
-            System.out.println("¡Ganaste! Premiación 1:1.");
+            System.out.println("¡Ganaste! Premiacion 1:1.");
             jugador.agregarFichas(apuesta * 2);
         } else {
             System.out.println("Perdiste la apuesta por mitad.");
@@ -308,9 +308,9 @@ public class Ruleta implements StrategyJuego {
     }
 
     /**
-     * Determina si un número de ruleta es rojo según la lista estándar.
+     * Determina si un numero de ruleta es rojo segun la lista estendar.
      * 
-     * @param numero número de la ruleta
+     * @param numero numero de la ruleta
      * @return true si es rojo, false si es negro o 0
      */
     private boolean esNumeroRojo(int numero) {
@@ -323,7 +323,7 @@ public class Ruleta implements StrategyJuego {
     }
 
     /**
-     * Representación textual de la estrategia para mostrar en menús.
+     * Representacion textual de la estrategia para mostrar en menus.
      * 
      * @return "Ruleta"
      */

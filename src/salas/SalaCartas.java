@@ -13,17 +13,17 @@ import java.util.Objects;
 
 /**
  * Sala especializada en juegos de carta dentro del casino.
- * Implementa el patrón Singleton para garantizar una única instancia.
- * Extiende de Sala para heredar la lógica de interfaz ASCII, movimiento e interacción.
+ * Implementa el patron Singleton para garantizar una unica instancia.
+ * Extiende de Sala para heredar la logica de interfaz ASCII, movimiento e interaccion.
  */
 public class SalaCartas extends Sala {
 
-    /** Instancia única de SalaCartas (Singleton lazy) */
+    /** Instancia unica de SalaCartas (Singleton lazy) */
     private static SalaCartas instancia;
 
     /**
-     * Constructor privado: inicializa el mapa, la mesa de juego y la posición de entrada.
-     * @param jugador jugador que ingresa a la sala (puede ser null en la creación inicial)
+     * Constructor privado: inicializa el mapa, la mesa de juego y la posicion de entrada.
+     * @param jugador jugador que ingresa a la sala (puede ser null en la creacion inicial)
      */
     private SalaCartas(Jugador jugador) {
         super(
@@ -48,7 +48,7 @@ public class SalaCartas extends Sala {
 
     /**
      * Provee la instancia singleton de SalaCartas, creando la primera vez.
-     * @return instancia única de SalaCartas
+     * @return instancia unica de SalaCartas
      */
     public static SalaCartas getInstance() {
         if (Objects.isNull(instancia)) {
@@ -58,16 +58,16 @@ public class SalaCartas extends Sala {
     }
 
     /**
-     * Suscribe al jugador a la mesa de Carta Más Alta y a posibles pasillos.
+     * Suscribe al jugador a la mesa de Carta Mes Alta y a posibles pasillos.
      * Asigna el jugador a la mesa, configura su estrategia y lo registra como observador.
-     * @param jugador instancia de Jugador que se suscribirá (ignorado si es null)
+     * @param jugador instancia de Jugador que se suscribire (ignorado si es null)
      */
     @Override
     public void subscribe(Jugador jugador) {
         if (jugador == null) {
             return;
         }
-        // Configurar la única mesa de juego en esta sala
+        // Configurar la unica mesa de juego en esta sala
         for (Mesa mesa : mesas) {
             mesa.setJugador(jugador);
             mesa.putStrategy();
@@ -81,7 +81,7 @@ public class SalaCartas extends Sala {
 
     /**
      * Desuscribe al jugador de todas las interacciones (mesas y pasillos).
-     * @param jugador instancia de Jugador que se desuscribirá
+     * @param jugador instancia de Jugador que se desuscribire
      */
     @Override
     public void unsubscribe(Jugador jugador) {
@@ -91,7 +91,7 @@ public class SalaCartas extends Sala {
     }
 
     /**
-     * Identificador textual de la sala para menús y logs.
+     * Identificador textual de la sala para menus y logs.
      * @return cadena "Cartas"
      */
     @Override

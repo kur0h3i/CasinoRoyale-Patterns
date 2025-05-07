@@ -18,11 +18,11 @@ import static recursos.MensajesEstaticos.*;
 
 /**
  * Sala principal del casino donde aparecen el cajero, puerta de salida y el bar Fenrir.
- * Aplica el patrón Singleton para garantizar una única instancia. Extiende de Sala para
- * heredar la lógica de interfaz ASCII, movimiento e interacción.
+ * Aplica el patron Singleton para garantizar una unica instancia. Extiende de Sala para
+ * heredar la logica de interfaz ASCII, movimiento e interaccion.
  *
- * En esta sala se configuran además los observadores que gestionan las acciones:
- *  - Cajero automático (ATM)
+ * En esta sala se configuran ademes los observadores que gestionan las acciones:
+ *  - Cajero autometico (ATM)
  *  - Puerta de salida (guardar/cargar/salir)
  *  - Bar Fenrir (comprar bebidas)
  *
@@ -37,7 +37,7 @@ public class SalaPrincipal extends Sala {
     /** Instancia Singleton de SalaPrincipal */
     private static SalaPrincipal instancia;
 
-    /** Cajero automático disponible en la sala */
+    /** Cajero autometico disponible en la sala */
     private final Cajero cajero = new Cajero(2, 7);
     /** Puerta de salida para guardar, cargar o salir del casino */
     private final PuertaSalida puertaSalida = new PuertaSalida(4, 0);
@@ -47,7 +47,7 @@ public class SalaPrincipal extends Sala {
     /**
      * Obtiene la instancia de SalaPrincipal, creando la primera vez.
      * @param jugador jugador que ingresa a la sala (puede ser null)
-     * @return instancia única de SalaPrincipal
+     * @return instancia unica de SalaPrincipal
      */
     public static SalaPrincipal getInstance(Jugador jugador) {
         if (Objects.isNull(instancia)) {
@@ -58,7 +58,7 @@ public class SalaPrincipal extends Sala {
 
     /**
      * Obtiene la instancia existente de SalaPrincipal sin cambiar el jugador.
-     * @return instancia única de SalaPrincipal
+     * @return instancia unica de SalaPrincipal
      */
     public static SalaPrincipal getInstance() {
         return getInstance(null);
@@ -66,7 +66,7 @@ public class SalaPrincipal extends Sala {
 
     /**
      * Constructor privado de SalaPrincipal.
-     * Inicializa el mapa ASCII y la posición de entrada.
+     * Inicializa el mapa ASCII y la posicion de entrada.
      * Suscribe al jugador a los observadores internos.
      *
      * @param jugador jugador que ocupa la sala (null inicializa sin asignar)
@@ -91,11 +91,11 @@ public class SalaPrincipal extends Sala {
     @Override
     public void subscribe(Jugador jugador) {
         if (Objects.isNull(jugador)) return;
-        // No hay mesas en esta sala, pero sí observadores adicionales
+        // No hay mesas en esta sala, pero si observadores adicionales
         jugador.attach(cajero);
         jugador.attach(puertaSalida);
         jugador.attach(fenrir);
-        // Suscribir también pasillos heredados si se configuran
+        // Suscribir tambien pasillos heredados si se configuran
         for (Pasillo pasillo : getPasillos()) {
             jugador.attach(pasillo);
         }
@@ -112,7 +112,7 @@ public class SalaPrincipal extends Sala {
     }
 
     /**
-     * Retorna el nombre de la sala para menús o logs.
+     * Retorna el nombre de la sala para menus o logs.
      * @return "Principal"
      */
     @Override

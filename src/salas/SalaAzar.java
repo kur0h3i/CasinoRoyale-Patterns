@@ -16,19 +16,19 @@ import java.util.Objects;
 
 /**
  * Sala que agrupa los juegos de azar del casino.
- * Implementa el patrón Singleton para garantizar una única instancia.
- * Extiende de Sala para heredar la lógica de interfaz y movimiento.
+ * Implementa el patron Singleton para garantizar una unica instancia.
+ * Extiende de Sala para heredar la logica de interfaz y movimiento.
  */
 public class SalaAzar extends Sala {
 
-    /** Referencia singleton de SalaAzar (inicialización perezosa) */
+    /** Referencia singleton de SalaAzar (inicializacion perezosa) */
     private static SalaAzar instancia;
 
     /**
      * Constructor privado que inicializa la sala con su mapa,
-     * mesas de juego y posición de entrada.
+     * mesas de juego y posicion de entrada.
      *
-     * @param jugador jugador que ingresa a la sala (puede ser null en el momento de la creación)
+     * @param jugador jugador que ingresa a la sala (puede ser null en el momento de la creacion)
      */
     private SalaAzar(Jugador jugador) {
         super(
@@ -47,7 +47,7 @@ public class SalaAzar extends Sala {
     }
 
     /**
-     * Obtiene la instancia única de SalaAzar, creando una si no existe.
+     * Obtiene la instancia unica de SalaAzar, creando una si no existe.
      *
      * @return la instancia singleton de SalaAzar
      */
@@ -62,7 +62,7 @@ public class SalaAzar extends Sala {
      * Suscribe al jugador a todas las mesas y pasillos de la sala.
      * Asigna el jugador a cada mesa y establece su estrategia de juego.
      *
-     * @param jugador instancia de Jugador que se suscribirá
+     * @param jugador instancia de Jugador que se suscribire
      */
     @Override
     public void subscribe(Jugador jugador) {
@@ -75,7 +75,7 @@ public class SalaAzar extends Sala {
             mesa.putStrategy();
             jugador.attach(mesa);
         }
-        // Suscribir pasillos (aunque aquí no hay pasillos definidos)
+        // Suscribir pasillos (aunque aqui no hay pasillos definidos)
         for (Pasillo pasillo : pasillos) {
             jugador.attach(pasillo);
         }
@@ -84,7 +84,7 @@ public class SalaAzar extends Sala {
     /**
      * Desuscribe al jugador de todos los observables (mesas, pasillos, etc.).
      *
-     * @param jugador instancia de Jugador que se desuscribirá
+     * @param jugador instancia de Jugador que se desuscribire
      */
     @Override
     public void unsubscribe(Jugador jugador) {
@@ -94,7 +94,7 @@ public class SalaAzar extends Sala {
     }
 
     /**
-     * Representación textual de la sala para menús o logs.
+     * Representacion textual de la sala para menus o logs.
      *
      * @return el nombre "Azar"
      */

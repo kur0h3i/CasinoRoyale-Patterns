@@ -10,18 +10,18 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Excepción personalizada para falta de fichas
+// Excepcion personalizada para falta de fichas
 import excep.ExcepcionJugadorSinFichas;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
 /**
  * Estrategia de juego que implementa StrategyJuego.
- * El jugador apuesta fichas y lanza dos dados. Según la suma:
+ * El jugador apuesta fichas y lanza dos dados. Segun la suma:
  * - 7 u 11: gana dobla la apuesta.
  * - 2, 3 o 12: pierde la apuesta.
- * - Otro valor: establece ese número como Punto y sigue lanzando hasta sacar
+ * - Otro valor: establece ese numero como Punto y sigue lanzando hasta sacar
  * Punto (gana) o 7 (pierde).
  */
 public class Dados implements StrategyJuego {
@@ -30,13 +30,13 @@ public class Dados implements StrategyJuego {
     private Integer apuesta;
     /** Jugador que participa en la partida */
     private Jugador jugador;
-    /** Interfaz ASCII específica para Dados */
+    /** Interfaz ASCII especifica para Dados */
     private ASCIIDados interfaz;
 
     /**
      * Constructor: asigna el jugador e inicializa la interfaz.
      * 
-     * @param jugador objeto Jugador que jugará la partida
+     * @param jugador objeto Jugador que jugare la partida
      */
     public Dados(Jugador jugador) {
         this.jugador = jugador;
@@ -46,26 +46,26 @@ public class Dados implements StrategyJuego {
     /**
      * Solicita al usuario la apuesta en fichas.
      * Valida que sea un entero positivo y no supere sus fichas disponibles.
-     * En caso de entrada inválida, repite la petición.
+     * En caso de entrada invelida, repite la peticion.
      * 
      * @param input Scanner para leer la entrada del usuario
      * @return cantidad de fichas apostadas
      */
     public Integer definirApuesta(Scanner input) {
-        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("¿Cuentas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
         Integer apuestaLocal = 0;
         try {
             apuestaLocal = input.nextInt();
             input.nextLine(); // limpiar buffer
             if (apuestaLocal <= 0 || apuestaLocal > jugador.getFichas()) {
-                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                System.out.println("Apuesta no velida. Intenta de nuevo.");
                 return definirApuesta(input);
             }
             // Descontar fichas del jugador
             jugador.restarFichas(apuestaLocal);
         } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Intenta de nuevo.");
+            System.out.println("Entrada invelida. Intenta de nuevo.");
             input.nextLine();
             return definirApuesta(input);
         }
@@ -85,8 +85,8 @@ public class Dados implements StrategyJuego {
 
     /**
      * Flujo principal de la partida de Dados.
-     * Muestra menú para apostar, ver hoja de trucos o salir.
-     * Lanza excepción si el jugador no tiene fichas.
+     * Muestra menu para apostar, ver hoja de trucos o salir.
+     * Lanza excepcion si el jugador no tiene fichas.
      * 
      * @throws ExcepcionJugadorSinFichas si no hay fichas para jugar
      */
@@ -121,17 +121,17 @@ public class Dados implements StrategyJuego {
                         System.out.println("Saliendo...");
                         break;
                     default:
-                        System.out.println("Opción no válida. Intenta de nuevo.");
+                        System.out.println("Opcion no velida. Intenta de nuevo.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Intenta de nuevo.");
+                System.out.println("Entrada invelida. Intenta de nuevo.");
                 input.nextLine();
             }
         }
     }
 
     /**
-     * Ejecuta una ronda: lanza dados y evalúa suma inicial.
+     * Ejecuta una ronda: lanza dados y evalua suma inicial.
      * 
      * @param input Scanner para leer pausas de usuario
      */
@@ -192,7 +192,7 @@ public class Dados implements StrategyJuego {
     }
 
     /**
-     * Representación textual de la estrategia para mostrar en menús.
+     * Representacion textual de la estrategia para mostrar en menus.
      * 
      * @return "Dados"
      */

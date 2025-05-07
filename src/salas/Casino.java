@@ -9,7 +9,7 @@ import acciones.Pasillo;
  * Se encarga de:
  *  1. Obtener instancias singleton de las salas (principal, azar, cartas).
  *  2. Configurar los pasillos que conectan las salas.
- *  3. Establecer la posición y sala inicial del jugador registrado.
+ *  3. Establecer la posicion y sala inicial del jugador registrado.
  *  4. Lanzar la interfaz ASCII de la sala principal.
  */
 public class Casino {

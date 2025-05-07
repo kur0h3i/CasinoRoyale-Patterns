@@ -19,7 +19,7 @@ public class BlackJackUI extends JFrame {
     private JLabel mensajeLabel;
 
     public BlackJackUI() {
-        // Configuración básica de la ventana
+        // Configuracion besica de la ventana
         setTitle("Black Jack");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,7 +123,7 @@ public class BlackJackUI extends JFrame {
         // Mostrar cartas del crupier
         for (Integer i = 0; i < crupier.getMano().length && crupier.getMano()[i] != null; i++) {
             Carta carta = crupier.getMano()[i];
-            // Muestra la primera carta del crupier, y oculta las demás con un reverso
+            // Muestra la primera carta del crupier, y oculta las demes con un reverso
             if (i == 0 || !pedirCartaButton.isEnabled()) {
                 crupierPanel.add(crearEtiquetaCarta(carta));
             } else {

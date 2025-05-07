@@ -5,16 +5,16 @@ import excep.ExcepcionJugadorSinFichas;
 
 /**
  * Interfaz que extiende PullPushModelObserver para casos
- * donde, además de la actualización básica, se necesita un método interactivo específico.
- * Implementaciones típicas lanzan un flujo de interacción (por ejemplo, mostrar menús ASCII).
+ * donde, ademes de la actualizacion besica, se necesita un metodo interactivo especifico.
+ * Implementaciones tipicas lanzan un flujo de interaccion (por ejemplo, mostrar menus ASCII).
  */
 public interface PullPushModelObserverInteractive extends PullPushModelObserver {
 
     /**
-     * Método que inicia la lógica interactiva del observador (menús, interfaces, etc.).
-     * Se invoca cuando el jugador esté en posición y pulse la tecla de interactuar.
+     * Metodo que inicia la logica interactiva del observador (menus, interfaces, etc.).
+     * Se invoca cuando el jugador este en posicion y pulse la tecla de interactuar.
      *
-     * @throws ExcepcionJugadorSinFichas si el jugador no dispone de fichas para comenzar la interacción
+     * @throws ExcepcionJugadorSinFichas si el jugador no dispone de fichas para comenzar la interaccion
      */
     void interactive() throws ExcepcionJugadorSinFichas;
 }

@@ -22,7 +22,7 @@ public class ASCIIFenrir implements Serializable {
     public void opcionesBar() {
         System.out.println("1. Comprar bebida");
         System.out.println("2. Salir del bar");
-        System.out.print("Selecciona una opción: ");
+        System.out.print("Selecciona una opcion: ");
     }
 
     public void mostrarMenuBebidas(List<Items> bebidas) {
@@ -30,7 +30,7 @@ public class ASCIIFenrir implements Serializable {
         
         System.out.println("--------------------------");
 
-        System.out.print("¿Qué deseas pedir? ");
+        System.out.print("¿Que deseas pedir? ");
     }
 
     public void carta() {

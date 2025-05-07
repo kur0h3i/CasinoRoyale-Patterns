@@ -17,8 +17,8 @@ import static recursos.MensajesEstaticos.*;
 
 /**
  * Clase abstracta para representar una sala en el casino.
- * Gestiona el mapa ASCII, la posición inicial del jugador, mesas y pasillos.
- * Implementa Subscription para suscripción del jugador a eventos de movimiento e interacción.
+ * Gestiona el mapa ASCII, la posicion inicial del jugador, mesas y pasillos.
+ * Implementa Subscription para suscripcion del jugador a eventos de movimiento e interaccion.
  */
 public abstract class Sala extends Subscription implements Serializable{
     @Serial
@@ -40,7 +40,7 @@ public abstract class Sala extends Subscription implements Serializable{
     /**
      * Constructor principal.
      * @param jugador jugador que entra en la sala
-     * @param mapa representación ASCII de la sala
+     * @param mapa representacion ASCII de la sala
      */
     protected Sala(Jugador jugador, Character[][] mapa) {
         this(jugador, mapa, new ArrayList<>(), new ArrayList<>(), 0, 0);
@@ -57,7 +57,7 @@ public abstract class Sala extends Subscription implements Serializable{
     }
 
     /**
-     * Constructor completo con posición inicial.
+     * Constructor completo con posicion inicial.
      */
     protected Sala(Jugador jugador,
                    Character[][] mapa,
@@ -71,7 +71,7 @@ public abstract class Sala extends Subscription implements Serializable{
         this.pasillos = pasillos;
         this.posInitialX = posInitialX;
         this.posInitialY = posInitialY;
-        // Si el jugador no tiene posición, asignarle la inicial
+        // Si el jugador no tiene posicion, asignarle la inicial
         if (jugador != null && (jugador.getPosX() == null || jugador.getPosY() == null)) {
             jugador.setPosX(posInitialX);
             jugador.setPosY(posInitialY);
@@ -85,14 +85,14 @@ public abstract class Sala extends Subscription implements Serializable{
     protected void interfazPrincipal(Jugador jugador) {
         // Mostrar panel de jugador
         playerUI(jugador);
-        // Mostrar mapa ASCII con la posición del jugador
+        // Mostrar mapa ASCII con la posicion del jugador
         mostrarMapa();
-        // Mostrar instrucciones de movimiento e interacción
+        // Mostrar instrucciones de movimiento e interaccion
         instructions();
     }
 
     /**
-     * Mueve al jugador, verifica colisión con paredes ('#') y notifica observadores.
+     * Mueve al jugador, verifica colision con paredes ('#') y notifica observadores.
      */
     protected void moverJugador(int dx, int dy) {
         int newX = jugador.getPosX() + dx;
@@ -106,7 +106,7 @@ public abstract class Sala extends Subscription implements Serializable{
     }
 
     /**
-     * Dibuja el mapa en consola, marcando la posición del jugador con 'P'.
+     * Dibuja el mapa en consola, marcando la posicion del jugador con 'P'.
      */
     private void mostrarMapa() {
         for (int y = 0; y < mapa.length; y++) {
@@ -157,14 +157,14 @@ public abstract class Sala extends Subscription implements Serializable{
                         badCommand();
                 }
             } catch (InputMismatchException ex) {
-                System.out.println("Entrada no válida. Por favor, usa WASD, E o I.");
+                System.out.println("Entrada no velida. Por favor, usa WASD, E o I.");
                 valid = false;
             }
         }
     }
 
     /**
-     * Bucle principal que mantiene la interfaz viva hasta cerrar la aplicación.
+     * Bucle principal que mantiene la interfaz viva hasta cerrar la aplicacion.
      */
     public void iniciarInterfaz() {
         Scanner scanner = new Scanner(System.in);

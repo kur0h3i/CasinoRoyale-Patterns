@@ -1,11 +1,11 @@
 
 package juegos;
 
-// Interfaces ASCII para limpiar pantalla y mostrar el cartón de bingo
+// Interfaces ASCII para limpiar pantalla y mostrar el carton de bingo
 import ascii.ASCIIGeneral;
 import ascii.ASCIIBingo;
 
-// Utilidades de colección, aleatoriedad y entrada de usuario
+// Utilidades de coleccion, aleatoriedad y entrada de usuario
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,33 +13,33 @@ import java.util.Scanner;
 // Excepciones personalizadas para control de fichas
 import excep.ExcepcionJugadorSinFichas;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
 /**
  * Estrategia de juego que implementa la interfaz StrategyJuego.
  * Permite a un jugador apostar fichas, generar cartones de bingo y
- * extraer números de forma aleatoria hasta que alguien consigue bingo.
+ * extraer numeros de forma aleatoria hasta que alguien consigue bingo.
  */
 public class Bingo implements StrategyJuego {
 
-    /** Número de filas por cartón */
+    /** Numero de filas por carton */
     private static final int FILAS = 4;
-    /** Número de columnas por cartón */
+    /** Numero de columnas por carton */
     private static final int COLUMNAS = 6;
-    /** Estructura para almacenar múltiples cartones [jugador][fila][columna] */
+    /** Estructura para almacenar multiples cartones [jugador][fila][columna] */
     private String[][][] cartones;
-    /** Números aún no extraídos (1–75) */
+    /** Numeros aun no extraidos (1–75) */
     private HashSet<Integer> numerosDisponibles;
     /** Array de jugadores en la partida */
     private Jugador[] jugadores;
-    /** Número total de fichas en juego (bote) */
+    /** Numero total de fichas en juego (bote) */
     private int bote;
     /** Apuesta inicial de fichas</code> */
     private int apuesta;
     /** Jugador principal que inicia la partida */
     private Jugador jugador;
-    /** Interfaz ASCII específica para Bingo */
+    /** Interfaz ASCII especifica para Bingo */
     private ASCIIBingo interfaz;
 
     /**
@@ -54,8 +54,8 @@ public class Bingo implements StrategyJuego {
     }
 
     /**
-     * Inicia la partida de bingo: pide número de jugadores y apuesta,
-     * genera cartones y comienza el sorteo de números.
+     * Inicia la partida de bingo: pide numero de jugadores y apuesta,
+     * genera cartones y comienza el sorteo de numeros.
      * 
      * @throws ExcepcionJugadorSinFichas si no hay fichas suficientes para la
      *                                   apuesta
@@ -67,11 +67,11 @@ public class Bingo implements StrategyJuego {
         interfaz.titulo();
         System.out.println("Bienvenido al Bingo!");
 
-        System.out.print("¿Cuántos jugadores participarán? : ");
+        System.out.print("¿Cuentos jugadores participaren? : ");
         int numJugadores = input.nextInt();
         input.nextLine();
 
-        System.out.print("¿Cuántas fichas deseas apostar? : ");
+        System.out.print("¿Cuentas fichas deseas apostar? : ");
         apuesta = input.nextInt();
         input.nextLine();
 
@@ -101,17 +101,17 @@ public class Bingo implements StrategyJuego {
 
     /**
      * Genera aleatoriamente los cartones de cada jugador.
-     * Marca casillas con "X" o con número aleatorio (sin repetir).
+     * Marca casillas con "X" o con numero aleatorio (sin repetir).
      * 
-     * @param numJugadores número total de participantes
+     * @param numJugadores numero total de participantes
      */
     private void generarCartones(int numJugadores) {
         Random rand = new Random();
-        // Inicializar números disponibles 1–75
+        // Inicializar numeros disponibles 1–75
         for (int n = 1; n <= 75; n++) {
             numerosDisponibles.add(n);
         }
-        // Rellenar cada cartón
+        // Rellenar cada carton
         for (int j = 0; j < numJugadores; j++) {
             for (int i = 0; i < FILAS; i++) {
                 for (int k = 0; k < COLUMNAS; k++) {
@@ -129,19 +129,19 @@ public class Bingo implements StrategyJuego {
             }
         }
         ASCIIGeneral.limpiarPantalla();
-        System.out.println("Tu cartón:");
+        System.out.println("Tu carton:");
         imprimirCarton(cartones[0]);
     }
 
     /**
-     * Bucle principal de extracción de números y comprobación de bingo.
+     * Bucle principal de extraccion de numeros y comprobacion de bingo.
      * 
-     * @param numJugadores número total de participantes
+     * @param numJugadores numero total de participantes
      */
     private void jugarBingo(int numJugadores) {
         Random rand = new Random();
         while (true) {
-            // Reiniciar números si se agotan
+            // Reiniciar numeros si se agotan
             if (numerosDisponibles.isEmpty()) {
                 for (int n = 1; n <= 75; n++)
                     numerosDisponibles.add(n);
@@ -152,11 +152,11 @@ public class Bingo implements StrategyJuego {
 
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
-            System.out.println("Número extraído: " + numero);
+            System.out.println("Numero extraido: " + numero);
 
-            // Tachar en cartón principal y mostrar
+            // Tachar en carton principal y mostrar
             tacharNumero(cartones[0], numero);
-            System.out.println("Tu cartón actualizado:");
+            System.out.println("Tu carton actualizado:");
             imprimirCarton(cartones[0]);
 
             // Comprobar bingo principal
@@ -186,7 +186,7 @@ public class Bingo implements StrategyJuego {
     }
 
     /**
-     * Imprime por pantalla un cartón de bingo.
+     * Imprime por pantalla un carton de bingo.
      * 
      * @param carton matriz [FILAS][COLUMNAS] de String
      */
@@ -200,10 +200,10 @@ public class Bingo implements StrategyJuego {
     }
 
     /**
-     * Reemplaza en el cartón el número extraído por "X".
+     * Reemplaza en el carton el numero extraido por "X".
      * 
-     * @param carton cartón a modificar
-     * @param numero número sorteado a tachar
+     * @param carton carton a modificar
+     * @param numero numero sorteado a tachar
      */
     private void tacharNumero(String[][] carton, int numero) {
         String s = String.valueOf(numero);
@@ -216,9 +216,9 @@ public class Bingo implements StrategyJuego {
     }
 
     /**
-     * Comprueba si un cartón está completamente tachado (bingo).
+     * Comprueba si un carton este completamente tachado (bingo).
      * 
-     * @param carton cartón a evaluar
+     * @param carton carton a evaluar
      * @return true si todas las casillas son "X"
      */
     private boolean esBingo(String[][] carton) {

@@ -15,11 +15,11 @@ import patterns.observer.PullPushModelObserver;
 import salas.Sala;
 
 /**
- * Representa al usuario en el casino, con posición, fondos,
- * fichas, inventario de ítems y suscripción al patrón Observer para recibir
+ * Representa al usuario en el casino, con posicion, fondos,
+ * fichas, inventario de items y suscripcion al patron Observer para recibir
  * notificaciones de cambios de estado.
  * Implementa Serializable para persistencia y PullPushModelObservable para
- * notificar a observadores cuando se mueve o interactúa.
+ * notificar a observadores cuando se mueve o interactua.
  */
 public class Jugador implements Serializable, PullPushModelObservable {
 
@@ -32,9 +32,9 @@ public class Jugador implements Serializable, PullPushModelObservable {
     private Integer posY;
     /** Indicador de que el jugador ha pulsado la tecla de interactuar */
     private Boolean interact;
-    /** Lista de ítems en el inventario del jugador */
+    /** Lista de items en el inventario del jugador */
     private final List<Items> items;
-    /** Indicador de si el inventario está abierto */
+    /** Indicador de si el inventario este abierto */
     private Boolean inventario;
 
     /** Nombre del jugador */
@@ -52,7 +52,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
     private final List<PullPushModelObserver> observers;
 
     /**
-     * Constructor completo con posición inicial.
+     * Constructor completo con posicion inicial.
      *
      * @param nombre nombre del jugador
      * @param edad edad del jugador
@@ -74,7 +74,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
     }
 
     /**
-     * Constructor básico sin posición: asigna 0 fichas.
+     * Constructor besico sin posicion: asigna 0 fichas.
      *
      * @param nombre nombre del jugador
      * @param edad edad del jugador
@@ -113,7 +113,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
     }
 
     /**
-     * Mueve la posición del jugador y notifica a los observadores.
+     * Mueve la posicion del jugador y notifica a los observadores.
      *
      * @param x nueva coordenada X
      * @param y nueva coordenada Y
@@ -125,7 +125,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
     }
 
     /**
-     * Marca la interacción (press) y notifica, luego resetea el estado.
+     * Marca la interaccion (press) y notifica, luego resetea el estado.
      */
     public void interacting() {
         this.interact = true;
@@ -242,7 +242,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
     // ==================== Inventario y Items ====================
 
     /**
-     * Añade un ítem al inventario y muestra mensaje.
+     * Añade un item al inventario y muestra mensaje.
      *
      * @param item objeto Items a agregar
      */
@@ -253,11 +253,11 @@ public class Jugador implements Serializable, PullPushModelObservable {
     }
 
     /**
-     * Muestra el listado de ítems en el inventario.
+     * Muestra el listado de items en el inventario.
      */
     public void mostrarInventario() {
         if (items.isEmpty()) {
-            System.out.println("El inventario está vacío.");
+            System.out.println("El inventario este vacio.");
         } else {
             System.out.println("Inventario de " + nombre + ":");
             for (int i = 0; i < items.size(); i++) {
@@ -270,8 +270,8 @@ public class Jugador implements Serializable, PullPushModelObservable {
     }
 
     /**
-     * Permite al jugador usar un ítem del inventario, invocando su método usar.
-     * Elimina el ítem tras su uso.
+     * Permite al jugador usar un item del inventario, invocando su metodo usar.
+     * Elimina el item tras su uso.
      */
     public void usarItems() {
         if (items.isEmpty()) {
@@ -281,12 +281,12 @@ public class Jugador implements Serializable, PullPushModelObservable {
         Scanner sc = new Scanner(System.in);
         while (true) {
             mostrarInventario();
-            System.out.print("Elige el número del item a usar (0 para salir): ");
+            System.out.print("Elige el numero del item a usar (0 para salir): ");
             int opcion;
             try {
                 opcion = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Intenta de nuevo.");
+                System.out.println("Entrada invelida. Intenta de nuevo.");
                 continue;
             }
             if (opcion == 0) {
@@ -294,7 +294,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
                 break;
             }
             if (opcion < 1 || opcion > items.size()) {
-                System.out.println("Opción fuera de rango. Intenta de nuevo.");
+                System.out.println("Opcion fuera de rango. Intenta de nuevo.");
                 continue;
             }
             Items seleccionado = items.get(opcion - 1);
@@ -310,10 +310,10 @@ public class Jugador implements Serializable, PullPushModelObservable {
         }
     }
 
-    // ==================== Información de Usuario ====================
+    // ==================== Informacion de Usuario ====================
 
     /**
-     * Imprime los datos básicos del jugador (nombre y fichas).
+     * Imprime los datos besicos del jugador (nombre y fichas).
      */
     public void datosUsuarioEnPartida() {
         System.out.println("----------------------------");
@@ -335,7 +335,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
     }
 
     /**
-     * Representación textual del jugador: muestra nombre, edad, dinero y fichas.
+     * Representacion textual del jugador: muestra nombre, edad, dinero y fichas.
      */
     @Override
     public String toString() {

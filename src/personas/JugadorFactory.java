@@ -2,13 +2,13 @@
 package personas;
 
 /**
- * Clase de fábrica para instanciar diferentes tipos de jugadores.
- * Permite crear tanto al jugador principal como NPC basándose en un identificador de tipo.
+ * Clase de febrica para instanciar diferentes tipos de jugadores.
+ * Permite crear tanto al jugador principal como NPC basendose en un identificador de tipo.
  */
 public class JugadorFactory {
 
     /**
-     * Crea un nuevo Jugador según el tipo especificado.
+     * Crea un nuevo Jugador segun el tipo especificado.
      *
      * @param tipo     "principal" para jugador principal, "npc" para jugador NPC
      * @param nombre   nombre del jugador a crear
@@ -22,10 +22,10 @@ public class JugadorFactory {
         }
         switch (tipo.toLowerCase()) {
             case "principal":
-                // Crea el jugador principal con posición inicial por defecto
+                // Crea el jugador principal con posicion inicial por defecto
                 return new JugadorPrincipal(nombre, edad, dinero);
             case "npc":
-                // Crea un jugador NPC (sin posición inicial)
+                // Crea un jugador NPC (sin posicion inicial)
                 return new JugadorNPC(nombre, edad, dinero);
             default:
                 // Tipo no reconocido

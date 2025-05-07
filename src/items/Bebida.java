@@ -5,8 +5,8 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Implementación de Items que representa una bebida consumible.
- * Permite obtener nombre, precio, descripción y usar la bebida con un mensaje.
+ * Implementacion de Items que representa una bebida consumible.
+ * Permite obtener nombre, precio, descripcion y usar la bebida con un mensaje.
  */
 public class Bebida implements Items, Serializable {
 
@@ -17,7 +17,7 @@ public class Bebida implements Items, Serializable {
     private final String nombre;
     /** Precio en euros de la bebida */
     private final Double precio;
-    /** Descripción del sabor o efecto de la bebida */
+    /** Descripcion del sabor o efecto de la bebida */
     private final String descripcion;
 
     /**
@@ -25,7 +25,7 @@ public class Bebida implements Items, Serializable {
      *
      * @param nombre      nombre de la bebida
      * @param precio      coste en euros
-     * @param descripcion descripción o efecto al consumir la bebida
+     * @param descripcion descripcion o efecto al consumir la bebida
      */
     public Bebida(String nombre, Double precio, String descripcion) {
         this.nombre = nombre;
@@ -54,9 +54,9 @@ public class Bebida implements Items, Serializable {
     }
 
     /**
-     * Obtiene la descripción de la bebida.
+     * Obtiene la descripcion de la bebida.
      * 
-     * @return descripción como String
+     * @return descripcion como String
      */
     @Override
     public String getDescripcion() {
@@ -64,7 +64,7 @@ public class Bebida implements Items, Serializable {
     }
 
     /**
-     * Acción al usar la bebida: imprime mensaje al jugador describiendo el sabor.
+     * Accion al usar la bebida: imprime mensaje al jugador describiendo el sabor.
      */
     @Override
     public void usar() {

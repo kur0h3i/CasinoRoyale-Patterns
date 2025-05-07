@@ -10,17 +10,17 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Excepción personalizada para falta de fichas
+// Excepcion personalizada para falta de fichas
 import excep.ExcepcionJugadorSinFichas;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
 /**
  * Estrategia de juego que implementa StrategyJuego.
- * El jugador apuesta fichas y gira una máquina tragamonedas de tres símbolos:
- * - Tres símbolos iguales: premio multiplicado según el símbolo
- * - Dos símbolos iguales: recupera la apuesta
+ * El jugador apuesta fichas y gira una mequina tragamonedas de tres simbolos:
+ * - Tres simbolos iguales: premio multiplicado segun el simbolo
+ * - Dos simbolos iguales: recupera la apuesta
  * - Ninguna coincidencia: pierde la apuesta
  */
 public class Slot implements StrategyJuego {
@@ -29,13 +29,13 @@ public class Slot implements StrategyJuego {
     private Integer apuesta;
     /** Jugador participante en la partida */
     private Jugador jugador;
-    /** Interfaz ASCII específica para Slot */
+    /** Interfaz ASCII especifica para Slot */
     private ASCIISlot interfaz;
 
     /**
      * Constructor: asigna el jugador e inicializa la interfaz ASCII.
      * 
-     * @param jugador instancia de Jugador que jugará la partida
+     * @param jugador instancia de Jugador que jugare la partida
      */
     public Slot(Jugador jugador) {
         this.jugador = jugador;
@@ -56,7 +56,7 @@ public class Slot implements StrategyJuego {
     /**
      * Ejecuta el flujo principal del juego Slot:
      * 1. Verificar fichas.
-     * 2. Mostrar menú de juego (apostar, ver tabla de premios, salir).
+     * 2. Mostrar menu de juego (apostar, ver tabla de premios, salir).
      * 
      * @throws ExcepcionJugadorSinFichas si no hay fichas disponibles
      */
@@ -92,13 +92,13 @@ public class Slot implements StrategyJuego {
                     case 3:
                         // Salir del juego
                         continuar = false;
-                        System.out.println("Gracias por jugar a Slot. ¡Hasta la próxima!");
+                        System.out.println("Gracias por jugar a Slot. ¡Hasta la proxima!");
                         break;
                     default:
-                        System.out.println("Opción no válida. Intenta de nuevo.");
+                        System.out.println("Opcion no velida. Intenta de nuevo.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Intenta de nuevo.");
+                System.out.println("Entrada invelida. Intenta de nuevo.");
                 input.nextLine();
             }
         }
@@ -111,20 +111,20 @@ public class Slot implements StrategyJuego {
      * @return cantidad de fichas apostadas
      */
     private Integer definirApuesta(Scanner input) {
-        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("¿Cuentas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
         Integer ap = 0;
         try {
             ap = input.nextInt();
             input.nextLine(); // limpiar buffer
             if (ap <= 0 || ap > jugador.getFichas()) {
-                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                System.out.println("Apuesta no velida. Intenta de nuevo.");
                 return definirApuesta(input);
             }
             // Descontar fichas
             jugador.restarFichas(ap);
         } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Intenta de nuevo.");
+            System.out.println("Entrada invelida. Intenta de nuevo.");
             input.nextLine();
             return definirApuesta(input);
         }
@@ -132,8 +132,8 @@ public class Slot implements StrategyJuego {
     }
 
     /**
-     * Gira la slot machine generando tres símbolos aleatorios,
-     * muestra el resultado y ajusta fichas según combinaciones.
+     * Gira la slot machine generando tres simbolos aleatorios,
+     * muestra el resultado y ajusta fichas segun combinaciones.
      */
     private void jugarSlot() {
         Random random = new Random();
@@ -155,9 +155,9 @@ public class Slot implements StrategyJuego {
     }
 
     /**
-     * Calcula el premio según el símbolo triplete.
+     * Calcula el premio segun el simbolo triplete.
      * 
-     * @param simbolo símbolo ganador
+     * @param simbolo simbolo ganador
      * @return cantidad de fichas a otorgar
      */
     private Integer calcularPremio(String simbolo) {
@@ -176,7 +176,7 @@ public class Slot implements StrategyJuego {
     }
 
     /**
-     * Representación textual de la estrategia para mostrar en menús.
+     * Representacion textual de la estrategia para mostrar en menus.
      * 
      * @return "Slots"
      */

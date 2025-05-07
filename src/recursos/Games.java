@@ -15,7 +15,7 @@ public enum Games {
     BINGO("Bingo"),
     /** Dados */
     DADOS("Dados"),
-    /** Carta más alta */
+    /** Carta mes alta */
     CARTAMASALTA("CartaMasAlta");
 
     /** Identificador de cadena asociado al juego */

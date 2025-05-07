@@ -12,11 +12,11 @@ import java.util.Scanner;
 // Excepciones personalizadas
 import excep.ExcepcionJugadorNoEncontrado;
 
-// Observer pull-push para interacción
+// Observer pull-push para interaccion
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
 // Interfaces ASCII para la puerta y utilidades generales
@@ -26,10 +26,10 @@ import ascii.ASCIIGeneral;
 import static recursos.MensajesEstaticos.interactSave;
 
 /**
- * Gestiona la interacción de salida del casino.
+ * Gestiona la interaccion de salida del casino.
  * Cuando el jugador se acerca a la puerta, ofrece opciones para
  * guardar, cargar partida, salir del juego o volver al casino.
- * Implementa el patrón Observer para detectar posición e interacción del
+ * Implementa el patron Observer para detectar posicion e interaccion del
  * jugador.
  */
 public class PuertaSalida implements PullPushModelObserverInteractive, Serializable {
@@ -41,16 +41,16 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
     private Integer posX;
     /** Coordenada Y donde se activa la puerta de salida */
     private Integer posY;
-    /** Jugador que está interactuando con la puerta */
+    /** Jugador que este interactuando con la puerta */
     private Jugador jugador;
-    /** Interfaz ASCII específica para la puerta de salida */
+    /** Interfaz ASCII especifica para la puerta de salida */
     private ASCIIPuerta interfaz;
 
     /**
      * Constructor de PuertaSalida.
      *
-     * @param posX coordenada X de activación
-     * @param posY coordenada Y de activación
+     * @param posX coordenada X de activacion
+     * @param posY coordenada Y de activacion
      */
     public PuertaSalida(Integer posX, Integer posY) {
         this.posX = posX;
@@ -60,7 +60,7 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
     /**
      * Update del Observer: se llama cuando el jugador se mueve.
      * Si llega a las coordenadas de la puerta, muestra la interfaz y espera
-     * interacción.
+     * interaccion.
      *
      * @param obs observable (debe ser Jugador)
      * @param obj datos adicionales (no usados)
@@ -69,9 +69,9 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
     public void update(PullPushModelObservable obs, Object obj) {
         if (obs instanceof Jugador) {
             Jugador j = (Jugador) obs;
-            // Verifica posición de jugador versus puerta
+            // Verifica posicion de jugador versus puerta
             if (Objects.equals(j.getPosX(), posX) && Objects.equals(j.getPosY(), posY)) {
-                // Mensaje de interacción
+                // Mensaje de interaccion
                 interactSave();
                 this.jugador = j;
                 // Inicializa la interfaz de la puerta para este jugador
@@ -87,7 +87,7 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
     }
 
     /**
-     * Inicia la modalidad interactiva: muestra el menú de la puerta.
+     * Inicia la modalidad interactiva: muestra el menu de la puerta.
      */
     @Override
     public void interactive() {
@@ -96,13 +96,13 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
     }
 
     /**
-     * Bucle principal del menú de salida:
+     * Bucle principal del menu de salida:
      * 1: guardar partida
      * 2: cargar partida
      * 3: salir del juego
      * 4: volver al casino
      *
-     * @param input Scanner para leer la opción del usuario
+     * @param input Scanner para leer la opcion del usuario
      */
     private void iniciarPuerta(Scanner input) {
         int opcion = 0;
@@ -130,11 +130,11 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
                         ASCIIGeneral.limpiarPantalla();
                         break;
                     default:
-                        System.out.println("Opción no válida.");
+                        System.out.println("Opcion no velida.");
                         ASCIIGeneral.esperarTecla();
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Introduce un número.");
+                System.out.println("Entrada no velida. Introduce un numero.");
                 input.nextLine(); // limpia buffer
                 ASCIIGeneral.esperarTecla();
             }
@@ -185,7 +185,7 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
     }
 
     /**
-     * Termina la aplicación.
+     * Termina la aplicacion.
      */
     private void salir() {
         System.out.println("Saliendo del juego...");

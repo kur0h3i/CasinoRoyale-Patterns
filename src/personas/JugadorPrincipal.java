@@ -2,8 +2,8 @@
 package personas;
 
 /**
- * Extensión de Jugador que representa al usuario principal del casino.
- * Se utiliza para interactuar con menús y lógica diseñada específicamente para el jugador real.
+ * Extension de Jugador que representa al usuario principal del casino.
+ * Se utiliza para interactuar con menus y logica diseñada especificamente para el jugador real.
  */
 public class JugadorPrincipal extends Jugador {
 

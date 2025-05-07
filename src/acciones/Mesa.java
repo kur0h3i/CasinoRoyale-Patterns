@@ -7,7 +7,7 @@ import excep.ExcepcionJugadorSinFichas;
 // Estrategias de juego (Strategy)
 import juegos.*;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
 // Utilidades ASCII para limpiar pantalla y pausar
@@ -25,9 +25,9 @@ import static recursos.MensajesEstaticos.interactTable;
 
 /**
  * Representa una mesa de juego en el casino.
- * Combina el patrón Observer (Pull-Push) para detectar la posición e
- * interacción del jugador
- * y el patrón Strategy para seleccionar dinámicamente el juego según el tipo de
+ * Combina el patron Observer (Pull-Push) para detectar la posicion e
+ * interaccion del jugador
+ * y el patron Strategy para seleccionar dinemicamente el juego segun el tipo de
  * mesa.
  */
 public class Mesa implements PullPushModelObserverInteractive, Serializable {
@@ -40,13 +40,13 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
      * "CartaMasAlta")
      */
     private String nombre;
-    /** Número de participantes permitido en la mesa */
+    /** Numero de participantes permitido en la mesa */
     private Integer numParticipantes;
     /** Coordenada X de la mesa en el mapa del casino */
     private Integer posX;
     /** Coordenada Y de la mesa en el mapa del casino */
     private Integer posY;
-    /** Referencia al jugador que está interactuando (null si ninguno) */
+    /** Referencia al jugador que este interactuando (null si ninguno) */
     private Jugador jugador;
     /** Estrategia de juego actual (StrategyJuego) */
     private StrategyJuego strategy;
@@ -55,7 +55,7 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
      * Constructor de Mesa.
      * 
      * @param nombre           identificador de la mesa ("Slot", "Ruleta", etc.)
-     * @param numParticipantes número de jugadores que participan (no usado
+     * @param numParticipantes numero de jugadores que participan (no usado
      *                         internamente)
      * @param posX             coordenada X donde se ubica la mesa
      * @param posY             coordenada Y donde se ubica la mesa
@@ -91,7 +91,7 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
 
     // ===================== Setters =====================
     /**
-     * Asigna el jugador que interactúa con la mesa.
+     * Asigna el jugador que interactua con la mesa.
      * 
      * @param jugador instancia de Jugador
      */
@@ -102,15 +102,15 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
     /**
      * Define la estrategia de juego (Strategy) para esta mesa.
      * 
-     * @param strategy implementación de StrategyJuego
+     * @param strategy implementacion de StrategyJuego
      */
     public void setStrategy(StrategyJuego strategy) {
         this.strategy = strategy;
     }
 
     /**
-     * Selecciona e instancia la estrategia apropiada según el nombre de la mesa.
-     * Debe llamarse después de asignar el jugador para poder pasarle la referencia.
+     * Selecciona e instancia la estrategia apropiada segun el nombre de la mesa.
+     * Debe llamarse despues de asignar el jugador para poder pasarle la referencia.
      */
     public void putStrategy() {
         switch (this.nombre) {
@@ -137,7 +137,7 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
 
     /**
      * Inicia la partida usando la estrategia actual.
-     * Captura excepción si el jugador no tiene fichas suficientes.
+     * Captura excepcion si el jugador no tiene fichas suficientes.
      * 
      * @throws ExcepcionJugadorSinFichas si no hay fichas
      */
@@ -153,7 +153,7 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
     // ===================== Observer Methods =====================
 
     /**
-     * Al interactuar, lanza el método jugar().
+     * Al interactuar, lanza el metodo jugar().
      */
     @Override
     public void interactive() throws ExcepcionJugadorSinFichas {
@@ -161,9 +161,9 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
     }
 
     /**
-     * Método update del Observer: se notifica cuando el jugador se mueve o
-     * interactúa.
-     * Si el jugador está en la posición de la mesa, asigna jugador, muestra mensaje
+     * Metodo update del Observer: se notifica cuando el jugador se mueve o
+     * interactua.
+     * Si el jugador este en la posicion de la mesa, asigna jugador, muestra mensaje
      * y, si pulsa interactuar, arranca el juego.
      *
      * @param obs observable (normalmente un Jugador)
@@ -187,8 +187,8 @@ public class Mesa implements PullPushModelObserverInteractive, Serializable {
     }
 
     /**
-     * Representación por defecto de la mesa (se muestra en el mensaje de
-     * interacción).
+     * Representacion por defecto de la mesa (se muestra en el mensaje de
+     * interaccion).
      */
     @Override
     public String toString() {

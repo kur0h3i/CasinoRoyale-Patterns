@@ -4,9 +4,9 @@ package mapas;
 public class SalaJuegosAzarMapa {
 
     /**
-     * Define la representación y posiciones clave de la sala de juegos de azar en el casino.
+     * Define la representacion y posiciones clave de la sala de juegos de azar en el casino.
      * Contiene un mapa de caracteres que modela el plano de la sala, junto con coordenadas
-     * estáticas para la posición inicial del jugador, la entrada desde pasillos y la ubicación de mesas específicas.
+     * esteticas para la posicion inicial del jugador, la entrada desde pasillos y la ubicacion de mesas especificas.
      */
     public static final Character[][] mapaAzar = {
             { '#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
@@ -42,9 +42,9 @@ public class SalaJuegosAzarMapa {
     /** Coordenada Y de la mesa de Ruleta dentro del mapa */
     public static final int posYRuleta = 4;
 
-    /** Coordenada X de la máquina Slot dentro del mapa */
+    /** Coordenada X de la mequina Slot dentro del mapa */
     public static final int posXSlots = 2;
-    /** Coordenada Y de la máquina Slot dentro del mapa */
+    /** Coordenada Y de la mequina Slot dentro del mapa */
     public static final int posYSlots = 11;
 
     /** Coordenada X de la mesa de Bingo dentro del mapa */

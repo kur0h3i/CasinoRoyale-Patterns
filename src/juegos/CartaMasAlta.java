@@ -13,22 +13,22 @@ import java.util.Scanner;
 import recursos.Baraja;
 import recursos.Carta;
 
-// Representación del jugador
+// Representacion del jugador
 import personas.Jugador;
 
-// Excepción para falta de fichas
+// Excepcion para falta de fichas
 import excep.ExcepcionJugadorSinFichas;
 
 /**
  * Estrategia de juego que implementa StrategyJuego.
  * El jugador apuesta fichas, se reparte una carta al jugador y otra a la IA,
- * y quien tenga el valor más alto gana la apuesta.
+ * y quien tenga el valor mes alto gana la apuesta.
  */
 public class CartaMasAlta implements StrategyJuego {
 
     /** Mazo de cartas para repartir */
     private Baraja baraja;
-    /** Interfaz ASCII específica para CartaMasAlta */
+    /** Interfaz ASCII especifica para CartaMasAlta */
     private ASCIICartaMasAlta interfaz;
     /** Jugador que participa en la partida */
     private Jugador jugador;
@@ -38,7 +38,7 @@ public class CartaMasAlta implements StrategyJuego {
     /**
      * Constructor: inicializa baraja, interfaz y asigna el jugador.
      * 
-     * @param jugador objeto Jugador que jugará la partida
+     * @param jugador objeto Jugador que jugare la partida
      */
     public CartaMasAlta(Jugador jugador) {
         this.jugador = jugador;
@@ -49,26 +49,26 @@ public class CartaMasAlta implements StrategyJuego {
     /**
      * Solicita al usuario la apuesta en fichas.
      * Valida que sea un entero positivo y no supere sus fichas disponibles.
-     * En caso de entrada inválida o apuesta no válida, repite la petición.
+     * En caso de entrada invelida o apuesta no velida, repite la peticion.
      * 
      * @param input Scanner para leer la entrada del usuario
      * @return cantidad de fichas apostadas
      */
     public Integer definirApuesta(Scanner input) {
-        System.out.println("¿Cuántas fichas deseas apostar?");
+        System.out.println("¿Cuentas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
         Integer apuestaLocal = 0;
         try {
             apuestaLocal = input.nextInt();
             input.nextLine(); // limpiar buffer
             if (apuestaLocal <= 0 || apuestaLocal > jugador.getFichas()) {
-                System.out.println("Apuesta no válida. Intenta de nuevo.");
+                System.out.println("Apuesta no velida. Intenta de nuevo.");
                 return definirApuesta(input);
             }
             // Descontar fichas del jugador
             jugador.restarFichas(apuestaLocal);
         } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Intenta de nuevo.");
+            System.out.println("Entrada invelida. Intenta de nuevo.");
             input.nextLine(); // limpiar buffer en caso de texto
             return definirApuesta(input);
         }
@@ -87,9 +87,9 @@ public class CartaMasAlta implements StrategyJuego {
     }
 
     /**
-     * Flujo principal de la partida CartaMásAlta.
-     * Muestra menú para apostar, ver hoja de referencia o salir.
-     * Lanza excepción si el jugador no tiene fichas.
+     * Flujo principal de la partida CartaMesAlta.
+     * Muestra menu para apostar, ver hoja de referencia o salir.
+     * Lanza excepcion si el jugador no tiene fichas.
      * 
      * @throws ExcepcionJugadorSinFichas si no hay fichas para jugar
      */
@@ -128,10 +128,10 @@ public class CartaMasAlta implements StrategyJuego {
                         System.out.println("Saliendo...");
                         break;
                     default:
-                        System.out.println("Opción no válida. Intenta de nuevo.");
+                        System.out.println("Opcion no velida. Intenta de nuevo.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Intenta de nuevo.");
+                System.out.println("Entrada invelida. Intenta de nuevo.");
                 input.nextLine();
             }
         }
@@ -139,7 +139,7 @@ public class CartaMasAlta implements StrategyJuego {
 
     /**
      * Ejecuta una ronda: reparte una carta al jugador y otra a la IA,
-     * compara valores y asigna fichas según el resultado.
+     * compara valores y asigna fichas segun el resultado.
      * 
      * @param apuesta cantidad de fichas apostadas por el jugador
      */
@@ -166,7 +166,7 @@ public class CartaMasAlta implements StrategyJuego {
     }
 
     /**
-     * Representación textual de la estrategia para mostrar en menús.
+     * Representacion textual de la estrategia para mostrar en menus.
      * 
      * @return "CartaMasAlta"
      */

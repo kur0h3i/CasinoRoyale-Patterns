@@ -30,7 +30,7 @@ public class ASCIISlot {
         System.out.println("| ! ! ! --> Mega premio! x7 tu apuesta |");
         System.out.println("| ? ? ? --> Buen premio! x5 tu apuesta |");
         System.out.println("| * * * --> Premio base! x3 tu apuesta |");
-        System.out.println("| Dos símbolos iguales --> Recuperar   |");
+        System.out.println("| Dos simbolos iguales --> Recuperar   |");
         System.out.println("|______________________________________|");
     }
 

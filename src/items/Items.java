@@ -3,34 +3,34 @@ package items;
 
 /**
  * Define el contrato para todos los objetos jugables o consumibles.
- * Contiene métodos para obtener propiedades básicas y ejecutar la acción del
- * ítem.
+ * Contiene metodos para obtener propiedades besicas y ejecutar la accion del
+ * item.
  */
 public interface Items {
 
     /**
-     * Obtiene el nombre del ítem.
+     * Obtiene el nombre del item.
      * 
      * @return nombre como String
      */
     String getNombre();
 
     /**
-     * Obtiene el precio en euros del ítem.
+     * Obtiene el precio en euros del item.
      * 
      * @return precio como Double
      */
     Double getPrecio();
 
     /**
-     * Obtiene la descripción o efecto del ítem.
+     * Obtiene la descripcion o efecto del item.
      * 
-     * @return descripción como String
+     * @return descripcion como String
      */
     String getDescripcion();
 
     /**
-     * Acción principal al usar el ítem: define el comportamiento específico.
+     * Accion principal al usar el item: define el comportamiento especifico.
      */
     void usar();
 }

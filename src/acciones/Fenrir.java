@@ -7,6 +7,9 @@ import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinDinero;
 import items.Bebida;
 import items.Items;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -18,13 +21,16 @@ import personas.Jugador;
 import static recursos.MensajesEstaticos.interactFenrir;
 
 /**
- * Clase Fenrir => Representa un bar donde el jugador puede comprar bebidas
+ * Representa un bar donde el jugador puede comprar bebidas
  * usando
  * dinero.
  * Implementa el patrón Observer (Pull-Push) para reaccionar a la posición e
  * interacción del jugador.
  */
-public class Fenrir implements PullPushModelObserverInteractive {
+public class Fenrir implements PullPushModelObserverInteractive, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Coordenada X del bar Fenrir en la sala */
     private Integer posX;

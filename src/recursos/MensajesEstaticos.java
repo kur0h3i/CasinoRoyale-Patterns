@@ -1,11 +1,12 @@
-/**
- * Clase MensajesEstaticos: centraliza mensajes de interfaz estática para el juego.
- * Proporciona métodos para mostrar información básica del jugador y prompts de interacción.
- */
+
 package recursos;
 
 import personas.Jugador;
 
+/**
+ * Centraliza mensajes de interfaz estática para el juego.
+ * Proporciona métodos para mostrar información básica del jugador y prompts de interacción.
+ */
 public class MensajesEstaticos {
 
     /**

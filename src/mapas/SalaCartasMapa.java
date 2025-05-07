@@ -2,8 +2,7 @@
 package mapas;
 
 /**
- * Clase SalaCartasMapa: define la representación y posiciones clave de la sala
- * de cartas en el casino.
+ * Define la representación y posiciones clave de la sala de cartas en el casino.
  * Contiene un mapa de caracteres que modela el plano de la sala, junto con
  * coordenadas
  * estáticas para la posición inicial del jugador, la entrada desde pasillos y

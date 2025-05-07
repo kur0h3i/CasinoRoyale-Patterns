@@ -1,18 +1,24 @@
 
 package items;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
- * Clase Bebida => Implementación de Items que representa una bebida consumible.
+ * Implementación de Items que representa una bebida consumible.
  * Permite obtener nombre, precio, descripción y usar la bebida con un mensaje.
  */
-public class Bebida implements Items {
+public class Bebida implements Items, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Nombre de la bebida (por ejemplo, "Cerveza") */
-    private String nombre;
+    private final String nombre;
     /** Precio en euros de la bebida */
-    private Double precio;
+    private final Double precio;
     /** Descripción del sabor o efecto de la bebida */
-    private String descripcion;
+    private final String descripcion;
 
     /**
      * Constructor de Bebida.

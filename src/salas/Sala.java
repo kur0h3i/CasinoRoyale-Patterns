@@ -7,6 +7,8 @@ import ascii.ASCIIGeneral;
 import personas.Jugador;
 import patterns.observer.Subscription;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,11 +16,13 @@ import java.util.Scanner;
 import static recursos.MensajesEstaticos.*;
 
 /**
- * Clase Sala => Clase abstracta para representar una sala en el casino.
+ * Clase abstracta para representar una sala en el casino.
  * Gestiona el mapa ASCII, la posición inicial del jugador, mesas y pasillos.
  * Implementa Subscription para suscripción del jugador a eventos de movimiento e interacción.
  */
-public abstract class Sala extends Subscription {
+public abstract class Sala extends Subscription implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Mapa ASCII bidimensional de la sala */
     private Character[][] mapa;
@@ -29,9 +33,9 @@ public abstract class Sala extends Subscription {
     /** Pasillos que conectan con otras salas */
     protected ArrayList<Pasillo> pasillos;
     /** Coordenada X donde aparece el jugador al entrar */
-    private Integer posInitialX;
+    private final Integer posInitialX;
     /** Coordenada Y donde aparece el jugador al entrar */
-    private Integer posInitialY;
+    private final Integer posInitialY;
 
     /**
      * Constructor principal.
@@ -93,7 +97,7 @@ public abstract class Sala extends Subscription {
     protected void moverJugador(int dx, int dy) {
         int newX = jugador.getPosX() + dx;
         int newY = jugador.getPosY() + dy;
-        // Limitar dentro de los bordes y suelo transitable (' ')
+        // Limitar dentro de los bordes y suelo transitable
         if (newX >= 0 && newX < mapa[0].length
                 && newY >= 0 && newY < mapa.length
                 && mapa[newY][newX] == ' ') {
@@ -183,7 +187,7 @@ public abstract class Sala extends Subscription {
         return posInitialX;
     }
 
-    /** @return coordenada Y inicial */
+    /** @return coordenada e Y inicial */
     public Integer getPosInitialY() {
         return posInitialY;
     }

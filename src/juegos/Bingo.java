@@ -17,7 +17,7 @@ import excep.ExcepcionJugadorSinFichas;
 import personas.Jugador;
 
 /**
- * Clase Bingo => Estrategia de juego que implementa la interfaz StrategyJuego.
+ * Estrategia de juego que implementa la interfaz StrategyJuego.
  * Permite a un jugador apostar fichas, generar cartones de bingo y
  * extraer números de forma aleatoria hasta que alguien consigue bingo.
  */

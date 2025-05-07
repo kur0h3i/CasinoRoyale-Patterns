@@ -2,7 +2,7 @@
 package recursos;
 
 /**
- * Clase Carta => Representa una carta de la baraja con un valor y un palo.
+ * Representa una carta de la baraja con un valor y un palo.
  * Proporciona métodos para obtener su representación, valor numérico y nombre de archivo.
  */
 public class Carta {

@@ -4,6 +4,8 @@ package personas;
 import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinFichas;
 import items.Items;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import patterns.observer.PullPushModelObserver;
 import salas.Sala;
 
 /**
- * Clase Jugador => Representa al usuario en el casino, con posición, fondos,
+ * Representa al usuario en el casino, con posición, fondos,
  * fichas, inventario de ítems y suscripción al patrón Observer para recibir
  * notificaciones de cambios de estado.
  * Implementa Serializable para persistencia y PullPushModelObservable para
@@ -21,6 +23,7 @@ import salas.Sala;
  */
 public class Jugador implements Serializable, PullPushModelObservable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /** Coordenada X actual del jugador en el mapa */
@@ -152,9 +155,7 @@ public class Jugador implements Serializable, PullPushModelObservable {
         return interact;
     }
 
-    public String getName() {
-        return nombre;
-    }
+    public String getName() { return nombre; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

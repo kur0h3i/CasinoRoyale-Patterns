@@ -2,12 +2,7 @@
 package acciones;
 
 // Entradas/salidas y manejo de archivos
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 // Utilidades de entrada
 import java.util.InputMismatchException;
@@ -31,13 +26,16 @@ import ascii.ASCIIGeneral;
 import static recursos.MensajesEstaticos.interactSave;
 
 /**
- * Clase PuertaSalida => Gestiona la interacción de salida del casino.
+ * Gestiona la interacción de salida del casino.
  * Cuando el jugador se acerca a la puerta, ofrece opciones para
  * guardar, cargar partida, salir del juego o volver al casino.
  * Implementa el patrón Observer para detectar posición e interacción del
  * jugador.
  */
-public class PuertaSalida implements PullPushModelObserverInteractive {
+public class PuertaSalida implements PullPushModelObserverInteractive, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Coordenada X donde se activa la puerta de salida */
     private Integer posX;

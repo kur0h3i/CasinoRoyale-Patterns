@@ -17,18 +17,23 @@ import ascii.ASCIIGeneral;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 import static recursos.MensajesEstaticos.interactTable;
 
 /**
- * Clase Mesa => Representa una mesa de juego en el casino.
+ * Representa una mesa de juego en el casino.
  * Combina el patrón Observer (Pull-Push) para detectar la posición e
  * interacción del jugador
  * y el patrón Strategy para seleccionar dinámicamente el juego según el tipo de
  * mesa.
  */
-public class Mesa implements PullPushModelObserverInteractive {
+public class Mesa implements PullPushModelObserverInteractive, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * Nombre identificador de la mesa ("Slot", "Ruleta", "Bingo", "Dados",

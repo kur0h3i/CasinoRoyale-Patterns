@@ -6,6 +6,9 @@ import ascii.ASCIICajero;
 import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinDinero;
 import excep.ExcepcionJugadorSinFichas;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -15,12 +18,15 @@ import personas.Jugador;
 import static recursos.MensajesEstaticos.interactATM;
 
 /**
- * Clase Cajero => Permite a un jugador convertir dinero en fichas y viceversa
+ * Permite a un jugador convertir dinero en fichas y viceversa
  * mediante una interfaz ASCII.
  * Implementa el patrón Observer (Pull-Push) para reaccionar a la posición e
  * interacción del jugador.
  */
-public class Cajero implements PullPushModelObserverInteractive {
+public class Cajero implements PullPushModelObserverInteractive, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Coordenada X del cajero en la sala */
     private Integer posX;

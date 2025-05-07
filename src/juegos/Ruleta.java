@@ -17,7 +17,7 @@ import excep.ExcepcionJugadorSinFichas;
 import personas.Jugador;
 
 /**
- * Clase Ruleta => Estrategia de juego que implementa StrategyJuego.
+ * Estrategia de juego que implementa StrategyJuego.
  * El jugador apuesta fichas y puede elegir entre varias opciones de apuesta:
  * - Color (Rojo/Negro)
  * - Par/Impar

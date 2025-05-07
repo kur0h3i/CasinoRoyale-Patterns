@@ -4,7 +4,7 @@ package patterns.observer;
 import excep.ExcepcionJugadorSinFichas;
 
 /**
- * PullPushModelObserver => interfaz que define el contrato para un observador
+ * Interfaz que define el contrato para un observador
  * en el patrón Observer (Pull-Push). Las implementaciones reaccionan a notificaciones
  * de un PullPushModelObservable ejecutando el método update.
  */

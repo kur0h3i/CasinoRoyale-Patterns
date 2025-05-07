@@ -4,7 +4,7 @@ package mapas;
 public class SalaPrincipalMapa {
 
     /**
-     * Clase SalaPrincipalMapa => representa el mapa de la sala principal del casino.
+     * Representa el mapa de la sala principal del casino.
      * Contiene un plano ASCII bidimensional con paredes, pasillos y símbolos
      * que indican puertas, entradas y conexiones a otras salas.
      * Además, define la posición inicial del jugador al entrar.

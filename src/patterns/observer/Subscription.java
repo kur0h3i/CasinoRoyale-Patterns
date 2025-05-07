@@ -4,7 +4,7 @@ package patterns.observer;
 import personas.Jugador;
 
 /**
- * Subscription => Clase abstracta que define el comportamiento de suscripción
+ * Clase abstracta que define el comportamiento de suscripción
  * de un Jugador a eventos o flujos de datos.
  * Permite registrar y desregistrar jugadores como suscriptores.
  */

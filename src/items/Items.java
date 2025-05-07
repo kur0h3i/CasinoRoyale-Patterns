@@ -2,8 +2,7 @@
 package items;
 
 /**
- * Interfaz Items => Define el contrato para todos los objetos jugables o
- * consumibles.
+ * Define el contrato para todos los objetos jugables o consumibles.
  * Contiene métodos para obtener propiedades básicas y ejecutar la acción del
  * ítem.
  */

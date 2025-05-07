@@ -4,7 +4,7 @@ package recursos;
 import java.util.Random;
 
 /**
- * Clase Baraja => Modelo de una baraja estándar de 52 cartas.
+ * Modelo de una baraja estándar de 52 cartas.
  * Permite mezclar, repartir y reiniciar la baraja.
  */
 public class Baraja {

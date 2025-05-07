@@ -13,17 +13,22 @@ import personas.Jugador;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Clase Pasillo => Representa un corredor que traslada al jugador de una sala a
+ * Representa un corredor que traslada al jugador de una sala a
  * otra
  * al entrar en las coordenadas definidas. Implementa el patrón Observer para
  * reaccionar
  * al movimiento del jugador (Pull-Push), desconectarlo de la sala actual y
  * cargar la siguiente.
  */
-public class Pasillo implements PullPushModelObserver {
+public class Pasillo implements PullPushModelObserver, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Coordenada X donde se activa el pasillo */
     private final Integer posX;

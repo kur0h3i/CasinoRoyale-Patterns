@@ -1,65 +1,82 @@
 @startuml
 
 'https://plantuml.com/class-diagram
+'- Privado' 'private Jugador jugador'
+'# protected' 'protected Jugador jugador'
+'~ package' 'Jugador jugador'
+'+ public' 'public Jugador jugador'
 
 package "Mapas" {
     class SalaCartasMapa {
-        - mapaCartas: Character[][]
-        - posXInicial: int
-        - posYInicial: int
-        - posXEntrada: int
-        - posYEntrada: int
-        - posXCartaMas: int
-        - posYCartaMas: int
+        + mapaCartas: Character[][]
+        + posXInicial: int
+        + posYInicial: int
+        + posXEntrada: int
+        + posYEntrada: int
+        + posXCartaMas: int
+        + posYCartaMas: int
     }
 
     class SalaJuegosAzarMapa {
-        - mapaAzar: Character[][]
-        - posXInicial: int
-        - posYInicial: int
-        - posXEntrada: int
-        - posYEntrada: int
-        - posXRuleta: int
-        - posYRuleta: int
-        - posXSlots: int
-        - posYSlots: int
-        - posXBingo: int
-        - posYBingo: int
-        - posXDados: int
-        - posYDados: int
+        + mapaAzar: Character[][]
+        + posXInicial: int
+        + posYInicial: int
+        + posXEntrada: int
+        + posYEntrada: int
+        + posXRuleta: int
+        + posYRuleta: int
+        + posXSlots: int
+        + posYSlots: int
+        + posXBingo: int
+        + posYBingo: int
+        + posXDados: int
+        + posYDados: int
     }
 
     class SalaPrincipalMapa {
-        - mapaSalaPrincipal: Character[][]
-        - posXInicial: int
-        - posYInicial: int
+        + mapaSalaPrincipal: Character[][]
+        + posXInicial: int
+        + posYInicial: int
     }
 }
 
 package "Patterns/Observer" {
-    class PullPushModelObservable {
+    interface PullPushModelObservable {
         + attach(PullPushModelObserver): void
         + detach(PullPushModelObserver): void
         + detachAll(): void
         + notifyObservers(): void
     }
 
-    class PullPushModelObserver {
+    interface PullPushModelObserver {
         + update(PullPushModelObservable, Object): void
     }
 
-    class PullPushModelObserverInteractive {
+    interface PullPushModelObserverInteractive {
         + interactive(): void
     }
 
-    class Subscription {
-        + subscribe(Jugador): void
-        + unsubscribe(Jugador): void
+    abstract class Subscription {
+        + {abstract} subscribe(Jugador): void
+        + {abstract} unsubscribe(Jugador): void
     }
 }
 
 package "personas" {
     class Jugador {
+        - {static} serialVersionUID: long
+        - posX: Integer
+        - posY: Integer
+        - interact: Boolean
+        - items: List<Items>
+        - inventario: Boolean
+        - nombre: String
+        - edad: Integer
+        - dinero: Double
+        - fichas: Integer
+        - salaActual: Sala
+        - observers: List<PullPushModelObserver>
+
         + Jugador(String, Integer, Double, Integer, Integer)
         + attach(PullPushModelObserver): void
         + detach(PullPushModelObserver): void
@@ -92,7 +109,7 @@ package "personas" {
     }
 
     class JugadorFactory {
-        + crearJugador(String, String, int, double): Jugador
+        + {static} crearJugador(String, String, int, double): Jugador
     }
 
     class JugadorNPC {
@@ -108,6 +125,9 @@ package "personas" {
 
 package "recursos" {
     class Baraja {
+        - cartas: Carta[]
+        - cartasDisponibles: Integer
+
         + Baraja()
         + mezclar(): void
         + repartir(): Carta
@@ -116,6 +136,9 @@ package "recursos" {
     }
 
     class Carta {
+        - valor : String
+        - tipo : String
+
         + Carta(String, String)
         + getNumero(): String
         + getTipo(): String
@@ -125,40 +148,51 @@ package "recursos" {
         + toString(): String
     }
 
-    class Games {
-        + Games(String)
-        + getIdentifier(): String
+    enum Games {
+        - identifier: String
         + SLOTS: Games
         + RULETA: Games
         + BINGO: Games
         + DADOS: Games
         + CARTAMASALTA: Games
+
+        - Games(String)
+        + getIdentifier(): String
     }
 
     class MensajesEstaticos {
-        + playerUI(Jugador): void
-        + instructions(): void
-        + interactSave(): void
-        + interactATM(): void
-        + interactTable(String): void
-        + badCommand(): void
-        + interactFenrir(): void
+        + {static} playerUI(Jugador): void
+        + {static} instructions(): void
+        + {static} interactSave(): void
+        + {static} interactATM(): void
+        + {static} interactTable(String): void
+        + {static} badCommand(): void
+        + {static} interactFenrir(): void
     }
 }
 
 package "salas" {
     class Casino {
-        + iniciarCasino(): void
+        + {static} iniciarCasino(): void
     }
 
-    class Sala {
-        + Sala(Jugador, Character[][])
-        + Sala(Jugador, Character[][], ArrayList<Mesa>, ArrayList<Pasillo>)
-        + Sala(Jugador, Character[][], ArrayList<Mesa>, ArrayList<Pasillo>, Integer, Integer)
-        + interfazPrincipal(Jugador): void
-        + moverJugador(int, int): void
-        + mostrarMapa(): void
-        + entradaTerminal(Scanner): void
+    abstract class Sala {
+
+        - serialVersionUID: long
+        - mapa: Character[][]
+        - jugador: Jugador
+        # mesas: ArrayList<Mesa>
+        # pasillos: ArrayList<Pasillo>
+        - posInitialX: Integer
+        - posInitialY: Integer
+
+        # Sala(Jugador, Character[][])
+        # Sala(Jugador, Character[][], ArrayList<Mesa>, ArrayList<Pasillo>)
+        # Sala(Jugador, Character[][], ArrayList<Mesa>, ArrayList<Pasillo>, Integer, Integer)
+        # interfazPrincipal(Jugador): void
+        # moverJugador(int, int): void
+        - mostrarMapa(): void
+        # entradaTerminal(Scanner): void
         + iniciarInterfaz(): void
         + setJugador(Jugador): void
         + getPosInitialX(): Integer
@@ -167,31 +201,42 @@ package "salas" {
     }
 
     class SalaAzar {
-        + SalaAzar(Jugador)
-        + getInstance(): SalaAzar
+        - {static} instancia : SalaAzar
+
+        - SalaAzar(Jugador)
+        + {static} getInstance(): SalaAzar
         + subscribe(Jugador): void → Subscription
         + unsubscribe(Jugador): void → Subscription
         + toString(): String → Object
     }
 
     class SalaCartas {
-        + SalaCartas(Jugador)
-        + getInstance(): SalaCartas
+        - {static} instancia : SalaCartas
+
+        - SalaCartas(Jugador)
+        + {static} getInstance(): SalaCartas
         + subscribe(Jugador): void → Subscription
         + unsubscribe(Jugador): void → Subscription
         + toString(): String → Object
     }
 
     class SalaPrincipal {
-        + SalaPrincipal(Jugador)
-        + getInstance(Jugador): SalaPrincipal
-        + getInstance(): SalaPrincipal
+        - {static} instancia: SalaPrincipal
+        - cajero: Cajero
+        - puertaSalida: PuertaSalida
+        - fenrir: Fenrir
+
+        - SalaPrincipal(Jugador)
+        + {static} getInstance(Jugador): SalaPrincipal
+        + {static} getInstance(): SalaPrincipal
         + subscribe(Jugador): void → Subscription
         + unsubscribe(Jugador): void → Subscription
         + toString(): String → Object
     }
 
     class SalaRegistro {
+        + jugador: Jugador
+
         + SalaRegistro()
         + asciiArt(): void
         + informacionCasino(): void
@@ -205,28 +250,46 @@ package "salas" {
 
 package "acciones" {
     class Cajero {
+        - posX: Integer
+        - posY: Integer
+        - jugador: Jugador
+        - interfaz: ASCIICajero
+        - {static} serialVersionUID: long
         + Cajero(Integer, Integer)
         + update(PullPushModelObservable, Object): void
         + interactive(): void
-        + iniciarCajero(Scanner): void
-        + cambiarDineroAFichas(Scanner): void
-        + cambiarFichasADinero(Scanner): void
-        + definirCantidadFichas(Scanner): int
-        + definirImporteDinero(Scanner): float
-        + comprobarFichas(): void
-        + comprobarDinero(): void
+        - iniciarCajero(Scanner): void
+        - cambiarDineroAFichas(Scanner): void
+        - cambiarFichasADinero(Scanner): void
+        - definirCantidadFichas(Scanner): int
+        - definirImporteDinero(Scanner): float
+        - comprobarFichas(): void
+        - comprobarDinero(): void
     }
 
     class Fenrir {
+        - posX: Integer
+        - posY: Integer
+        - jugador: Jugador
+        - bebidasDisponibles: List<Items> = new ArrayList<>()
+        - interfaz: ASCIIFenrir
+        - {static} serialVersionUID: long
         + Fenrir(Integer, Integer)
         + update(PullPushModelObservable, Object): void
         + interactive(): void
         + iniciarBar(Scanner): void
-        + comprarBebida(Scanner): void
-        + procesarCompraDinero(Items): void
+        - comprarBebida(Scanner): void
+        - procesarCompraDinero(Items): void
     }
 
     class Mesa {
+        - nombre: String
+        - numParticipantes: Integer
+        - posX: Integer
+        - posY: Integer
+        - jugador: Jugador
+        - strategy: StrategyJuego
+        - {static} serialVersionUID: long
         + Mesa(String, Integer, Integer, Integer)
         + getNumParticipantes(): Integer
         + getPosX(): Integer
@@ -243,18 +306,27 @@ package "acciones" {
     }
 
     class Pasillo {
+        - posX: Integer
+        - posY: Integer
+        - salaSiguiente: Sala
+        - {static} serialVersionUID: long
         + Pasillo(Integer, Integer, Sala)
         + update(PullPushModelObservable, Object): void
     }
 
     class PuertaSalida {
+        - posX: Integer
+        - posY: Integer
+        - jugador: Jugador
+        - interfaz: ASCIIPuerta
+        - {static} serialVersionUID: long
         + PuertaSalida(Integer, Integer)
         + update(PullPushModelObservable, Object): void
         + interactive(): void
-        + iniciarPuerta(Scanner): void
-        + guardarPartida(): void
-        + cargarPartida(): void
-        + salir(): void
+        - iniciarPuerta(Scanner): void
+        - guardarPartida(): void
+        - cargarPartida(): void
+        - salir(): void
     }
 }
 
@@ -264,12 +336,14 @@ package "ascii" {
     }
 
     class ASCIICajero {
+        ~ jugador: jugador
         + ASCIICajero(Jugador)
         + titulo(): void
         + opciones(): void
     }
 
     class ASCIICartaMasAlta {
+        ~ jugador: jugador
         + ASCIICartaMasAlta(Jugador)
         + titulo(): void
         + cheatsheet(): void
@@ -277,6 +351,7 @@ package "ascii" {
     }
 
     class ASCIIDados {
+        ~ jugador: jugador
         + ASCIIDados(Jugador)
         + titulo(): void
         + cheatsheet(): void
@@ -285,6 +360,7 @@ package "ascii" {
     }
 
     class ASCIIFenrir {
+        - {static} serialVersionUID: long
         + ASCIIFenrir
         + titulo(): void
         + opcionesBar(): void
@@ -293,18 +369,20 @@ package "ascii" {
     }
 
     class ASCIIGeneral {
-        + ASCIIGeneral
-        + esperarTecla(): void
-        + limpiarPantalla(): void
+        + {static} esperarTecla(): void
+        + {static} limpiarPantalla(): void
     }
 
     class ASCIIPuerta {
+        ~ jugador : Jugador
+        - {static} serialVersionUID: long
         + ASCIIPuerta(Jugador)
         + titulo(): void
         + opciones(): void
     }
 
     class ASCIIRuleta {
+        ~ jugador : Jugador
         + ASCIIRuleta(Jugador)
         + titulo(): void
         + interfazRuleta(): void
@@ -314,6 +392,7 @@ package "ascii" {
     }
 
     class ASCIISlot {
+        ~ jugador: Jugador
         + ASCIISlot(Jugador)
         + titulo(): void
         + cheatsheet(): void
@@ -342,6 +421,10 @@ package "excep" {
 
 package "items" {
     class Bebida {
+        - {static} serialVersionUID: long
+        - nombre: String
+        - precio: Double
+        - descripcion: String
         + Bebida(String, Double, String)
         + getNombre(): String
         + getPrecio(): Double
@@ -359,55 +442,82 @@ package "items" {
 
 package "juegos" {
     class Bingo {
+        + toString(): String
+        - {static} FILAS: int = 4
+        - {static} COLUMNAS: int = 6
+        - cartones: String[][]
+        - numerosDisponibles: HashSet<Integer>
+        - jugadores: Jugador[]
+        - bote: int
+        - apuesta: int
+        - jugador: Jugador
+        - interfaz: ASCIIBingo
         + Bingo(Jugador)
         + iniciarPartida(): void
-        + generarCartones(int): void
-        + jugarBingo(int): void
-        + imprimirCarton(String[][]): void
-        + tacharNumero(String[][], int): void
-        + esBingo(String[][]): boolean
+        - generarCartones(int): void
+        - jugarBingo(int): void
+        - imprimirCarton(String[][]): void
+        - tacharNumero(String[][], int): void
+        - esBingo(String[][]): boolean
     }
 
     class CartaMasAlta {
+        + toString(): String
+        - baraja: Baraja
+        - interfaz: ASCIICartaMasAlta
+        - jugador: Jugador
+        - apuesta: Integer
         + CartaMasAlta(Jugador)
         + definirApuesta(Scanner): Integer
         + comprobarFichas(): void
         + iniciarPartida(): void
-        + jugarRonda(Integer): void
+        - jugarRonda(Integer): void
     }
 
     class Dados {
+        + toString(): String
+        - apuesta: Integer
+        - jugador: Jugador
+        - interfaz: ASCIIDados
         + Dados(Jugador)
         + definirApuesta(Scanner): Integer
         + comprobarFichas(): void
         + iniciarPartida(): void
-        + jugarDados(Scanner): void
-        + jugarPunto(Scanner, Integer, Random): void
-        + tirarDados(Random): Integer
+        - jugarDados(Scanner): void
+        - jugarPunto(Scanner, Integer, Random): void
+        - tirarDados(Random): Integer
     }
 
     class Ruleta {
+        + toString(): String
+        - apuesta: Integer
+        - jugador: Jugador
+        - interfaz: ASCIIRuleta
         + Ruleta(Jugador)
-        + comprobarFichas(): void
+        - comprobarFichas(): void
         + iniciarPartida(): void
-        + definirApuesta(Scanner): Integer
-        + opcionesDeApuesta(Scanner): void
-        + tirarRuleta(): Integer
-        + apostarPorColor(Scanner): void
-        + apostarParImpar(Scanner): void
-        + apostarPorNumero(Scanner): void
-        + apostarPorDocena(Scanner): void
-        + apostarMitad(Scanner): void
-        + esNumeroRojo(Scanner): boolean
+        - definirApuesta(Scanner): Integer
+        - opcionesDeApuesta(Scanner): void
+        - tirarRuleta(): Integer
+        - apostarPorColor(Scanner): void
+        - apostarParImpar(Scanner): void
+        - apostarPorNumero(Scanner): void
+        - apostarPorDocena(Scanner): void
+        - apostarMitad(Scanner): void
+        - esNumeroRojo(Scanner): boolean
     }
 
     class Slot {
+        + toString(): String
+        - apuesta: Integer
+        - jugador: Jugador
+        - interfaz: ASCIISlot
         + Slot(Jugador)
-        + comprobarFichas(): void
+        - comprobarFichas(): void
         + iniciarPartida(): void
-        + definirApuesta(Scanner): Integer
-        + jugarSlot(): void
-        + calcularPremio(String): Integer
+        - definirApuesta(Scanner): Integer
+        - jugarSlot(): void
+        - calcularPremio(String): Integer
     }
 
     interface StrategyJuego {

@@ -1,0 +1,418 @@
+@startuml
+
+'https://plantuml.com/class-diagram
+
+package "Mapas" {
+    class SalaCartasMapa {
+        - mapaCartas: Character[][]
+        - posXInicial: int
+        - posYInicial: int
+        - posXEntrada: int
+        - posYEntrada: int
+        - posXCartaMas: int
+        - posYCartaMas: int
+    }
+
+    class SalaJuegosAzarMapa {
+        - mapaAzar: Character[][]
+        - posXInicial: int
+        - posYInicial: int
+        - posXEntrada: int
+        - posYEntrada: int
+        - posXRuleta: int
+        - posYRuleta: int
+        - posXSlots: int
+        - posYSlots: int
+        - posXBingo: int
+        - posYBingo: int
+        - posXDados: int
+        - posYDados: int
+    }
+
+    class SalaPrincipalMapa {
+        - mapaSalaPrincipal: Character[][]
+        - posXInicial: int
+        - posYInicial: int
+    }
+}
+
+package "Patterns/Observer" {
+    class PullPushModelObservable {
+        + attach(PullPushModelObserver): void
+        + detach(PullPushModelObserver): void
+        + detachAll(): void
+        + notifyObservers(): void
+    }
+
+    class PullPushModelObserver {
+        + update(PullPushModelObservable, Object): void
+    }
+
+    class PullPushModelObserverInteractive {
+        + interactive(): void
+    }
+
+    class Subscription {
+        + subscribe(Jugador): void
+        + unsubscribe(Jugador): void
+    }
+}
+
+package "personas" {
+    class Jugador {
+        + Jugador(String, Integer, Double, Integer, Integer)
+        + attach(PullPushModelObserver): void
+        + detach(PullPushModelObserver): void
+        + detachAll(): void
+        + notifyObservers(): void
+        + move(Integer, Integer): void
+        + interacting(): void
+        + getPosX(): Integer
+        + getPosY(): Integer
+        + getInteract(): Boolean
+        + getName(): String
+        + setNombre(String): void
+        + getEdad(): Integer
+        + setEdad(Integer): void
+        + getDinero(): Double
+        + setDinero(Double): void
+        + getFichas(): Integer
+        + setFichas(Integer): void
+        + getSalaActual(): Sala
+        + setSala(Sala): void
+        + getInventario(): Boolean
+        + setInventario(Boolean): void
+        + agregarFichas(Integer): void
+        + restarFichas(Integer): void
+        + agregarDinero(Double): void
+        + restarDinero(Double): void
+        + agregarItem(Items): void
+        + mostrarInventario(): void
+        + usarItems(): void
+    }
+
+    class JugadorFactory {
+        + crearJugador(String, String, int, double): Jugador
+    }
+
+    class JugadorNPC {
+        + JugadorNPC(String, int, double)
+        + datosUsuarioEnPartida(): void
+    }
+
+    class JugadorPrincipal {
+        + JugadorPrincipal(String, int, double)
+        + datosUsuarioEnPartida(): void
+    }
+}
+
+package "recursos" {
+    class Baraja {
+        + Baraja()
+        + mezclar(): void
+        + repartir(): Carta
+        + cartasRestantes(): int
+        + reiniciar(): void
+    }
+
+    class Carta {
+        + Carta(String, String)
+        + getNumero(): String
+        + getTipo(): String
+        + getValorNumerico(): Integer
+        + getPrioridadPalo(): Integer
+        + getNombreArchivo(): String
+        + toString(): String
+    }
+
+    class Games {
+        + Games(String)
+        + getIdentifier(): String
+        + SLOTS: Games
+        + RULETA: Games
+        + BINGO: Games
+        + DADOS: Games
+        + CARTAMASALTA: Games
+    }
+
+    class MensajesEstaticos {
+        + playerUI(Jugador): void
+        + instructions(): void
+        + interactSave(): void
+        + interactATM(): void
+        + interactTable(String): void
+        + badCommand(): void
+        + interactFenrir(): void
+    }
+}
+
+package "salas" {
+    class Casino {
+        + iniciarCasino(): void
+    }
+
+    class Sala {
+        + Sala(Jugador, Character[][])
+        + Sala(Jugador, Character[][], ArrayList<Mesa>, ArrayList<Pasillo>)
+        + Sala(Jugador, Character[][], ArrayList<Mesa>, ArrayList<Pasillo>, Integer, Integer)
+        + interfazPrincipal(Jugador): void
+        + moverJugador(int, int): void
+        + mostrarMapa(): void
+        + entradaTerminal(Scanner): void
+        + iniciarInterfaz(): void
+        + setJugador(Jugador): void
+        + getPosInitialX(): Integer
+        + getPosInitialY(): Integer
+        + getPasillos(): ArrayList<Pasillo>
+    }
+
+    class SalaAzar {
+        + SalaAzar(Jugador)
+        + getInstance(): SalaAzar
+        + subscribe(Jugador): void → Subscription
+        + unsubscribe(Jugador): void → Subscription
+        + toString(): String → Object
+    }
+
+    class SalaCartas {
+        + SalaCartas(Jugador)
+        + getInstance(): SalaCartas
+        + subscribe(Jugador): void → Subscription
+        + unsubscribe(Jugador): void → Subscription
+        + toString(): String → Object
+    }
+
+    class SalaPrincipal {
+        + SalaPrincipal(Jugador)
+        + getInstance(Jugador): SalaPrincipal
+        + getInstance(): SalaPrincipal
+        + subscribe(Jugador): void → Subscription
+        + unsubscribe(Jugador): void → Subscription
+        + toString(): String → Object
+    }
+
+    class SalaRegistro {
+        + SalaRegistro()
+        + asciiArt(): void
+        + informacionCasino(): void
+        + iniciarJugador(): Jugador
+        + cargarJugador(): Jugador
+        + crearJugador(): Jugador
+        + verificarMayorEdad(): Boolean
+        + toString(): String → Object
+    }
+}
+
+package "acciones" {
+    class Cajero {
+        + Cajero(Integer, Integer)
+        + update(PullPushModelObservable, Object): void
+        + interactive(): void
+        + iniciarCajero(Scanner): void
+        + cambiarDineroAFichas(Scanner): void
+        + cambiarFichasADinero(Scanner): void
+        + definirCantidadFichas(Scanner): int
+        + definirImporteDinero(Scanner): float
+        + comprobarFichas(): void
+        + comprobarDinero(): void
+    }
+
+    class Fenrir {
+        + Fenrir(Integer, Integer)
+        + update(PullPushModelObservable, Object): void
+        + interactive(): void
+        + iniciarBar(Scanner): void
+        + comprarBebida(Scanner): void
+        + procesarCompraDinero(Items): void
+    }
+
+    class Mesa {
+        + Mesa(String, Integer, Integer, Integer)
+        + getNumParticipantes(): Integer
+        + getPosX(): Integer
+        + getPosY(): Integer
+        + getJugador(): Jugador
+        + getStrategy(): StrategyJuego
+        + setJugador(Jugador): void
+        + setStrategy(StrategyJuego): void
+        + putStrategy(): void
+        + jugar(): void
+        + interactive(): void
+        + update(PullPushModelObservable, Object): void
+        + toString(): String
+    }
+
+    class Pasillo {
+        + Pasillo(Integer, Integer, Sala)
+        + update(PullPushModelObservable, Object): void
+    }
+
+    class PuertaSalida {
+        + PuertaSalida(Integer, Integer)
+        + update(PullPushModelObservable, Object): void
+        + interactive(): void
+        + iniciarPuerta(Scanner): void
+        + guardarPartida(): void
+        + cargarPartida(): void
+        + salir(): void
+    }
+}
+
+package "ascii" {
+    class ASCIIBingo {
+        + titulo(): void
+    }
+
+    class ASCIICajero {
+        + ASCIICajero(Jugador)
+        + titulo(): void
+        + opciones(): void
+    }
+
+    class ASCIICartaMasAlta {
+        + ASCIICartaMasAlta(Jugador)
+        + titulo(): void
+        + cheatsheet(): void
+        + opciones(): void
+    }
+
+    class ASCIIDados {
+        + ASCIIDados(Jugador)
+        + titulo(): void
+        + cheatsheet(): void
+        + opciones(): void
+        + mostrarResultadoDados(Integer, Integer, Integer): void
+    }
+
+    class ASCIIFenrir {
+        + ASCIIFenrir
+        + titulo(): void
+        + opcionesBar(): void
+        + mostrarMenuBebidas(List<Items>): void
+        + carta(): void
+    }
+
+    class ASCIIGeneral {
+        + ASCIIGeneral
+        + esperarTecla(): void
+        + limpiarPantalla(): void
+    }
+
+    class ASCIIPuerta {
+        + ASCIIPuerta(Jugador)
+        + titulo(): void
+        + opciones(): void
+    }
+
+    class ASCIIRuleta {
+        + ASCIIRuleta(Jugador)
+        + titulo(): void
+        + interfazRuleta(): void
+        + cheatsheet(): void
+        + interfazPartida(): void
+        + opciones(): void
+    }
+
+    class ASCIISlot {
+        + ASCIISlot(Jugador)
+        + titulo(): void
+        + cheatsheet(): void
+        + opciones(): void
+        + mostrarResultados(String, String, String): void
+    }
+}
+
+package "excep" {
+    class ExcepcionJugadorMenorEdad {
+        + ExcepcionJugadorMenorEdad(String)
+    }
+
+    class ExcepcionJugadorNoEncontrado {
+        + ExcepcionJugadorNoEncontrado(String)
+    }
+
+    class ExcepcionJugadorSinDinero {
+        + ExcepcionJugadorSinDinero(String)
+    }
+
+    class ExcepcionJugadorSinFichas {
+        + ExcepcionJugadorSinFichas(String)
+    }
+}
+
+package "items" {
+    class Bebida {
+        + Bebida(String, Double, String)
+        + getNombre(): String
+        + getPrecio(): Double
+        + getDescripcion(): String
+        + usar(): void
+    }
+
+    interface Items {
+        + getNombre(): String
+        + getPrecio(): Double
+        + getDescripcion(): String
+        + usar(): void
+    }
+}
+
+package "juegos" {
+    class Bingo {
+        + Bingo(Jugador)
+        + iniciarPartida(): void
+        + generarCartones(int): void
+        + jugarBingo(int): void
+        + imprimirCarton(String[][]): void
+        + tacharNumero(String[][], int): void
+        + esBingo(String[][]): boolean
+    }
+
+    class CartaMasAlta {
+        + CartaMasAlta(Jugador)
+        + definirApuesta(Scanner): Integer
+        + comprobarFichas(): void
+        + iniciarPartida(): void
+        + jugarRonda(Integer): void
+    }
+
+    class Dados {
+        + Dados(Jugador)
+        + definirApuesta(Scanner): Integer
+        + comprobarFichas(): void
+        + iniciarPartida(): void
+        + jugarDados(Scanner): void
+        + jugarPunto(Scanner, Integer, Random): void
+        + tirarDados(Random): Integer
+    }
+
+    class Ruleta {
+        + Ruleta(Jugador)
+        + comprobarFichas(): void
+        + iniciarPartida(): void
+        + definirApuesta(Scanner): Integer
+        + opcionesDeApuesta(Scanner): void
+        + tirarRuleta(): Integer
+        + apostarPorColor(Scanner): void
+        + apostarParImpar(Scanner): void
+        + apostarPorNumero(Scanner): void
+        + apostarPorDocena(Scanner): void
+        + apostarMitad(Scanner): void
+        + esNumeroRojo(Scanner): boolean
+    }
+
+    class Slot {
+        + Slot(Jugador)
+        + comprobarFichas(): void
+        + iniciarPartida(): void
+        + definirApuesta(Scanner): Integer
+        + jugarSlot(): void
+        + calcularPremio(String): Integer
+    }
+
+    interface StrategyJuego {
+        + iniciarPartida(): void
+    }
+}
+
+@enduml

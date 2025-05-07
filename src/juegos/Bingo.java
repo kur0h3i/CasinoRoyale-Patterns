@@ -1,89 +1,74 @@
-// Bingo.java
+
 package juegos;
 
-// ASCII
+// Interfaces ASCII para limpiar pantalla y mostrar el cartón de bingo
 import ascii.ASCIIGeneral;
 import ascii.ASCIIBingo;
 
-// Util
+// Utilidades de colección, aleatoriedad y entrada de usuario
 import java.util.HashSet;
-import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Excepciones
+// Excepciones personalizadas para control de fichas
 import excep.ExcepcionJugadorSinFichas;
 
-// Jugador
+// Representación del jugador
 import personas.Jugador;
 
-
+/**
+ * Clase Bingo => Estrategia de juego que implementa la interfaz StrategyJuego.
+ * Permite a un jugador apostar fichas, generar cartones de bingo y
+ * extraer números de forma aleatoria hasta que alguien consigue bingo.
+ */
 public class Bingo implements StrategyJuego {
 
-    // Atributos
-    private final Integer FILAS = 4;
-    private final Integer COLUMNAS = 6;
+    /** Número de filas por cartón */
+    private static final int FILAS = 4;
+    /** Número de columnas por cartón */
+    private static final int COLUMNAS = 6;
+    /** Estructura para almacenar múltiples cartones [jugador][fila][columna] */
     private String[][][] cartones;
-    // Usar HashSet para no tener numeros repetidos 
+    /** Números aún no extraídos (1–75) */
     private HashSet<Integer> numerosDisponibles;
+    /** Array de jugadores en la partida */
     private Jugador[] jugadores;
-    private Integer bote;
-    private Integer apuesta;
+    /** Número total de fichas en juego (bote) */
+    private int bote;
+    /** Apuesta inicial de fichas</code> */
+    private int apuesta;
+    /** Jugador principal que inicia la partida */
     private Jugador jugador;
+    /** Interfaz ASCII específica para Bingo */
     private ASCIIBingo interfaz;
 
-    // Constructor
+    /**
+     * Constructor: inicializa la partida de bingo para un jugador.
+     * 
+     * @param jugador objeto Jugador que juega
+     */
     public Bingo(Jugador jugador) {
         this.jugador = jugador;
-        numerosDisponibles = new HashSet<>();
-        interfaz = new ASCIIBingo();
+        this.numerosDisponibles = new HashSet<>();
+        this.interfaz = new ASCIIBingo();
     }
 
-    // Deifinir la apuesta
-    public Integer definirApuesta(Scanner input) {
-        System.out.println("¿Cuántas fichas deseas apostar?");
-        System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
-
-        Integer apuesta = 0;
-
-        try {
-            apuesta = input.nextInt();
-            input.nextLine(); // Limpiar buffer
-
-            if (apuesta <= 0 || apuesta > jugador.getFichas()) {
-                System.out.println("Apuesta no válida. Intenta de nuevo.");
-                return definirApuesta(input); // Llamada recursiva para pedir una apuesta válida
-            }
-
-            jugador.restarFichas(apuesta);
-        } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Intenta de nuevo.");
-            input.nextLine(); // Limpiar buffer en caso de excepción
-            return definirApuesta(input); // Llamada recursiva para repetir el proceso
-        }
-
-        return apuesta;
-    }
-
-
-    // Comprobar si hay fichas
-    public void comprobarfichas() throws ExcepcionJugadorSinFichas{
-        if (jugador.getFichas() <= 0) {
-            throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
-        }
-    }
-
-    // Metodos
+    /**
+     * Inicia la partida de bingo: pide número de jugadores y apuesta,
+     * genera cartones y comienza el sorteo de números.
+     * 
+     * @throws ExcepcionJugadorSinFichas si no hay fichas suficientes para la
+     *                                   apuesta
+     */
     @Override
     public void iniciarPartida() throws ExcepcionJugadorSinFichas {
         Scanner input = new Scanner(System.in);
-
         ASCIIGeneral.limpiarPantalla();
         interfaz.titulo();
-
         System.out.println("Bienvenido al Bingo!");
+
         System.out.print("¿Cuántos jugadores participarán? : ");
-        Integer numJugadores = input.nextInt();
+        int numJugadores = input.nextInt();
         input.nextLine();
 
         System.out.print("¿Cuántas fichas deseas apostar? : ");
@@ -94,15 +79,17 @@ public class Bingo implements StrategyJuego {
             throw new ExcepcionJugadorSinFichas("No tienes suficientes fichas para la apuesta inicial.");
         }
 
+        // Restar fichas del jugador principal y calcular bote
+        jugador.restarFichas(apuesta);
         bote = apuesta * numJugadores;
+
+        // Crear arrays para jugadores y cartones
         jugadores = new Jugador[numJugadores];
         cartones = new String[numJugadores][FILAS][COLUMNAS];
-
         jugadores[0] = jugador;
-        jugador.restarFichas(apuesta);
-
-        for (Integer i = 1; i < numJugadores; i++) {
-            jugadores[i] = new Jugador("Jugador " + i, 18, 0.0);
+        // Jugadores adicionales con fichas iniciales cero
+        for (int i = 1; i < numJugadores; i++) {
+            jugadores[i] = new Jugador("Jugador " + (i + 1), 18, 0.0);
         }
 
         System.out.println("¡Apuesta aceptada! El bote es de " + bote + " fichas.");
@@ -112,132 +99,142 @@ public class Bingo implements StrategyJuego {
         jugarBingo(numJugadores);
     }
 
-    // Generar Cartones
-    private void generarCartones(Integer numJugadores) {
-        Random random = new Random();
-
-        // Numeros disponibles
-        for (Integer i = 1; i <= 75; i++) {
-            numerosDisponibles.add(i);
+    /**
+     * Genera aleatoriamente los cartones de cada jugador.
+     * Marca casillas con "X" o con número aleatorio (sin repetir).
+     * 
+     * @param numJugadores número total de participantes
+     */
+    private void generarCartones(int numJugadores) {
+        Random rand = new Random();
+        // Inicializar números disponibles 1–75
+        for (int n = 1; n <= 75; n++) {
+            numerosDisponibles.add(n);
         }
-
-        // Rellenar el carton de bingo
-        for (Integer k = 0; k < numJugadores; k++) {
-            for (Integer i = 0; i < FILAS; i++) {
-                for (Integer j = 0; j < COLUMNAS; j++) {
-                    if (random.nextInt(100) < 50) { 
-                        cartones[k][i][j] = "X";
+        // Rellenar cada cartón
+        for (int j = 0; j < numJugadores; j++) {
+            for (int i = 0; i < FILAS; i++) {
+                for (int k = 0; k < COLUMNAS; k++) {
+                    if (rand.nextBoolean()) {
+                        cartones[j][i][k] = "X";
                     } else {
-                        Integer numero;
+                        int num;
                         do {
-                            numero = random.nextInt(75) + 1;
-                        } while (!numerosDisponibles.contains(numero));
-                        cartones[k][i][j] = String.valueOf(numero);
+                            num = rand.nextInt(75) + 1;
+                        } while (!numerosDisponibles.contains(num));
+                        numerosDisponibles.remove(num);
+                        cartones[j][i][k] = String.valueOf(num);
                     }
                 }
             }
         }
-
         ASCIIGeneral.limpiarPantalla();
         System.out.println("Tu cartón:");
-        // Carton del jugador Principal
-        imprimirCarton(cartones[0]); 
+        imprimirCarton(cartones[0]);
     }
 
-    // Mostrar el carton
-    private void imprimirCarton(String[][] carton) {
-        for (Integer i = 0; i < FILAS; i++) {
-            for (Integer j = 0; j < COLUMNAS; j++) {
-                System.out.print(carton[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    // Juego 
-    private void jugarBingo(Integer numJugadores) {
-        Random random = new Random();
-    
-        System.out.println("Comienza el Bingo! Bote total: " + bote + " fichas.");
-    
+    /**
+     * Bucle principal de extracción de números y comprobación de bingo.
+     * 
+     * @param numJugadores número total de participantes
+     */
+    private void jugarBingo(int numJugadores) {
+        Random rand = new Random();
         while (true) {
-            Long startTime = System.currentTimeMillis(); // Tiempo de inicio de la iteración
-            
+            // Reiniciar números si se agotan
             if (numerosDisponibles.isEmpty()) {
-                for (Integer i = 1; i <= 75; i++) {
-                    numerosDisponibles.add(i); 
-                }
+                for (int n = 1; n <= 75; n++)
+                    numerosDisponibles.add(n);
             }
-    
-            Integer numero = random.nextInt(75) + 1;
-    
-            if (!numerosDisponibles.contains(numero)) {
-                continue; // Evitar números repetidos
-            }
-    
-            numerosDisponibles.remove(numero);
+            int numero = rand.nextInt(75) + 1;
+            if (!numerosDisponibles.remove(numero))
+                continue;
+
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             System.out.println("Número extraído: " + numero);
-    
+
+            // Tachar en cartón principal y mostrar
             tacharNumero(cartones[0], numero);
             System.out.println("Tu cartón actualizado:");
             imprimirCarton(cartones[0]);
-    
+
+            // Comprobar bingo principal
             if (esBingo(cartones[0])) {
                 System.out.println("¡Bingo! Has ganado el bote de " + bote + " fichas.");
                 jugador.agregarFichas(bote);
                 ASCIIGeneral.esperarTecla();
                 return;
             }
-    
-            for (Integer k = 1; k < numJugadores; k++) {
-                tacharNumero(cartones[k], numero);
-                if (esBingo(cartones[k])) {
-                    System.out.println("¡Bingo! El ganador es " + jugadores[k].getName() + " y se lleva el bote de " + bote + " fichas.");
-                    jugadores[k].agregarFichas(bote);
+            // Comprobar bingo en otros jugadores
+            for (int i = 1; i < numJugadores; i++) {
+                tacharNumero(cartones[i], numero);
+                if (esBingo(cartones[i])) {
+                    System.out.println(
+                            "¡Bingo! El ganador es " + jugadores[i].getName() + " y se lleva " + bote + " fichas.");
+                    jugadores[i].agregarFichas(bote);
                     ASCIIGeneral.esperarTecla();
                     return;
                 }
             }
-    
-            Long elapsedTime = System.currentTimeMillis() - startTime;
-    
-            // Intervalo de 1 Segundo
-            Long sleepTime = 1000 - elapsedTime;
-            if (sleepTime > 0) {
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    System.out.println("Error en la pausa: " + e.getMessage());
-                }
-            }
-        }
-    }
-    
-    // Tacha un numero en el carton
-    private void tacharNumero(String[][] carton, Integer numero) {
-        for (Integer i = 0; i < FILAS; i++) {
-            for (Integer j = 0; j < COLUMNAS; j++) {
-                if (carton[i][j].equals(String.valueOf(numero))) {
-                    carton[i][j] = "X";
-                }
+            // Pausa de 1 segundo entre llamadas
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
             }
         }
     }
 
-    // Comprueba si es bingo
-    private Boolean esBingo(String[][] carton) {
-        for (Integer i = 0; i < FILAS; i++) {
-            for (Integer j = 0; j < COLUMNAS; j++) {
-                if (!carton[i][j].equals("X")) {
+    /**
+     * Imprime por pantalla un cartón de bingo.
+     * 
+     * @param carton matriz [FILAS][COLUMNAS] de String
+     */
+    private void imprimirCarton(String[][] carton) {
+        for (String[] fila : carton) {
+            for (String celda : fila) {
+                System.out.print(celda + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Reemplaza en el cartón el número extraído por "X".
+     * 
+     * @param carton cartón a modificar
+     * @param numero número sorteado a tachar
+     */
+    private void tacharNumero(String[][] carton, int numero) {
+        String s = String.valueOf(numero);
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                if (carton[i][j].equals(s))
+                    carton[i][j] = "X";
+            }
+        }
+    }
+
+    /**
+     * Comprueba si un cartón está completamente tachado (bingo).
+     * 
+     * @param carton cartón a evaluar
+     * @return true si todas las casillas son "X"
+     */
+    private boolean esBingo(String[][] carton) {
+        for (String[] fila : carton) {
+            for (String celda : fila) {
+                if (!celda.equals("X"))
                     return false;
-                }
             }
         }
         return true;
     }
 
+    /**
+     * Retorna la cadena identificadora de la estrategia (para display).
+     */
+    @Override
     public String toString() {
         return "Bingo";
     }

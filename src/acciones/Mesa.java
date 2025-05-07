@@ -1,94 +1,142 @@
 
-// Mesa.java
 package acciones;
 
-// Excepciones
+// Excepciones de juego
 import excep.ExcepcionJugadorSinFichas;
 
-// Strategy
+// Estrategias de juego (Strategy)
 import juegos.*;
 
-//Jugador
+// Representación del jugador
 import personas.Jugador;
 
-// ASCII
+// Utilidades ASCII para limpiar pantalla y pausar
 import ascii.ASCIIGeneral;
 
-// Observer
+// Observer pull-push
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserverInteractive;
-import recursos.Games;
 
 import java.util.Objects;
 
-import static recursos.Games.SLOTS;
 import static recursos.MensajesEstaticos.interactTable;
 
-
-// TODO : DUDA AL PROFESOR SI HACE FALTA HACER UN FACTORY O UN SINGLETON
-
+/**
+ * Clase Mesa => Representa una mesa de juego en el casino.
+ * Combina el patrón Observer (Pull-Push) para detectar la posición e
+ * interacción del jugador
+ * y el patrón Strategy para seleccionar dinámicamente el juego según el tipo de
+ * mesa.
+ */
 public class Mesa implements PullPushModelObserverInteractive {
 
-    // Atributos
+    /**
+     * Nombre identificador de la mesa ("Slot", "Ruleta", "Bingo", "Dados",
+     * "CartaMasAlta")
+     */
     private String nombre;
-    Integer numPartcipantes;
-    private Integer posX, posY;
+    /** Número de participantes permitido en la mesa */
+    private Integer numParticipantes;
+    /** Coordenada X de la mesa en el mapa del casino */
+    private Integer posX;
+    /** Coordenada Y de la mesa en el mapa del casino */
+    private Integer posY;
+    /** Referencia al jugador que está interactuando (null si ninguno) */
     private Jugador jugador;
-    StrategyJuego strategy;
+    /** Estrategia de juego actual (StrategyJuego) */
+    private StrategyJuego strategy;
 
-    // Constructor [Observer + Strategy]
-    public Mesa(String nombre, Integer numPartcipantes, Integer posX, Integer posY) {
+    /**
+     * Constructor de Mesa.
+     * 
+     * @param nombre           identificador de la mesa ("Slot", "Ruleta", etc.)
+     * @param numParticipantes número de jugadores que participan (no usado
+     *                         internamente)
+     * @param posX             coordenada X donde se ubica la mesa
+     * @param posY             coordenada Y donde se ubica la mesa
+     */
+    public Mesa(String nombre, Integer numParticipantes, Integer posX, Integer posY) {
         this.nombre = nombre;
-        this.numPartcipantes = numPartcipantes;
-
+        this.numParticipantes = numParticipantes;
         this.posX = posX;
         this.posY = posY;
-
-        this.strategy = null;
+        this.strategy = null; // La estrategia se asigna al interactuar
     }
 
-    // Getters
-    public Integer getNumPartcipantes() {
-        return numPartcipantes;
+    // ===================== Getters =====================
+    public Integer getNumParticipantes() {
+        return numParticipantes;
     }
-    public Integer getPosX() {return posX;}
-    public Integer getPosY() {return posY;}
-    public Jugador getJugador() {return jugador;}
-    public StrategyJuego getStrategy() {return strategy;}
 
-    // Setters
+    public Integer getPosX() {
+        return posX;
+    }
+
+    public Integer getPosY() {
+        return posY;
+    }
+
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public StrategyJuego getStrategy() {
+        return strategy;
+    }
+
+    // ===================== Setters =====================
+    /**
+     * Asigna el jugador que interactúa con la mesa.
+     * 
+     * @param jugador instancia de Jugador
+     */
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
     }
 
-    // Strategy -> Definir las estrategia
+    /**
+     * Define la estrategia de juego (Strategy) para esta mesa.
+     * 
+     * @param strategy implementación de StrategyJuego
+     */
     public void setStrategy(StrategyJuego strategy) {
         this.strategy = strategy;
     }
 
-    public void putStrategy(){
-        switch (this.nombre){
+    /**
+     * Selecciona e instancia la estrategia apropiada según el nombre de la mesa.
+     * Debe llamarse después de asignar el jugador para poder pasarle la referencia.
+     */
+    public void putStrategy() {
+        switch (this.nombre) {
             case "Slot":
-                this.setStrategy(new Slot(jugador));
+                setStrategy(new Slot(jugador));
                 break;
             case "Ruleta":
-                this.setStrategy(new Ruleta(jugador));
+                setStrategy(new Ruleta(jugador));
                 break;
             case "Bingo":
-                this.setStrategy(new Bingo(jugador));
+                setStrategy(new Bingo(jugador));
                 break;
             case "Dados":
-                this.setStrategy(new Dados(jugador));
+                setStrategy(new Dados(jugador));
                 break;
             case "CartaMasAlta":
-                this.setStrategy(new CartaMasAlta(jugador));
+                setStrategy(new CartaMasAlta(jugador));
                 break;
+            default:
+                // Nombre de mesa no reconocido
+                throw new IllegalArgumentException("Juego no soportado: " + nombre);
         }
     }
 
-
-
-    public void jugar() throws ExcepcionJugadorSinFichas{
+    /**
+     * Inicia la partida usando la estrategia actual.
+     * Captura excepción si el jugador no tiene fichas suficientes.
+     * 
+     * @throws ExcepcionJugadorSinFichas si no hay fichas
+     */
+    public void jugar() throws ExcepcionJugadorSinFichas {
         try {
             strategy.iniciarPartida();
         } catch (ExcepcionJugadorSinFichas e) {
@@ -97,27 +145,48 @@ public class Mesa implements PullPushModelObserverInteractive {
         }
     }
 
-    // Observer
+    // ===================== Observer Methods =====================
+
+    /**
+     * Al interactuar, lanza el método jugar().
+     */
     @Override
     public void interactive() throws ExcepcionJugadorSinFichas {
         jugar();
     }
 
+    /**
+     * Método update del Observer: se notifica cuando el jugador se mueve o
+     * interactúa.
+     * Si el jugador está en la posición de la mesa, asigna jugador, muestra mensaje
+     * y, si pulsa interactuar, arranca el juego.
+     *
+     * @param obs observable (normalmente un Jugador)
+     * @param obj objeto adicional (no usado)
+     */
     @Override
-    public void update(PullPushModelObservable pullPushModelObservable, Object object) throws ExcepcionJugadorSinFichas {
-
-        if (pullPushModelObservable instanceof Jugador) { // Se que a nivel de ciclo de vida llegaria otro objeto Observable distinto, pero por si las moscas
-            Jugador jugadorTMP = (Jugador) pullPushModelObservable;
-
-            if (Objects.equals(jugadorTMP.getPosX(), this.posX) && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
-                interactTable(this.toString()); // TODO
-                this.jugador = jugadorTMP;
-                if (this.jugador.getInteract()) interactive();
-            }
-            else {
-                jugador = null; // Se asume de que no hay ningun jugador ocupado // No se si habra multiplayer xd
+    public void update(PullPushModelObservable obs, Object obj) throws ExcepcionJugadorSinFichas {
+        if (obs instanceof Jugador) {
+            Jugador j = (Jugador) obs;
+            if (Objects.equals(j.getPosX(), posX) && Objects.equals(j.getPosY(), posY)) {
+                interactTable(this.toString());
+                this.jugador = j;
+                putStrategy();
+                if (j.getInteract()) {
+                    interactive();
+                }
+            } else {
+                this.jugador = null; // Limpia la referencia al alejarse
             }
         }
+    }
 
+    /**
+     * Representación por defecto de la mesa (se muestra en el mensaje de
+     * interacción).
+     */
+    @Override
+    public String toString() {
+        return nombre + " (" + numParticipantes + " plazas)";
     }
 }

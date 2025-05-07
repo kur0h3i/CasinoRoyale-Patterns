@@ -1,6 +1,7 @@
+
 package acciones;
 
-// Excepciones
+// Imports de excepciones y utilidades
 import ascii.ASCIICajero;
 import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinDinero;
@@ -13,34 +14,65 @@ import patterns.observer.PullPushModelObserverInteractive;
 import personas.Jugador;
 import static recursos.MensajesEstaticos.interactATM;
 
+/**
+ * Clase Cajero => Permite a un jugador convertir dinero en fichas y viceversa
+ * mediante una interfaz ASCII.
+ * Implementa el patrón Observer (Pull-Push) para reaccionar a la posición e
+ * interacción del jugador.
+ */
 public class Cajero implements PullPushModelObserverInteractive {
 
-    // Coordenadas en sala
-    private Integer posX, posY;
-
-    // El jugador y la interfaz ASCII
+    /** Coordenada X del cajero en la sala */
+    private Integer posX;
+    /** Coordenada Y del cajero en la sala */
+    private Integer posY;
+    /** Referencia al jugador que interactúa actualmente */
     private Jugador jugador;
+    /** Interfaz ASCII específica del cajero para mostrar menús y mensajes */
     private ASCIICajero interfaz;
 
+    /**
+     * Constructor del cajero con sus coordenadas en la sala.
+     * 
+     * @param posX coordenada X
+     * @param posY coordenada Y
+     */
     public Cajero(Integer posX, Integer posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
+    /**
+     * Método llamado por el observable (Jugador) cuando cambia de estado.
+     * Si el jugador está en las mismas coordenadas que el cajero, se inicia la
+     * interacción.
+     * 
+     * @param obs el observable que notifica (debe ser instancia de Jugador)
+     * @param obj objeto adicional (no usado)
+     */
     @Override
     public void update(PullPushModelObservable obs, Object obj) {
         if (obs instanceof Jugador) {
             Jugador j = (Jugador) obs;
+            // Comprueba si el jugador está en la posición del cajero
             if (Objects.equals(j.getPosX(), posX) && Objects.equals(j.getPosY(), posY)) {
                 interactATM();
                 this.jugador = j;
-                if (j.getInteract()) interactive();
+                // Si el jugador ha pulsado la tecla de interactuar, iniciar menú
+                if (j.getInteract()) {
+                    interactive();
+                }
             } else {
+                // Si se aleja, dejamos de referenciar al jugador
                 this.jugador = null;
             }
         }
     }
 
+    /**
+     * Inicia el modo interactivo del cajero, mostrando la interfaz y capturando
+     * input.
+     */
     @Override
     public void interactive() {
         Scanner input = new Scanner(System.in);
@@ -48,15 +80,21 @@ public class Cajero implements PullPushModelObserverInteractive {
         iniciarCajero(input);
     }
 
+    /**
+     * Bucle principal de opciones: cambiar dinero a fichas, fichas a dinero o
+     * salir.
+     * 
+     * @param input Scanner para leer la elección del usuario
+     */
     private void iniciarCajero(Scanner input) {
         int opcion = 0;
         while (opcion != 3) {
             ASCIIGeneral.limpiarPantalla();
-            interfaz.titulo();
-            interfaz.opcioes();
+            interfaz.titulo(); // Muestra título ASCII
+            interfaz.opcioes(); // Muestra opciones de menú
             try {
                 opcion = input.nextInt();
-                input.nextLine();
+                input.nextLine(); // Limpiar buffer de entrada
                 switch (opcion) {
                     case 1:
                         cambiarDineroAFichas(input);
@@ -74,20 +112,26 @@ public class Cajero implements PullPushModelObserverInteractive {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no válida. Usa un número.");
-                input.nextLine(); // limpiar buffer
+                input.nextLine(); // limpiar buffer en caso de texto
                 ASCIIGeneral.esperarTecla();
             }
         }
     }
 
+    /**
+     * Solicita al usuario un importe en euros, comprueba fondos y realiza el cambio
+     * a fichas.
+     * 
+     * @param input Scanner para leer el importe
+     */
     private void cambiarDineroAFichas(Scanner input) {
         float importe = definirImporteDinero(input);
         try {
             comprobarDinero();
             System.out.printf("Cambiando %.2f€ por fichas…%n", importe);
-            // restamos dinero (Jugador usa Double)
+            // Restar dinero del jugador (usa Double) y redondeo natural de float a int
             jugador.restarDinero((double) importe);
-            // añadimos fichas (solo enteras)
+            // Añade fichas (parte entera del importe)
             jugador.agregarFichas((int) importe);
             System.out.println("Operación completada.");
         } catch (ExcepcionJugadorSinDinero e) {
@@ -96,15 +140,19 @@ public class Cajero implements PullPushModelObserverInteractive {
         ASCIIGeneral.esperarTecla();
     }
 
+    /**
+     * Solicita al usuario cantidad de fichas, comprueba existencia y realiza el
+     * cambio a dinero.
+     * 
+     * @param input Scanner para leer la cantidad de fichas
+     */
     private void cambiarFichasADinero(Scanner input) {
         int cantidad = definirCantidadFichas(input);
         try {
             comprobarFichas();
             System.out.printf("Cambiando %d fichas por dinero…%n", cantidad);
-            // restamos fichas
-            jugador.restarFichas(cantidad);
-            // añadimos dinero como Double
-            jugador.agregarDinero((double) cantidad);
+            jugador.restarFichas(cantidad); // Quita fichas al jugador
+            jugador.agregarDinero((double) cantidad); // Añade dinero en euros
             System.out.println("Operación completada.");
         } catch (ExcepcionJugadorSinFichas e) {
             System.out.println("No tienes suficientes fichas.");
@@ -112,7 +160,12 @@ public class Cajero implements PullPushModelObserverInteractive {
         ASCIIGeneral.esperarTecla();
     }
 
-    // Solo acepta ints > 0
+    /**
+     * Pide al usuario un número de fichas > 0. Repite hasta input válido.
+     * 
+     * @param input Scanner de entrada
+     * @return cantidad de fichas
+     */
     private int definirCantidadFichas(Scanner input) {
         int v = -1;
         while (v <= 0) {
@@ -124,14 +177,19 @@ public class Cajero implements PullPushModelObserverInteractive {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no válida. Usa un número entero.");
-                input.nextLine();
+                input.nextLine(); // limpiar buffer
             }
         }
-        input.nextLine();
+        input.nextLine(); // limpiar salto de línea restante
         return v;
     }
 
-    // Solo acepta floats > 0
+    /**
+     * Pide al usuario un importe en euros > 0. Repite hasta input válido.
+     * 
+     * @param input Scanner de entrada
+     * @return importe en euros
+     */
     private float definirImporteDinero(Scanner input) {
         float v = -1f;
         while (v <= 0) {
@@ -150,12 +208,22 @@ public class Cajero implements PullPushModelObserverInteractive {
         return v;
     }
 
+    /**
+     * Comprueba que el jugador tiene fichas suficientes, lanza excepción si no.
+     * 
+     * @throws ExcepcionJugadorSinFichas si fichas <= 0
+     */
     private void comprobarFichas() throws ExcepcionJugadorSinFichas {
         if (jugador.getFichas() <= 0) {
             throw new ExcepcionJugadorSinFichas("Jugador sin fichas");
         }
     }
 
+    /**
+     * Comprueba que el jugador tiene dinero suficiente, lanza excepción si no.
+     * 
+     * @throws ExcepcionJugadorSinDinero si dinero <= 0.0
+     */
     private void comprobarDinero() throws ExcepcionJugadorSinDinero {
         if (jugador.getDinero() <= 0.0) {
             throw new ExcepcionJugadorSinDinero("Jugador sin dinero");

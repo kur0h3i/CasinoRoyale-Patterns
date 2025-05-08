@@ -13,6 +13,7 @@ import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import salas.Sala;
+import salas.SalaPrincipal;
 
 /**
  * Representa al usuario en el casino, con posicion, fondos,
@@ -21,7 +22,7 @@ import salas.Sala;
  * Implementa Serializable para persistencia y PullPushModelObservable para
  * notificar a observadores cuando se mueve o interactua.
  */
-public class Jugador implements Serializable, PullPushModelObservable {
+public class Jugador implements JugadorTotal, Serializable, PullPushModelObservable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -149,6 +150,11 @@ public class Jugador implements Serializable, PullPushModelObservable {
 
     public void setPosY(Integer posY) {
         this.posY = posY;
+    }
+
+    @Override
+    public void setSala(SalaPrincipal salaPrincipal) {
+        salaActual = salaPrincipal;
     }
 
     public Boolean getInteract() {

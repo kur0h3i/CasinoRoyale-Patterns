@@ -2,6 +2,7 @@
 package salas;
 
 import acciones.Pasillo;
+import personas.Jugador;
 
 /**
  * Clase de inicio que configura las salas del casino y corredores entre ellas.
@@ -50,7 +51,7 @@ public class Casino {
                 salaPrincipal.getPosInitialY()
         );
         SalaRegistro.jugador.setSala(salaPrincipal);
-        salaPrincipal.setJugador(SalaRegistro.jugador);
+        salaPrincipal.setJugador((Jugador) SalaRegistro.jugador);
 
         // Iniciar la interfaz ASCII de la sala principal
         salaPrincipal.iniciarInterfaz();

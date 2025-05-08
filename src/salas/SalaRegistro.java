@@ -11,6 +11,7 @@ import excep.ExcepcionJugadorMenorEdad;
 import excep.ExcepcionJugadorNoEncontrado;
 import personas.Jugador;
 import personas.JugadorFactory;
+import personas.JugadorTotal;
 
 /**
  * Punto de entrada para registrar o cargar un jugador antes de iniciar el casino.
@@ -26,7 +27,7 @@ public class SalaRegistro {
     /**
      * Jugador seleccionado o creado durante el registro.
      */
-    public static Jugador jugador;
+    public static JugadorTotal jugador;
 
     /**
      * Constructor: muestra arte ASCII, informacion del casino,
@@ -73,9 +74,9 @@ public class SalaRegistro {
      *
      * @return instancia de Jugador velido
      */
-    public Jugador iniciarJugador() {
+    public JugadorTotal iniciarJugador() {
         Scanner input = new Scanner(System.in);
-        Jugador sel = null;
+        JugadorTotal sel = null;
         int opcion;
         do {
             System.out.println("1. Iniciar sesion de socio");
@@ -141,7 +142,7 @@ public class SalaRegistro {
      *
      * @return Jugador recien creado
      */
-    public Jugador crearJugador() {
+    public JugadorTotal crearJugador() {
         Scanner input = new Scanner(System.in);
         String nombre;
         int edad;

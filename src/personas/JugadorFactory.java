@@ -16,14 +16,14 @@ public class JugadorFactory {
      * @param dinero   saldo inicial en euros
      * @return instancia de JugadorPrincipal o JugadorNPC, o null si el tipo es nulo o desconocido
      */
-    public static Jugador crearJugador(String tipo, String nombre, int edad, double dinero) {
+    public static JugadorTotal crearJugador(String tipo, String nombre, int edad, double dinero) {
         if (tipo == null) {
             return null;
         }
         switch (tipo.toLowerCase()) {
             case "principal":
                 // Crea el jugador principal con posicion inicial por defecto
-                return new JugadorPrincipal(nombre, edad, dinero);
+                return new Jugador(nombre, edad, dinero);
             case "npc":
                 // Crea un jugador NPC (sin posicion inicial)
                 return new JugadorNPC(nombre, edad, dinero);

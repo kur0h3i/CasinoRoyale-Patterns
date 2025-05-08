@@ -5,16 +5,37 @@ package personas;
 import ascii.ASCIIGeneral;
 import excep.ExcepcionJugadorSinFichas;
 import items.Items;
+
+import java.util.List;
 import java.util.Scanner;
 import patterns.observer.PullPushModelObservable;
 import patterns.observer.PullPushModelObserver;
 import salas.Sala;
+import salas.SalaPrincipal;
 
 /**
  * Extension de Jugador que representa un personaje no controlado por el usuario.
  * Se utiliza para simular participantes controlados por la IA en el casino.
  */
-public class JugadorNPC extends Jugador {
+public class JugadorNPC implements JugadorTotal {
+
+    /** Coordenada X actual del jugador en el mapa */
+    private Integer posX;
+    /** Coordenada Y actual del jugador en el mapa */
+    private Integer posY;
+    /** Indicador de que el jugador ha pulsado la tecla de interactuar */
+    private Boolean interact;
+
+    /** Nombre del jugador */
+    private String nombre;
+    /** Edad del jugador */
+    private Integer edad;
+    /** Dinero en euros disponible */
+    private Double dinero;
+    /** Fichas disponibles para apostar */
+    private Integer fichas;
+    /** Sala actual donde se encuentra el jugador */
+    private Sala salaActual;
 
     /**
      * Constructor de JugadorNPC.
@@ -24,7 +45,9 @@ public class JugadorNPC extends Jugador {
      * @param dinero saldo inicial en euros
      */
     public JugadorNPC(String nombre, int edad, double dinero) {
-        super(nombre, edad, dinero);
+        this.nombre = nombre;
+        this.edad = edad;
+        this.dinero = dinero;
     }
 
     /**
@@ -34,8 +57,30 @@ public class JugadorNPC extends Jugador {
     @Override
     public void datosUsuarioEnPartida() {
         System.out.println("----------------------------");
-        System.out.println("NPC: " + getName());
-        System.out.println("Fichas: " + getFichas());
+        System.out.println("NPC: " + this.nombre);
+        System.out.println("Fichas: " + this.fichas);
         System.out.println("----------------------------");
     }
+
+    @Override
+    public Integer getEdad() {
+        return 0;
+    }
+
+    @Override
+    public void setPosX(Integer posInitialX) {
+        this.posX = posInitialX;
+    }
+
+    @Override
+    public void setPosY(Integer posInitialY) {
+        this.posY = posInitialY;
+    }
+
+    @Override
+    public void setSala(SalaPrincipal salaPrincipal) {
+        this.salaActual = salaPrincipal;
+    }
+
+
 }

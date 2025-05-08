@@ -1,21 +1,11 @@
-
-
 package personas;
 
-import ascii.ASCIIGeneral;
-import excep.ExcepcionJugadorSinFichas;
-import items.Items;
-
-import java.util.List;
-import java.util.Scanner;
-import patterns.observer.PullPushModelObservable;
-import patterns.observer.PullPushModelObserver;
 import salas.Sala;
 import salas.SalaPrincipal;
 
 /**
- * Extension de Jugador que representa un personaje no controlado por el usuario.
- * Se utiliza para simular participantes controlados por la IA en el casino.
+ * Extiende la clase Jugador para representar un personaje no controlado por el usuario.
+ * Este tipo de jugador es controlado por la IA en el entorno del casino.
  */
 public class JugadorNPC implements JugadorTotal {
 
@@ -39,6 +29,7 @@ public class JugadorNPC implements JugadorTotal {
 
     /**
      * Constructor de JugadorNPC.
+     * Este constructor inicializa los valores basicos del NPC sin posicion en el mapa.
      *
      * @param nombre nombre del NPC
      * @param edad edad del NPC
@@ -48,11 +39,13 @@ public class JugadorNPC implements JugadorTotal {
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
+        this.fichas = 0;  // Inicializacion de fichas a 0
     }
 
     /**
      * Muestra los datos del NPC en el juego de forma resumida.
-     * Se sobreescribe para identificar al personaje como NPC.
+     * Se sobreescribe este metodo para diferenciar la representacion de un NPC
+     * frente a un jugador controlado por el usuario.
      */
     @Override
     public void datosUsuarioEnPartida() {
@@ -62,25 +55,46 @@ public class JugadorNPC implements JugadorTotal {
         System.out.println("----------------------------");
     }
 
+    // ==================== Metodos Getter y Setter ====================
+
+    /**
+     * Obtiene la edad del NPC. Este valor esta fijo a 0 para representar que
+     * no es relevante para los NPCs.
+     *
+     * @return 0, ya que la edad no es relevante para los NPCs
+     */
     @Override
     public Integer getEdad() {
         return 0;
     }
 
+    /**
+     * Establece la coordenada X inicial del NPC en el mapa.
+     *
+     * @param posInitialX coordenada X inicial
+     */
     @Override
     public void setPosX(Integer posInitialX) {
         this.posX = posInitialX;
     }
 
+    /**
+     * Establece la coordenada Y inicial del NPC en el mapa.
+     *
+     * @param posInitialY coordenada Y inicial
+     */
     @Override
     public void setPosY(Integer posInitialY) {
         this.posY = posInitialY;
     }
 
+    /**
+     * Establece la sala donde se encuentra el NPC.
+     *
+     * @param salaPrincipal instancia de la sala en la que se encuentra el NPC
+     */
     @Override
     public void setSala(SalaPrincipal salaPrincipal) {
         this.salaActual = salaPrincipal;
     }
-
-
 }

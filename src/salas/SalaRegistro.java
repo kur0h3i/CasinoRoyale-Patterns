@@ -165,7 +165,7 @@ public class SalaRegistro {
     }
 
     /**
-     * Verifica que el jugador sea mayor de 18 años.
+     * Verifica que el jugador sea mayor de 18 anos.
      *
      * @return
      * @throws ExcepcionJugadorMenorEdad si no cumple la edad minima

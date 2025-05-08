@@ -159,7 +159,7 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
 
     /**
      * Comprueba si el jugador tiene suficiente dinero y, en caso afirmativo,
-     * descuenta el precio y añade el item al inventario.
+     * descuenta el precio y anade el item al inventario.
      *
      * @param bebida objeto Items con nombre y precio
      */
@@ -170,7 +170,7 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
                 throw new ExcepcionJugadorSinDinero("Fondos insuficientes");
             }
             jugador.restarDinero(precio); // Descuenta dinero del jugador
-            jugador.agregarItem(bebida); // Añade bebida al inventario del jugador
+            jugador.agregarItem(bebida); // Anade bebida al inventario del jugador
             System.out.println("Has comprado " + bebida.getNombre() + " por €" + precio);
         } catch (ExcepcionJugadorSinDinero e) {
             System.out.println("No tienes suficiente dinero para " + bebida.getNombre());

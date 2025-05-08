@@ -137,7 +137,7 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
             System.out.printf("Cambiando %.2f€ por fichas…%n", importe);
             // Restar dinero del jugador (usa Double) y redondeo natural de float a int
             jugador.restarDinero((double) importe);
-            // Añade fichas (parte entera del importe)
+            // Anade fichas (parte entera del importe)
             jugador.agregarFichas((int) importe);
             System.out.println("Operacion completada.");
         } catch (ExcepcionJugadorSinDinero e) {
@@ -158,7 +158,7 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
             comprobarFichas();
             System.out.printf("Cambiando %d fichas por dinero…%n", cantidad);
             jugador.restarFichas(cantidad); // Quita fichas al jugador
-            jugador.agregarDinero((double) cantidad); // Añade dinero en euros
+            jugador.agregarDinero((double) cantidad); // Anade dinero en euros
             System.out.println("Operacion completada.");
         } catch (ExcepcionJugadorSinFichas e) {
             System.out.println("No tienes suficientes fichas.");

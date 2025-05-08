@@ -248,13 +248,13 @@ public class Jugador implements JugadorTotal, Serializable, PullPushModelObserva
     // ==================== Inventario y Items ====================
 
     /**
-     * Añade un item al inventario y muestra mensaje.
+     * Anade un item al inventario y muestra mensaje.
      *
      * @param item objeto Items a agregar
      */
     public void agregarItem(Items item) {
         items.add(item);
-        System.out.println("Se ha añadido al inventario: " + item.getNombre() +
+        System.out.println("Se ha anadido al inventario: " + item.getNombre() +
                 " (Precio: " + item.getPrecio() + ")");
     }
 

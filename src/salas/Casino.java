@@ -51,9 +51,7 @@ public class Casino {
                 salaPrincipal.getPosInitialY()
         );
         SalaRegistro.jugador.setSala(salaPrincipal);
-        salaPrincipal.setJugador((Jugador) SalaRegistro.jugador);
 
-        // Iniciar la interfaz ASCII de la sala principal
-        salaPrincipal.iniciarInterfaz();
+        salaPrincipal.enterNewStage((Jugador) SalaRegistro.jugador);
     }
 }

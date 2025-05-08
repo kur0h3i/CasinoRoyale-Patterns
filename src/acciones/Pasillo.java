@@ -72,7 +72,7 @@ public class Pasillo implements PullPushModelObserver, Serializable {
                 && Objects.equals(jugadorTMP.getPosY(), this.posY)) {
 
             // Desconecta al jugador de todos los observables de la sala actual
-            jugadorTMP.detachAll();
+            jugadorTMP.getSalaActual().unsubscribe(jugadorTMP);
 
             // Establece la posicion de entrada segun la sala previa
             String salaActual = jugadorTMP.getSalaActual().toString();
@@ -90,10 +90,8 @@ public class Pasillo implements PullPushModelObserver, Serializable {
 
             // Actualiza la referencia de sala actual del jugador
             jugadorTMP.setSala(this.salaSiguiente);
-            // Adjunta al jugador como observador de la nueva sala
-            this.salaSiguiente.setJugador(jugadorTMP);
-            // Inicializa la interfaz grefica o ASCII de la sala
-            this.salaSiguiente.iniciarInterfaz();
+
+            this.salaSiguiente.enterNewStage(jugadorTMP);
         }
     }
 }

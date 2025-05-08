@@ -12,7 +12,7 @@ public interface PullPushModelObservable {
     /**
      * Adjunta un observador a este observable.
      *
-     * @param observer instancia de PullPushModelObserver que se añadire
+     * @param observer instancia de PullPushModelObserver que se anadire
      */
     void attach(PullPushModelObserver observer);
 

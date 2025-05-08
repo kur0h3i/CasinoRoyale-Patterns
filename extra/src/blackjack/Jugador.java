@@ -11,7 +11,7 @@ public class Jugador {
         this.numeroCartas = 0;
     }
 
-    // Añadir una carta a la mano
+    // Anadir una carta a la mano
     public void recibirCarta(Carta carta) {
         if (numeroCartas < mano.length) {
             mano[numeroCartas++] = carta;

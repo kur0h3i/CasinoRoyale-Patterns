@@ -6,6 +6,13 @@
 '~ package' 'Jugador jugador'
 '+ public' 'public Jugador jugador'
 
+ annotation "Leyenda" {
+    - Privado
+    # Protected
+    ~ Package
+    + Public
+}
+
 package "Mapas" {
     class SalaCartasMapa {
         + mapaCartas: Character[][]
@@ -40,26 +47,37 @@ package "Mapas" {
     }
 }
 
-package "Patterns/Observer" {
-    interface PullPushModelObservable {
-        + attach(PullPushModelObserver): void
-        + detach(PullPushModelObserver): void
-        + detachAll(): void
-        + notifyObservers(): void
+package "Patterns" {
+
+    package "Observer" {
+        interface PullPushModelObservable {
+            + attach(PullPushModelObserver): void
+            + detach(PullPushModelObserver): void
+            + detachAll(): void
+            + notifyObservers(): void
+        }
+
+        interface PullPushModelObserver {
+            + update(PullPushModelObservable, Object): void
+        }
+
+        interface PullPushModelObserverInteractive {
+            + interactive(): void
+        }
+
+        interface Subscription {
+            + subscribe(Jugador): void
+            + unsubscribe(Jugador): void
+        }
     }
 
-    interface PullPushModelObserver {
-        + update(PullPushModelObservable, Object): void
+    package "Template" {
+        abstract class NewStageTemplate {
+                + enterNewStage(Jugador): void
+                + iniciarInterfaz(): void
+        }
     }
 
-    interface PullPushModelObserverInteractive {
-        + interactive(): void
-    }
-
-    abstract class Subscription {
-        + {abstract} subscribe(Jugador): void
-        + {abstract} unsubscribe(Jugador): void
-    }
 }
 
 package "personas" {
@@ -77,11 +95,8 @@ package "personas" {
         - salaActual: Sala
         - observers: List<PullPushModelObserver>
 
+        + Jugador(String, Integer, Double, Integer)
         + Jugador(String, Integer, Double, Integer, Integer)
-        + attach(PullPushModelObserver): void
-        + detach(PullPushModelObserver): void
-        + detachAll(): void
-        + notifyObservers(): void
         + move(Integer, Integer): void
         + interacting(): void
         + getPosX(): Integer
@@ -89,7 +104,6 @@ package "personas" {
         + getInteract(): Boolean
         + getName(): String
         + setNombre(String): void
-        + getEdad(): Integer
         + setEdad(Integer): void
         + getDinero(): Double
         + setDinero(Double): void
@@ -113,13 +127,24 @@ package "personas" {
     }
 
     class JugadorNPC {
+        - posX: Integer
+        - posY: Integer
+        - interact: Boolean
+        - nombre: String
+        - edad: Integer
+        - dinero: Double
+        - fichas: Integer
+        - salaActual: Sala
+
         + JugadorNPC(String, int, double)
-        + datosUsuarioEnPartida(): void
     }
 
-    class JugadorPrincipal {
-        + JugadorPrincipal(String, int, double)
+    interface JugadorTotal {
         + datosUsuarioEnPartida(): void
+        + getEdad(): Integer
+        + setPosX(Integer): void
+        + setPosY(Integer): void
+        + setSala(SalaPrincipal): void
     }
 }
 
@@ -193,7 +218,6 @@ package "salas" {
         # moverJugador(int, int): void
         - mostrarMapa(): void
         # entradaTerminal(Scanner): void
-        + iniciarInterfaz(): void
         + setJugador(Jugador): void
         + getPosInitialX(): Integer
         + getPosInitialY(): Integer
@@ -205,8 +229,6 @@ package "salas" {
 
         - SalaAzar(Jugador)
         + {static} getInstance(): SalaAzar
-        + subscribe(Jugador): void → Subscription
-        + unsubscribe(Jugador): void → Subscription
         + toString(): String → Object
     }
 
@@ -215,8 +237,6 @@ package "salas" {
 
         - SalaCartas(Jugador)
         + {static} getInstance(): SalaCartas
-        + subscribe(Jugador): void → Subscription
-        + unsubscribe(Jugador): void → Subscription
         + toString(): String → Object
     }
 
@@ -229,8 +249,6 @@ package "salas" {
         - SalaPrincipal(Jugador)
         + {static} getInstance(Jugador): SalaPrincipal
         + {static} getInstance(): SalaPrincipal
-        + subscribe(Jugador): void → Subscription
-        + unsubscribe(Jugador): void → Subscription
         + toString(): String → Object
     }
 
@@ -425,11 +443,8 @@ package "items" {
         - nombre: String
         - precio: Double
         - descripcion: String
+
         + Bebida(String, Double, String)
-        + getNombre(): String
-        + getPrecio(): Double
-        + getDescripcion(): String
-        + usar(): void
     }
 
     interface Items {
@@ -523,6 +538,11 @@ package "juegos" {
     interface StrategyJuego {
         + iniciarPartida(): void
     }
+
+    'Relaciones'
+
+    PullPushModelObserver <|.. PullPushModelObserverInteractive
+    PullPushModelObserver o-- PullPushModelObservable
 }
 
 @enduml

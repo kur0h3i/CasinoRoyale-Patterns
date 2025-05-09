@@ -54,8 +54,8 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
         bebidasDisponibles.add(new Bebida("Cerveza", 2.50, "Bien fria"));
         bebidasDisponibles.add(new Bebida("Copa de vino", 3.00, "Tinto de la casa"));
         bebidasDisponibles.add(new Bebida("Redbull", 1.59, "Te da alas"));
-        bebidasDisponibles.add(new Bebida("Cacaolat", 1.59, "Chocolate"));
-        bebidasDisponibles.add(new Bebida("FireBall", 1.59, "Canela y fuego"));
+        bebidasDisponibles.add(new Bebida("Cacaolat", 1.10, "Chocolate"));
+        bebidasDisponibles.add(new Bebida("FireBall", 1.42, "Canela y fuego"));
 
         this.posX = posX;
         this.posY = posY;

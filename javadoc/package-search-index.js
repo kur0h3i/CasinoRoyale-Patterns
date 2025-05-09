@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"acciones"},{"l":"All Packages","u":"allpackages-index.html"},{"l":"ascii"},{"l":"excep"},{"l":"items"},{"l":"juegos"},{"l":"mapas"},{"l":"patterns.observer"},{"l":"patterns.template"},{"l":"personas"},{"l":"recursos"},{"l":"salas"}];updateSearchResults();

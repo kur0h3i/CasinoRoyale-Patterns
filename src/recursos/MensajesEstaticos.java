@@ -26,7 +26,7 @@ public class MensajesEstaticos {
      * Muestra las instrucciones besicas de control.
      */
     public static void instructions() {
-        System.out.println("Usa WASD para moverte, E para unirte a la mesa:");
+        System.out.println("Usa WASD para moverte, E para unirte a la mesa, I para abrir inventario:");
     }
 
     /**

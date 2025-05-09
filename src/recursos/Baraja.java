@@ -1,13 +1,18 @@
 
 package recursos;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Modelo de una baraja estendar de 52 cartas.
  * Permite mezclar, repartir y reiniciar la baraja.
  */
-public class Baraja {
+public class Baraja implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Array que contiene las 52 cartas de la baraja */
     private Carta[] cartas;
@@ -19,8 +24,8 @@ public class Baraja {
      * Genera todas las combinaciones de valor y palo.
      */
     public Baraja() {
-        String[] valores = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-        String[] palos = {"C", "D", "H", "S"}; // C=Clubs, D=Diamonds, H=Hearts, S=Spades
+        String[] valores = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+        String[] palos = { "C", "D", "H", "S" }; // C=Clubs, D=Diamonds, H=Hearts, S=Spades
         cartas = new Carta[52];
         Integer index = 0;
         for (String palo : palos) {

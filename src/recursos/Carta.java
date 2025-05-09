@@ -1,11 +1,18 @@
 
 package recursos;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * Representa una carta de la baraja con un valor y un palo.
- * Proporciona metodos para obtener su representacion, valor numerico y nombre de archivo.
+ * Proporciona metodos para obtener su representacion, valor numerico y nombre
+ * de archivo.
  */
-public class Carta {
+public class Carta implements Serializable {
+
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   /**
    * Valor de la carta ("A", "2", ..., "10", "J", "Q", "K")

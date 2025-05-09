@@ -5,7 +5,8 @@ import personas.Jugador;
 
 /**
  * Centraliza mensajes de interfaz estetica para el juego.
- * Proporciona metodos para mostrar informacion besica del jugador y prompts de interaccion.
+ * Proporciona metodos para mostrar informacion besica del jugador y prompts de
+ * interaccion.
  */
 public class MensajesEstaticos {
 

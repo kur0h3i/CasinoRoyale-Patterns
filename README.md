@@ -1,18 +1,14 @@
 ```
-    ________  ______                     ______           _             
-   / ____/ / / ____/________ _____      / ____/___ ______(_)___  ____   
-  / __/ / / / / __/ ___/ __ `/ __ \    / /   / __ `/ ___/ / __ \/ __ \  
- / /___/ / / /_/ / /  / /_/ / / / /   / /___/ /_/ (__  ) / / / / /_/ /  
-/_____/_/  \____/_/   \__,_/_/ /_/    \____/\__,_/____/_/_/ /_/\____/   
-    ____            __  ___            __             _                 
-   / __ \___       /  |/  /___  ____  / /____  ____  (_)___  ____ ______
-  / / / / _ \     / /|_/ / __ \/ __ \/ __/ _ \/ __ \/ / __ \/ __ `/ ___/
- / /_/ /  __/    / /  / / /_/ / / / / /_/  __/ /_/ / / / / / /_/ / /    
-/_____/\___/    /_/  /_/\____/_/ /_/\__/\___/ .___/_/_/ /_/\__,_/_/     
-                                           /_/                          
+  ____          _               ____                   _      
+ / ___|__ _ ___(_)_ __   ___   |  _ \ ___  _   _  __ _| | ___ 
+| |   / _` / __| | '_ \ / _ \  | |_) / _ \| | | |/ _` | |/ _ \
+| |__| (_| \__ \ | | | | (_) | |  _ < (_) | |_| | (_| | |  __/
+ \____\__,_|___/_|_| |_|\___/  |_| \_\___/ \__, |\__,_|_|\___|
+                                           |___/                                      
 ``` 
 
-Casino Royale es una aplicación en Java que simula el funcionamiento de un casino virtual. El proyecto hace uso de múltiples patrones de diseño para lograr un sistema modular, extensible y fácil de mantener.
+Casino Royale es una aplicación en Java que simula el funcionamiento de un casino virtual. 
+El proyecto hace uso de múltiples patrones de diseño para lograr un sistema modular y extensible.
 
 
 ## 📂 Repositorio

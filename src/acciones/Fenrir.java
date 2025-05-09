@@ -104,7 +104,7 @@ public class Fenrir implements PullPushModelObserverInteractive, Serializable {
      * @param input Scanner para leer la opcion del usuario
      */
     public void iniciarBar(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 2) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo(); // Muestra titulo ASCII del bar

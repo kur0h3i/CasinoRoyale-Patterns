@@ -35,17 +35,17 @@ public class SalaCartasMapa {
     };
 
     /** Coordenada X inicial donde aparece el jugador al entrar en la sala */
-    public static final int posXInicial = 11;
+    public static final Integer posXInicial = 11;
     /** Coordenada Y inicial donde aparece el jugador al entrar en la sala */
-    public static final int posYInicial = 14;
+    public static final Integer posYInicial = 14;
 
     /** Coordenada X de la entrada desde el pasillo hacia la sala */
-    public static final int posXEntrada = 21;
+    public static final Integer posXEntrada = 21;
     /** Coordenada Y de la entrada desde el pasillo hacia la sala */
-    public static final int posYEntrada = 1;
+    public static final Integer posYEntrada = 1;
 
     /** Coordenada X de la mesa de CartaMesAlta dentro del mapa */
-    public static final int posXCartaMas = 13;
+    public static final Integer posXCartaMas = 13;
     /** Coordenada Y de la mesa de CartaMesAlta dentro del mapa */
-    public static final int posYCartaMas = 2;
+    public static final Integer posYCartaMas = 2;
 }

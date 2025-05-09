@@ -77,7 +77,7 @@ public class SalaRegistro {
     public JugadorTotal iniciarJugador() {
         Scanner input = new Scanner(System.in);
         JugadorTotal sel = null;
-        int opcion;
+        Integer opcion;
         do {
             System.out.println("1. Iniciar sesion de socio");
             System.out.println("2. Registrar nuevo socio");
@@ -146,8 +146,8 @@ public class SalaRegistro {
     public JugadorTotal crearJugador() {
         Scanner input = new Scanner(System.in);
         String nombre;
-        int edad;
-        char confirma;
+        Integer edad;
+        Character confirma;
         do {
             System.out.print("Tu nombre: ");
             nombre = input.nextLine().trim();

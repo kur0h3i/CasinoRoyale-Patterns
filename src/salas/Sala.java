@@ -95,9 +95,9 @@ public abstract class Sala extends NewStageTemplate implements Serializable{
     /**
      * Mueve al jugador, verifica colision con paredes ('#') y notifica observadores.
      */
-    protected void moverJugador(int dx, int dy) {
-        int newX = jugador.getPosX() + dx;
-        int newY = jugador.getPosY() + dy;
+    protected void moverJugador(Integer dx, Integer dy) {
+        Integer newX = jugador.getPosX() + dx;
+        Integer newY = jugador.getPosY() + dy;
         // Limitar dentro de los bordes y suelo transitable
         if (newX >= 0 && newX < mapa[0].length
                 && newY >= 0 && newY < mapa.length
@@ -110,8 +110,8 @@ public abstract class Sala extends NewStageTemplate implements Serializable{
      * Dibuja el mapa en consola, marcando la posicion del jugador con 'P'.
      */
     private void mostrarMapa() {
-        for (int y = 0; y < mapa.length; y++) {
-            for (int x = 0; x < mapa[y].length; x++) {
+        for (Integer y = 0; y < mapa.length; y++) {
+            for (Integer x = 0; x < mapa[y].length; x++) {
                 if (y == jugador.getPosY() && x == jugador.getPosX()) {
                     System.out.print("P ");
                 } else {
@@ -126,7 +126,7 @@ public abstract class Sala extends NewStageTemplate implements Serializable{
      * Procesa la entrada de teclado (WASD, E, I) para mover o interactuar.
      */
     protected void entradaTerminal(Scanner scanner) {
-        boolean valid = false;
+        Boolean valid = false;
         while (!valid) {
             try {
                 String input = scanner.nextLine().trim().toLowerCase();

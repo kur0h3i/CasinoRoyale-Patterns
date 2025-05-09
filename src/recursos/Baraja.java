@@ -12,7 +12,7 @@ public class Baraja {
     /** Array que contiene las 52 cartas de la baraja */
     private Carta[] cartas;
     /** Numero de cartas aun disponibles para repartir */
-    private int cartasDisponibles;
+    private Integer cartasDisponibles;
 
     /**
      * Constructor: crea el array de 52 cartas y las mezcla.
@@ -22,7 +22,7 @@ public class Baraja {
         String[] valores = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         String[] palos = {"C", "D", "H", "S"}; // C=Clubs, D=Diamonds, H=Hearts, S=Spades
         cartas = new Carta[52];
-        int index = 0;
+        Integer index = 0;
         for (String palo : palos) {
             for (String valor : valores) {
                 cartas[index++] = new Carta(valor, palo);
@@ -38,8 +38,8 @@ public class Baraja {
      */
     public void mezclar() {
         Random rnd = new Random();
-        for (int i = cartas.length - 1; i > 0; i--) {
-            int j = rnd.nextInt(i + 1);
+        for (Integer i = cartas.length - 1; i > 0; i--) {
+            Integer j = rnd.nextInt(i + 1);
             Carta temp = cartas[i];
             cartas[i] = cartas[j];
             cartas[j] = temp;
@@ -64,7 +64,7 @@ public class Baraja {
     /**
      * @return numero de cartas que quedan por repartir
      */
-    public int cartasRestantes() {
+    public Integer cartasRestantes() {
         return cartasDisponibles;
     }
 

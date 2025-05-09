@@ -93,7 +93,7 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
      * @param input Scanner para leer la eleccion del usuario
      */
     private void iniciarCajero(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 3) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo(); // Muestra titulo ASCII
@@ -131,14 +131,14 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
      * @param input Scanner para leer el importe
      */
     private void cambiarDineroAFichas(Scanner input) {
-        float importe = definirImporteDinero(input);
+        Float importe = definirImporteDinero(input);
         try {
             comprobarDinero();
             System.out.printf("Cambiando %.2f€ por fichas…%n", importe);
-            // Restar dinero del jugador (usa Double) y redondeo natural de float a int
-            jugador.restarDinero((double) importe);
+            // Restar dinero del jugador (usa Double) y redondeo natural de Float a Integer
+            jugador.restarDinero(importe.doubleValue());
             // Anade fichas (parte entera del importe)
-            jugador.agregarFichas((int) importe);
+            jugador.agregarFichas(importe.intValue());
             System.out.println("Operacion completada.");
         } catch (ExcepcionJugadorSinDinero e) {
             System.out.println("No tienes suficiente dinero.");
@@ -153,12 +153,12 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
      * @param input Scanner para leer la cantidad de fichas
      */
     private void cambiarFichasADinero(Scanner input) {
-        int cantidad = definirCantidadFichas(input);
+        Integer cantidad = definirCantidadFichas(input);
         try {
             comprobarFichas();
             System.out.printf("Cambiando %d fichas por dinero…%n", cantidad);
             jugador.restarFichas(cantidad); // Quita fichas al jugador
-            jugador.agregarDinero((double) cantidad); // Anade dinero en euros
+            jugador.agregarDinero(cantidad.doubleValue()); // Anade dinero en euros
             System.out.println("Operacion completada.");
         } catch (ExcepcionJugadorSinFichas e) {
             System.out.println("No tienes suficientes fichas.");
@@ -172,8 +172,8 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
      * @param input Scanner de entrada
      * @return cantidad de fichas
      */
-    private int definirCantidadFichas(Scanner input) {
-        int v = -1;
+    private Integer definirCantidadFichas(Scanner input) {
+        Integer v = -1;
         while (v <= 0) {
             System.out.print("¿Cuentas fichas quieres cambiar? ");
             try {
@@ -196,8 +196,8 @@ public class Cajero implements PullPushModelObserverInteractive, Serializable {
      * @param input Scanner de entrada
      * @return importe en euros
      */
-    private float definirImporteDinero(Scanner input) {
-        float v = -1f;
+    private Float definirImporteDinero(Scanner input) {
+        Float v = -1f;
         while (v <= 0) {
             System.out.print("¿Cuento dinero (€) quieres cambiar? ");
             try {

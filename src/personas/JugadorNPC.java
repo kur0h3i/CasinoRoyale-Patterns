@@ -35,7 +35,7 @@ public class JugadorNPC implements JugadorTotal {
      * @param edad edad del NPC
      * @param dinero saldo inicial en euros
      */
-    public JugadorNPC(String nombre, int edad, double dinero) {
+    public JugadorNPC(String nombre, Integer edad, Double dinero) {
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;

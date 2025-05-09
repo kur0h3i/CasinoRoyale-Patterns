@@ -103,7 +103,7 @@ public class CartaMasAlta implements StrategyJuego, Serializable {
         Scanner input = new Scanner(System.in);
         // Verificar que haya fichas para jugar
         comprobarFichas();
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
@@ -155,8 +155,8 @@ public class CartaMasAlta implements StrategyJuego, Serializable {
         Carta cartaIA = baraja.repartir();
         System.out.println("Tu carta: " + cartaJugador);
         System.out.println("Carta de la IA: " + cartaIA);
-        int valorJugador = cartaJugador.getValorNumerico();
-        int valorIA = cartaIA.getValorNumerico();
+        Integer valorJugador = cartaJugador.getValorNumerico();
+        Integer valorIA = cartaIA.getValorNumerico();
         if (valorJugador > valorIA) {
             System.out.println("¡Has ganado esta ronda con " + cartaJugador + "!");
             // Gana doble la apuesta

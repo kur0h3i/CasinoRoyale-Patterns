@@ -100,7 +100,7 @@ public class Dados implements StrategyJuego, Serializable {
         Scanner input = new Scanner(System.in);
         // Verificar que haya fichas disponibles
         comprobarFichas();
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();

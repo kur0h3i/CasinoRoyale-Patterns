@@ -73,7 +73,7 @@ public class Ruleta implements StrategyJuego, Serializable {
         Scanner input = new Scanner(System.in);
         // Validar fichas antes de comenzar
         comprobarFichas();
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 4) {
             // Mostrar interfaz principal de ruleta
             ASCIIGeneral.limpiarPantalla();
@@ -96,7 +96,7 @@ public class Ruleta implements StrategyJuego, Serializable {
                         // Girar ruleta sin apostar
                         ASCIIGeneral.limpiarPantalla();
                         interfaz.titulo();
-                        int resultado = tirarRuleta();
+                        Integer resultado = tirarRuleta();
                         System.out.println("Resultado: " + resultado);
                         ASCIIGeneral.esperarTecla();
                         break;
@@ -134,7 +134,7 @@ public class Ruleta implements StrategyJuego, Serializable {
     private Integer definirApuesta(Scanner input) {
         System.out.println("¿Cuentas fichas deseas apostar?");
         System.out.println("Tienes " + jugador.getFichas() + " fichas disponibles.");
-        int ap = 0;
+        Integer ap = 0;
         try {
             ap = input.nextInt();
             input.nextLine();
@@ -158,7 +158,7 @@ public class Ruleta implements StrategyJuego, Serializable {
      * @param input Scanner para leer la entrada del usuario
      */
     private void opcionesDeApuesta(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 6) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.interfazPartida();
@@ -205,7 +205,7 @@ public class Ruleta implements StrategyJuego, Serializable {
      */
     private Integer tirarRuleta() {
         Random rand = new Random();
-        int res = rand.nextInt(37);
+        Integer res = rand.nextInt(37);
         System.out.println("La ruleta gira... Numero: " + res);
         return res;
     }
@@ -217,9 +217,9 @@ public class Ruleta implements StrategyJuego, Serializable {
      */
     private void apostarPorColor(Scanner input) {
         System.out.print("Elige color: 1=Rojo, 2=Negro: ");
-        int color = input.nextInt();
-        int res = tirarRuleta();
-        boolean esRojo = esNumeroRojo(res);
+        Integer color = input.nextInt();
+        Integer res = tirarRuleta();
+        Boolean esRojo = esNumeroRojo(res);
         if ((color == 1 && esRojo) || (color == 2 && !esRojo)) {
             System.out.println("¡Ganaste! Premiacion 1:1.");
             jugador.agregarFichas(apuesta * 2);
@@ -235,9 +235,9 @@ public class Ruleta implements StrategyJuego, Serializable {
      */
     private void apostarParImpar(Scanner input) {
         System.out.print("Elige: 1=Par, 2=Impar: ");
-        int elec = input.nextInt();
-        int res = tirarRuleta();
-        boolean esPar = (res != 0 && res % 2 == 0);
+        Integer elec = input.nextInt();
+        Integer res = tirarRuleta();
+        Boolean esPar = (res != 0 && res % 2 == 0);
         if ((elec == 1 && esPar) || (elec == 2 && !esPar)) {
             System.out.println("¡Ganaste! Premiacion 1:1.");
             jugador.agregarFichas(apuesta * 2);
@@ -253,12 +253,12 @@ public class Ruleta implements StrategyJuego, Serializable {
      */
     private void apostarPorNumero(Scanner input) {
         System.out.print("Elige un numero (0-36): ");
-        int num = input.nextInt();
+        Integer num = input.nextInt();
         if (num < 0 || num > 36) {
             System.out.println("Numero invelido.");
             return;
         }
-        int res = tirarRuleta();
+        Integer res = tirarRuleta();
         if (res == num) {
             System.out.println("¡Ganaste! Premiacion 35:1.");
             jugador.agregarFichas(apuesta * 36);
@@ -274,13 +274,13 @@ public class Ruleta implements StrategyJuego, Serializable {
      */
     private void apostarPorDocena(Scanner input) {
         System.out.print("Elige docena: 1=(1-12), 2=(13-24), 3=(25-36): ");
-        int doc = input.nextInt();
+        Integer doc = input.nextInt();
         if (doc < 1 || doc > 3) {
             System.out.println("Docena invelida.");
             return;
         }
-        int res = tirarRuleta();
-        boolean acierto = (doc == 1 && res <= 12) || (doc == 2 && res <= 24 && res >= 13)
+        Integer res = tirarRuleta();
+        Boolean acierto = (doc == 1 && res <= 12) || (doc == 2 && res <= 24 && res >= 13)
                 || (doc == 3 && res <= 36 && res >= 25);
         if (acierto) {
             System.out.println("¡Ganaste! Premiacion 2:1.");
@@ -297,13 +297,13 @@ public class Ruleta implements StrategyJuego, Serializable {
      */
     private void apostarMitad(Scanner input) {
         System.out.print("Elige mitad: 1=(1-18), 2=(19-36): ");
-        int mitad = input.nextInt();
+        Integer mitad = input.nextInt();
         if (mitad != 1 && mitad != 2) {
             System.out.println("Mitad invelida.");
             return;
         }
-        int res = tirarRuleta();
-        boolean acierto = (mitad == 1 && res <= 18 && res >= 1) || (mitad == 2 && res <= 36 && res >= 19);
+        Integer res = tirarRuleta();
+        Boolean acierto = (mitad == 1 && res <= 18 && res >= 1) || (mitad == 2 && res <= 36 && res >= 19);
         if (acierto) {
             System.out.println("¡Ganaste! Premiacion 1:1.");
             jugador.agregarFichas(apuesta * 2);
@@ -318,9 +318,9 @@ public class Ruleta implements StrategyJuego, Serializable {
      * @param numero numero de la ruleta
      * @return true si es rojo, false si es negro o 0
      */
-    private boolean esNumeroRojo(int numero) {
-        int[] rojos = { 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36 };
-        for (int r : rojos) {
+    private Boolean esNumeroRojo(Integer numero) {
+        Integer[] rojos = { 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36 };
+        for (Integer r : rojos) {
             if (numero == r)
                 return true;
         }

@@ -105,7 +105,7 @@ public class PuertaSalida implements PullPushModelObserverInteractive, Serializa
      * @param input Scanner para leer la opcion del usuario
      */
     private void iniciarPuerta(Scanner input) {
-        int opcion = 0;
+        Integer opcion = 0;
         while (opcion != 4) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();

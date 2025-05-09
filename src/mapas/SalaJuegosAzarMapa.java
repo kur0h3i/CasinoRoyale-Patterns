@@ -28,32 +28,32 @@ public class SalaJuegosAzarMapa {
     };
 
     /** Coordenada X inicial donde aparece el jugador al entrar en la sala */
-    public static final int posXInicial = 3;
+    public static final Integer posXInicial = 3;
     /** Coordenada Y inicial donde aparece el jugador al entrar en la sala */
-    public static final int posYInicial = 1;
+    public static final Integer posYInicial = 1;
 
     /** Coordenada X de la entrada desde el pasillo hacia la sala */
-    public static final int posXEntrada = 3;
+    public static final Integer posXEntrada = 3;
     /** Coordenada Y de la entrada desde el pasillo hacia la sala */
-    public static final int posYEntrada = 14;
+    public static final Integer posYEntrada = 14;
 
     /** Coordenada X de la mesa de Ruleta dentro del mapa */
-    public static final int posXRuleta = 9;
+    public static final Integer posXRuleta = 9;
     /** Coordenada Y de la mesa de Ruleta dentro del mapa */
-    public static final int posYRuleta = 4;
+    public static final Integer posYRuleta = 4;
 
     /** Coordenada X de la mequina Slot dentro del mapa */
-    public static final int posXSlots = 2;
+    public static final Integer posXSlots = 2;
     /** Coordenada Y de la mequina Slot dentro del mapa */
-    public static final int posYSlots = 11;
+    public static final Integer posYSlots = 11;
 
     /** Coordenada X de la mesa de Bingo dentro del mapa */
-    public static final int posXBingo = 15;
+    public static final Integer posXBingo = 15;
     /** Coordenada Y de la mesa de Bingo dentro del mapa */
-    public static final int posYBingo = 13;
+    public static final Integer posYBingo = 13;
 
     /** Coordenada X de la mesa de Dados dentro del mapa */
-    public static final int posXDados = 24;
+    public static final Integer posXDados = 24;
     /** Coordenada Y de la mesa de Dados dentro del mapa */
-    public static final int posYDados = 7;
+    public static final Integer posYDados = 7;
 }

@@ -266,7 +266,7 @@ public class Jugador implements JugadorTotal, Serializable, PullPushModelObserva
             System.out.println("El inventario este vacio.");
         } else {
             System.out.println("Inventario de " + nombre + ":");
-            for (int i = 0; i < items.size(); i++) {
+            for (Integer i = 0; i < items.size(); i++) {
                 Items item = items.get(i);
                 System.out.println((i + 1) + ". " + item.getNombre() +
                         " | " + item.getDescripcion() +
@@ -288,7 +288,7 @@ public class Jugador implements JugadorTotal, Serializable, PullPushModelObserva
         while (true) {
             mostrarInventario();
             System.out.print("Elige el numero del item a usar (0 para salir): ");
-            int opcion;
+            Integer opcion;
             try {
                 opcion = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {

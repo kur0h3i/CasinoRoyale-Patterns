@@ -29,7 +29,7 @@ public class SalaPrincipalMapa {
     };
 
     /** Coordenada X inicial donde aparece el jugador al entrar en la sala */
-    public static final int posXInicial = 4;
+    public static final Integer posXInicial = 4;
     /** Coordenada Y inicial donde aparece el jugador al entrar en la sala */
-    public static final int posYInicial = 1;
+    public static final Integer posYInicial = 1;
 }

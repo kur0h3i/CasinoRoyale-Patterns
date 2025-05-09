@@ -16,7 +16,7 @@ public class JugadorFactory {
      * @param dinero   saldo inicial en euros
      * @return instancia de JugadorPrincipal o JugadorNPC, o null si el tipo es nulo o desconocido
      */
-    public static JugadorTotal crearJugador(String tipo, String nombre, int edad, double dinero) {
+    public static JugadorTotal crearJugador(String tipo, String nombre, Integer edad, Double dinero) {
         if (tipo == null) {
             return null;
         }

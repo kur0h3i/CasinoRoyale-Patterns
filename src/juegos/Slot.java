@@ -70,13 +70,13 @@ public class Slot implements StrategyJuego, Serializable {
         Scanner input = new Scanner(System.in);
         // Verifica que el jugador tenga fichas para jugar
         comprobarFichas();
-        boolean continuar = true;
+        Boolean continuar = true;
         while (continuar) {
             ASCIIGeneral.limpiarPantalla();
             interfaz.titulo();
             interfaz.opcioes();
             try {
-                int opcion = input.nextInt();
+                Integer opcion = input.nextInt();
                 input.nextLine(); // limpiar buffer
                 switch (opcion) {
                     case 1:
@@ -148,7 +148,7 @@ public class Slot implements StrategyJuego, Serializable {
         String s3 = simbolos[random.nextInt(simbolos.length)];
         interfaz.mostrarResultados(s1, s2, s3);
         if (s1.equals(s2) && s2.equals(s3)) {
-            int premio = calcularPremio(s1);
+            Integer premio = calcularPremio(s1);
             System.out.println("¡Felicidades! Ganaste " + premio + " fichas.");
             jugador.agregarFichas(premio);
         } else if (s1.equals(s2) || s2.equals(s3) || s1.equals(s3)) {

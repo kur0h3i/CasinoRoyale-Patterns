@@ -29,9 +29,9 @@ public class Bingo implements StrategyJuego, Serializable {
     private static final long serialVersionUID = 1L;
 
     /** Numero de filas por carton */
-    private static final int FILAS = 4;
+    private static final Integer FILAS = 4;
     /** Numero de columnas por carton */
-    private static final int COLUMNAS = 6;
+    private static final Integer COLUMNAS = 6;
     /** Estructura para almacenar multiples cartones [jugador][fila][columna] */
     private String[][][] cartones;
     /** Numeros aun no extraidos (1–75) */
@@ -39,9 +39,9 @@ public class Bingo implements StrategyJuego, Serializable {
     /** Array de jugadores en la partida */
     private Jugador[] jugadores;
     /** Numero total de fichas en juego (bote) */
-    private int bote;
+    private Integer bote;
     /** Apuesta inicial de fichas</code> */
-    private int apuesta;
+    private Integer apuesta;
     /** Jugador principal que inicia la partida */
     private Jugador jugador;
     /** Interfaz ASCII especifica para Bingo */
@@ -73,7 +73,7 @@ public class Bingo implements StrategyJuego, Serializable {
         System.out.println("Bienvenido al Bingo!");
 
         System.out.print("¿Cuentos jugadores participaren? : ");
-        int numJugadores = input.nextInt();
+        Integer numJugadores = input.nextInt();
         input.nextLine();
 
         System.out.print("¿Cuentas fichas deseas apostar? : ");
@@ -93,7 +93,7 @@ public class Bingo implements StrategyJuego, Serializable {
         cartones = new String[numJugadores][FILAS][COLUMNAS];
         jugadores[0] = jugador;
         // Jugadores adicionales con fichas iniciales cero
-        for (int i = 1; i < numJugadores; i++) {
+        for (Integer i = 1; i < numJugadores; i++) {
             jugadores[i] = new Jugador("Jugador " + (i + 1), 18, 0.0);
         }
 
@@ -110,20 +110,20 @@ public class Bingo implements StrategyJuego, Serializable {
      * 
      * @param numJugadores numero total de participantes
      */
-    private void generarCartones(int numJugadores) {
+    private void generarCartones(Integer numJugadores) {
         Random rand = new Random();
         // Inicializar numeros disponibles 1–75
-        for (int n = 1; n <= 75; n++) {
+        for (Integer n = 1; n <= 75; n++) {
             numerosDisponibles.add(n);
         }
         // Rellenar cada carton
-        for (int j = 0; j < numJugadores; j++) {
-            for (int i = 0; i < FILAS; i++) {
-                for (int k = 0; k < COLUMNAS; k++) {
+        for (Integer j = 0; j < numJugadores; j++) {
+            for (Integer i = 0; i < FILAS; i++) {
+                for (Integer k = 0; k < COLUMNAS; k++) {
                     if (rand.nextBoolean()) {
                         cartones[j][i][k] = "X";
                     } else {
-                        int num;
+                        Integer num;
                         do {
                             num = rand.nextInt(75) + 1;
                         } while (!numerosDisponibles.contains(num));
@@ -143,15 +143,15 @@ public class Bingo implements StrategyJuego, Serializable {
      * 
      * @param numJugadores numero total de participantes
      */
-    private void jugarBingo(int numJugadores) {
+    private void jugarBingo(Integer numJugadores) {
         Random rand = new Random();
         while (true) {
             // Reiniciar numeros si se agotan
             if (numerosDisponibles.isEmpty()) {
-                for (int n = 1; n <= 75; n++)
+                for (Integer n = 1; n <= 75; n++)
                     numerosDisponibles.add(n);
             }
-            int numero = rand.nextInt(75) + 1;
+            Integer numero = rand.nextInt(75) + 1;
             if (!numerosDisponibles.remove(numero))
                 continue;
 
@@ -172,7 +172,7 @@ public class Bingo implements StrategyJuego, Serializable {
                 return;
             }
             // Comprobar bingo en otros jugadores
-            for (int i = 1; i < numJugadores; i++) {
+            for (Integer i = 1; i < numJugadores; i++) {
                 tacharNumero(cartones[i], numero);
                 if (esBingo(cartones[i])) {
                     System.out.println(
@@ -210,10 +210,10 @@ public class Bingo implements StrategyJuego, Serializable {
      * @param carton carton a modificar
      * @param numero numero sorteado a tachar
      */
-    private void tacharNumero(String[][] carton, int numero) {
+    private void tacharNumero(String[][] carton, Integer numero) {
         String s = String.valueOf(numero);
-        for (int i = 0; i < FILAS; i++) {
-            for (int j = 0; j < COLUMNAS; j++) {
+        for (Integer i = 0; i < FILAS; i++) {
+            for (Integer j = 0; j < COLUMNAS; j++) {
                 if (carton[i][j].equals(s))
                     carton[i][j] = "X";
             }
@@ -226,7 +226,7 @@ public class Bingo implements StrategyJuego, Serializable {
      * @param carton carton a evaluar
      * @return true si todas las casillas son "X"
      */
-    private boolean esBingo(String[][] carton) {
+    private Boolean esBingo(String[][] carton) {
         for (String[] fila : carton) {
             for (String celda : fila) {
                 if (!celda.equals("X"))

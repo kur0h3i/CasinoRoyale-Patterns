@@ -1,21 +1,26 @@
 //ASCUIRuleta
 package ascii;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 //Jugador
 import personas.Jugador;
 
-public class ASCIIRuleta {
-    
+public class ASCIIRuleta implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     // Atributos
     Jugador jugador;
 
     // Metodos
-    public ASCIIRuleta (Jugador jugador){
+    public ASCIIRuleta(Jugador jugador) {
         this.jugador = jugador;
     }
 
     // Titulo de la Ruleta
-    public void titulo(){
+    public void titulo() {
         System.out.println("____        _      _        ");
         System.out.println("|  _ \\ _   _| | ___| |_ __ _ ");
         System.out.println("| |_) | | | | |/ _ \\ __/ _` |");
@@ -53,26 +58,26 @@ public class ASCIIRuleta {
     }
 
     // Opciones de la apuesta de la Ruleta
-    public void interfazPartida(){
-            jugador.datosUsuarioEnPartida();
-            System.out.println("_______________________");
-            System.out.println("| Opciones de Apuesta   |");
-            System.out.println("| 1. Color (Rojo/Negro) |");
-            System.out.println("| 2. Par / Impar        |");
-            System.out.println("| 3. Numero Individual  |");
-            System.out.println("| 4. Docena             |");
-            System.out.println("| 5. Mitad              |");
-            System.out.println("| 6. Salir              |");
-            System.out.println("|_______________________|");
+    public void interfazPartida() {
+        jugador.datosUsuarioEnPartida();
+        System.out.println("_______________________");
+        System.out.println("| Opciones de Apuesta   |");
+        System.out.println("| 1. Color (Rojo/Negro) |");
+        System.out.println("| 2. Par / Impar        |");
+        System.out.println("| 3. Numero Individual  |");
+        System.out.println("| 4. Docena             |");
+        System.out.println("| 5. Mitad              |");
+        System.out.println("| 6. Salir              |");
+        System.out.println("|_______________________|");
     }
 
     // Opciones de la Ruleta
-    public void opciones(){
+    public void opciones() {
         jugador.datosUsuarioEnPartida();
         System.out.println("1. Realizar Apuesta");
         System.out.println("2. Girar Ruleta");
         System.out.println("3. CheetSheet");
         System.out.println("4. Salir");
     }
-    
+
 }

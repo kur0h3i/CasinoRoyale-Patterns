@@ -1,16 +1,22 @@
 // ASCIISlot.java
 package ascii;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 // Jugador
 import personas.Jugador;
 
-public class ASCIISlot {
-    
+public class ASCIISlot implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     // Atributos
     Jugador jugador;
 
     // constructor
-    public ASCIISlot(Jugador jugador){
+    public ASCIISlot(Jugador jugador) {
         this.jugador = jugador;
     }
 
@@ -35,14 +41,14 @@ public class ASCIISlot {
     }
 
     // Opciones de la Slot
-    public void opcioes(){
+    public void opcioes() {
         jugador.datosUsuarioEnPartida();
         System.out.println("1. Realizar Apuesta");
         System.out.println("2. CheetSheet");
         System.out.println("3. Salir");
     }
 
-    // Mostrar el resultados de la Slot 
+    // Mostrar el resultados de la Slot
     public void mostrarResultados(String simbolo1, String simbolo2, String simbolo3) {
         System.out.println("_____________");
         System.out.println("|    SLOT   |");

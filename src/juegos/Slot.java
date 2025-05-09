@@ -5,6 +5,8 @@ package juegos;
 import ascii.ASCIIGeneral;
 import ascii.ASCIISlot;
 
+import java.io.Serial;
+import java.io.Serializable;
 // Utilidades de entrada y control de errores
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -23,7 +25,10 @@ import personas.Jugador;
  * - Dos simbolos iguales: recupera la apuesta
  * - Ninguna coincidencia: pierde la apuesta
  */
-public class Slot implements StrategyJuego {
+public class Slot implements StrategyJuego, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Apuesta actual en fichas */
     private Integer apuesta;

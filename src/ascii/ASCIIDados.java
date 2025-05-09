@@ -2,11 +2,16 @@
 
 package ascii;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 //Jugador
 import personas.Jugador;
 
-public class ASCIIDados {
+public class ASCIIDados implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     // Atributo para el jugador
     Jugador jugador;
 

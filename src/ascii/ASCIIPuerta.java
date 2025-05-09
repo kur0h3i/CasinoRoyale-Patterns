@@ -8,20 +8,20 @@ import java.io.Serial;
 import java.io.Serializable;
 
 public class ASCIIPuerta implements Serializable {
-    
+
     // Atributos
     @Serial
     private static final long serialVersionUID = 1L;
 
     Jugador jugador;
-    
+
     // Constructor
-    public ASCIIPuerta(Jugador jugador){
+    public ASCIIPuerta(Jugador jugador) {
         this.jugador = jugador;
     }
 
     // Titulo de la Salida
-    public void titulo(){
+    public void titulo() {
         System.out.println(" ____                  _          ____        _ _     _       ");
         System.out.println("|  _ \\ _   _  ___ _ __| |_ __ _  / ___|  __ _| (_) __| | __ _ ");
         System.out.println("| |_) | | | |/ _ \\ '__| __/ _` | \\___ \\ / _` | | |/ _` |/ _` |");
@@ -30,7 +30,7 @@ public class ASCIIPuerta implements Serializable {
     }
 
     // Opciones de la Salida
-    public void opcioes(){
+    public void opcioes() {
         System.out.println("------------------------------");
         System.out.println(jugador);
         System.out.println("\n-----------------------------");

@@ -5,6 +5,8 @@ package juegos;
 import ascii.ASCIIGeneral;
 import ascii.ASCIIRuleta;
 
+import java.io.Serial;
+import java.io.Serializable;
 // Utilidades de entrada y aleatoriedad
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -27,7 +29,10 @@ import personas.Jugador;
  * Luego se gira la ruleta y se determina el resultado, ajustando fichas segun
  * el tipo de apuesta.
  */
-public class Ruleta implements StrategyJuego {
+public class Ruleta implements StrategyJuego, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Apuesta realizada por el jugador */
     private Integer apuesta;

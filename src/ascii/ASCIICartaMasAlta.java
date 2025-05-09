@@ -2,16 +2,22 @@
 
 package ascii;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 // Jugador
 import personas.Jugador;
 
-public class ASCIICartaMasAlta {
-    
+public class ASCIICartaMasAlta implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     // Atributos
     Jugador jugador;
 
     // Constructor
-    public ASCIICartaMasAlta(Jugador jugador){
+    public ASCIICartaMasAlta(Jugador jugador) {
         this.jugador = jugador;
     }
 
@@ -43,4 +49,3 @@ public class ASCIICartaMasAlta {
         System.out.println("3. Salir");
     }
 }
-

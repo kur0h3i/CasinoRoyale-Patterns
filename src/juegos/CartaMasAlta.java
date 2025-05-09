@@ -5,6 +5,8 @@ package juegos;
 import ascii.ASCIIGeneral;
 import ascii.ASCIICartaMasAlta;
 
+import java.io.Serial;
+import java.io.Serializable;
 // Utilidades de entrada y manejo de excepciones de usuario
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -24,7 +26,10 @@ import excep.ExcepcionJugadorSinFichas;
  * El jugador apuesta fichas, se reparte una carta al jugador y otra a la IA,
  * y quien tenga el valor mes alto gana la apuesta.
  */
-public class CartaMasAlta implements StrategyJuego {
+public class CartaMasAlta implements StrategyJuego, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Mazo de cartas para repartir */
     private Baraja baraja;

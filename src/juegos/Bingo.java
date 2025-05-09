@@ -5,6 +5,8 @@ package juegos;
 import ascii.ASCIIGeneral;
 import ascii.ASCIIBingo;
 
+import java.io.Serial;
+import java.io.Serializable;
 // Utilidades de coleccion, aleatoriedad y entrada de usuario
 import java.util.HashSet;
 import java.util.Random;
@@ -21,7 +23,10 @@ import personas.Jugador;
  * Permite a un jugador apostar fichas, generar cartones de bingo y
  * extraer numeros de forma aleatoria hasta que alguien consigue bingo.
  */
-public class Bingo implements StrategyJuego {
+public class Bingo implements StrategyJuego, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Numero de filas por carton */
     private static final int FILAS = 4;

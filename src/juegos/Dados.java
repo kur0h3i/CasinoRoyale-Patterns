@@ -5,6 +5,8 @@ package juegos;
 import ascii.ASCIIGeneral;
 import ascii.ASCIIDados;
 
+import java.io.Serial;
+import java.io.Serializable;
 // Utilidades de entrada y control de errores
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -24,7 +26,10 @@ import personas.Jugador;
  * - Otro valor: establece ese numero como Punto y sigue lanzando hasta sacar
  * Punto (gana) o 7 (pierde).
  */
-public class Dados implements StrategyJuego {
+public class Dados implements StrategyJuego, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Apuesta actual en fichas */
     private Integer apuesta;

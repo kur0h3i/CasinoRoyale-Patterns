@@ -319,6 +319,15 @@ public class Jugador implements JugadorTotal, Serializable, PullPushModelObserva
     // ==================== Informacion de Usuario ====================
 
     /**
+     * Inicializa el jugador cuando se carga los datos de una partida ya guardada
+     */
+    public void initPlayer() {
+        this.interact = false;
+        this.inventario = false;
+        this.detachAll();
+    }
+
+    /**
      * Imprime los datos besicos del jugador (nombre y fichas).
      */
     public void datosUsuarioEnPartida() {

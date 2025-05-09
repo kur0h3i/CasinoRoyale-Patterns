@@ -125,6 +125,7 @@ public class SalaRegistro {
             try (ObjectInputStream ois = new ObjectInputStream(
                     new FileInputStream(archivo))) {
                 Jugador cargado = (Jugador) ois.readObject();
+                cargado.initPlayer();
                 System.out.println("Partida cargada exitosamente.\n" + cargado);
                 return cargado;
             }
